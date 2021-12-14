@@ -3,12 +3,9 @@
 
 #include "model.hpp"
 #include "json.hpp"
-#include <fmt/core.h>
-#include <string_view>
-
 #include <itensor/mps/sites/boson.h>
 
-class BoseHubbard1D
+class BoseHubbard1D : public Model
 {
 private:
     int L;
@@ -16,7 +13,7 @@ private:
     double J;
     double U;
     bool periodic;
-    const itensor::Boson sites;
+    itensor::Boson sites;
 
 public:
     BoseHubbard1D(int L, int N, double J, double U, bool periodic);

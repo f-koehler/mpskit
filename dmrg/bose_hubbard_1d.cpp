@@ -1,4 +1,5 @@
 #include "bose_hubbard_1d.hpp"
+#include <fmt/core.h>
 
 BoseHubbard1D::BoseHubbard1D(int L, int N, double J, double U, bool periodic) : L(L), N(N), J(J), U(U), periodic(periodic), sites(L, {"MaxOcc=", N})
 {
