@@ -1,0 +1,16 @@
+name: CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build dmrg code.
+        run: cmake -B build --build --target all
+      - name: Run BoseHubbard1D.
+        run: build/dmrg examples/bose_hubbard_1d.json
