@@ -1,0 +1,18 @@
+{
+    "model": "BoseHubbard1D",
+    "L": 8,
+    "N": 8,
+    "J": 1.0,
+    "U": 10.0,
+    "periodic": true,
+    "sweeps": [
+        {"maxdim": 50, "mindim": 20, "cutoff": 1e-6, "niter": 4, "noise": 1e-7},
+        {"maxdim": 80, "mindim": 20, "cutoff": 1e-8, "niter": 3, "noise": 1e-8},
+        {"maxdim": 100, "mindim": 10, "cutoff": 1e-10, "niter": 2, "noise": 1e-9},
+        {"maxdim": 150, "mindim": 10, "cutoff": 1e-12, "niter": 2, "noise": 1e-10},
+        {"maxdim": 200, "mindim": 10, "cutoff": 1e-12, "niter": 2, "noise": 1e-11},
+        {"maxdim": 250, "mindim": 10, "cutoff": 1e-12, "niter": 2, "noise": 1e-12},
+        {"maxdim": 300, "mindim": 10, "cutoff": 1e-12, "niter": 2, "noise": 0},
+        {"maxdim": 500, "mindim": 10, "cutoff": 1e-12, "niter": 2, "noise": 0}
+    ]
+}
