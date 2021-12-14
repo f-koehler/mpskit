@@ -5,9 +5,8 @@ BoseHubbard1D::BoseHubbard1D(int L, int N, double J, double U, bool periodic) : 
 {
 }
 
-BoseHubbard1D BoseHubbard1D::from_json(const json &j)
+BoseHubbard1D::BoseHubbard1D(const json &j) : L(j["L"].get<int>()), N(j["N"].get<int>()), J(j["J"].get<double>()), U(j["U"].get<double>()), periodic(j["periodic"].get<bool>()), sites(L, {"MaxOcc=", N})
 {
-    return BoseHubbard1D(j["L"].get<int>(), j["N"].get<int>(), j["J"].get<double>(), j["U"].get<double>(), j["periodic"].get<bool>());
 }
 
 itensor::MPS BoseHubbard1D::get_initial_state() const

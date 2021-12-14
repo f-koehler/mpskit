@@ -17,8 +17,7 @@ private:
 
 public:
     BoseHubbard1D(int L, int N, double J, double U, bool periodic);
-
-    static BoseHubbard1D from_json(const json &j);
+    BoseHubbard1D(const json &j);
 
     itensor::MPS get_initial_state() const;
     itensor::MPO get_hamiltonian() const;

@@ -23,18 +23,28 @@ int main(int argc, char **argv)
 
     const auto sweeps = get_sweeps_from_json(input["sweeps"]);
 
-    auto model = BoseHubbard1D::from_json(input);
+    Model *model;
+    const auto model_name = input["model"].get<std::string>();
+    if (model_name == "BoseHubbard1D")
+    {
+        model = new BoseHubbard1D(input);
+    }
+    else
+    {
+        std::cerr << "unknown model: " << model_name << '\n';
+        return 1;
+    }
 
     const auto start_monotonic = std::chrono::steady_clock::now();
     const auto start_hires = std::chrono::high_resolution_clock::now();
 
-    const auto hamiltonian = model.get_hamiltonian();
-    auto psi0 = model.get_initial_state();
+    const auto hamiltonian = model->get_hamiltonian();
+    auto psi0 = model->get_initial_state();
     const auto [energy, psi] = dmrg(hamiltonian, psi0, sweeps);
 
     json expvals, variances, two_point;
 
-    for (const auto &observable : model.get_observables())
+    for (const auto &observable : model->get_observables())
     {
         expvals[observable.name] = compute_expectation_value(psi, observable.mpo);
         if (observable.compute_variance)
@@ -43,7 +53,7 @@ int main(int argc, char **argv)
         }
     }
 
-    for (const auto &correlation : model.get_two_point_correlations())
+    for (const auto &correlation : model->get_two_point_correlations())
     {
         two_point[correlation.name] = compute_two_point(psi, correlation.mpo1, correlation.mpo2);
     }

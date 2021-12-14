@@ -11,7 +11,9 @@ struct TwoPointCorrelation;
 
 class Model
 {
+public:
     virtual itensor::MPO get_hamiltonian() const = 0;
+    virtual itensor::MPS get_initial_state() const = 0;
     virtual std::vector<Observable> get_observables() const = 0;
     virtual std::vector<TwoPointCorrelation> get_two_point_correlations() const = 0;
 };
