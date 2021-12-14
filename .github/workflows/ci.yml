@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build dmrg code.
-        run: cmake -B build --build
+      - name: CMake configure.
+        run: cmake -B build
+      - name: CMake build.
+        run: cmake --build build
       - name: Run BoseHubbard1D.
         run: build/dmrg examples/bose_hubbard_1d.json
