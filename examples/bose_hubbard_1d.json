@@ -3,7 +3,7 @@
     "L": 8,
     "N": 8,
     "J": 1.0,
-    "U": 10.0,
+    "U": 1.0,
     "periodic": true,
     "sweeps": [
         {"maxdim": 50, "mindim": 20, "cutoff": 1e-6, "niter": 4, "noise": 1e-7},

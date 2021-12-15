@@ -17,8 +17,8 @@ struct TwoPoint
     std::string opname2;
 };
 
-template <typename SiteType>
-double compute_one_point(itensor::MPS &psi, const itensor::BasicSiteSet<SiteType> &sites, const OnePoint &spec)
+template <typename SiteSet>
+double compute_one_point(itensor::MPS &psi, const SiteSet &sites, const OnePoint &spec)
 {
     psi.position(spec.position);
     auto ket = psi(spec.position);
@@ -27,15 +27,16 @@ double compute_one_point(itensor::MPS &psi, const itensor::BasicSiteSet<SiteType
     return itensor::elt(bra * op * ket);
 }
 
-template <typename SiteType>
-double compute_one_point(itensor::MPS &psi, const itensor::BasicSiteSet<SiteType> &sites, const TwoPoint &spec)
+template <typename SiteSet>
+double compute_two_point(itensor::MPS &psi, const SiteSet &sites, const TwoPoint &spec)
 {
     if (spec.position1 == spec.position2)
     {
         psi.position(spec.position1);
         auto ket = psi(spec.position1);
         auto bra = itensor::dag(itensor::prime(ket, "Site"));
-        auto op = spec.prefactor * itensor::op(sites, spec.opname1, spec.position1) * itensor::op(sites, spec.opname2, spec.position1);
+        // auto op = spec.prefactor * itensor::op(sites, spec.opname1, spec.position1) * itensor::op(sites, spec.opname2, spec.position1);
+        auto op = spec.prefactor * itensor::multSiteOps(itensor::op(sites, spec.opname1, spec.position1), itensor::op(sites, spec.opname2, spec.position1));
         return itensor::elt(bra * op * ket);
     }
 

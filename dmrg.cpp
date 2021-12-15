@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 
     const auto start_monotonic = std::chrono::steady_clock::now();
     const auto start_hires = std::chrono::high_resolution_clock::now();
-    const auto [energy, psi] = dmrg(hamiltonian, psi0, sweeps);
+    auto [energy, psi] = dmrg(hamiltonian, psi0, sweeps);
     const auto stop_hires = std::chrono::high_resolution_clock::now();
     const auto stop_monotonic = std::chrono::steady_clock::now();
 
@@ -65,6 +65,9 @@ int main(int argc, char **argv)
         }
     }
 
+    const auto one_point = model->compute_one_point(psi);
+    const auto two_point = model->compute_two_point(psi);
+
     auto duration_monotonic = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) / 1e9;
     auto duration_hires = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) / 1e9;
 
@@ -78,6 +81,16 @@ int main(int argc, char **argv)
     for (const auto &[name, value] : variances)
     {
         H5Easy::dump(file, "/variances/"s + name, value);
+    }
+
+    for (auto &[name, values] : one_point)
+    {
+        H5Easy::dump(file, "/one_point/"s + name, values);
+    }
+
+    for (auto &[name, values] : two_point)
+    {
+        H5Easy::dump(file, "/two_point/"s + name, values);
     }
 
     return 0;

@@ -23,6 +23,9 @@ public:
     itensor::MPO get_hamiltonian() const;
     itensor::MPO get_particle_number_operator() const;
     std::vector<Observable> get_observables() const;
+
+    std::map<std::string, xt::xarray<double>> compute_one_point(itensor::MPS &psi) const;
+    std::map<std::string, xt::xarray<double>> compute_two_point(itensor::MPS &psi) const;
 };
 
 #endif /* DMRG_BOSE_HUBBARD_1D */

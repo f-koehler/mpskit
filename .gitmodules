@@ -1,9 +1,15 @@
 [submodule "fmt"]
-	path = fmt
+	path = dependencies/fmt
 	url = https://github.com/fmtlib/fmt.git
 [submodule "json"]
-	path = json
+	path = dependencies/json
 	url = https://github.com/nlohmann/json.git
 [submodule "highfive"]
-	path = highfive
+	path = dependencies/highfive
 	url = https://github.com/BlueBrain/HighFive.git
+[submodule "dependencies/xtl"]
+	path = dependencies/xtl
+	url = https://github.com/xtensor-stack/xtl.git
+[submodule "dependencies/xtensor"]
+	path = dependencies/xtensor
+	url = https://github.com/xtensor-stack/xtensor.git

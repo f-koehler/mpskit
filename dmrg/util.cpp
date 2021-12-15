@@ -24,11 +24,6 @@ double compute_variance(const itensor::MPS &psi, const itensor::MPO &op)
     return require_real_valued(itensor::innerC(op, psi, op, psi) - (exp * exp));
 }
 
-double compute_two_point(const itensor::MPS &psi, const itensor::MPO &op1, const itensor::MPO &op2)
-{
-    return require_real_valued(itensor::innerC(op1, psi, op2, psi) - (itensor::innerC(psi, op1, psi) * itensor::innerC(psi, op2, psi)));
-}
-
 itensor::Sweeps get_sweeps_from_json(const json &j)
 {
     int num_sweeps = static_cast<int>(j.size());

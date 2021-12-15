@@ -1,6 +1,8 @@
 #include "transverse_ising_1d.hpp"
 #include <fmt/core.h>
 
+using namespace std::string_literals;
+
 TransverseIsing1D::TransverseIsing1D(int L, double J, double hx, double hy, double hz, bool periodic) : L(L), J(J), hx(hx), hy(hy), hz(hz), periodic(periodic), sites(L, {"ConserveQNs=", false})
 {
 }
@@ -85,4 +87,31 @@ std::vector<Observable> TransverseIsing1D::get_observables() const
         Observable{"Y", get_total_sigma_y()},
         Observable{"Z", get_total_sigma_z()}};
     return observables;
+}
+
+std::map<std::string, xt::xarray<double>> TransverseIsing1D::compute_one_point(itensor::MPS &psi) const
+{
+    xt::xarray<double> sz_i = xt::zeros<double>({L});
+    auto func = OnePoint{2.0, 1, "Sz"};
+    for (auto i : itensor::range1(L))
+    {
+        func.position = i;
+        sz_i(i - 1) = ::compute_one_point(psi, sites, func);
+    }
+    return {{"sz_i"s, sz_i}};
+}
+std::map<std::string, xt::xarray<double>> TransverseIsing1D::compute_two_point(itensor::MPS &psi) const
+{
+    xt::xarray<double> sz_i_sz_j = xt::zeros<double>({L, L});
+    auto func = TwoPoint{4.0, 1, "Sz", 1, "Sz"};
+    for (auto i : itensor::range1(L))
+    {
+        func.position1 = i;
+        for (auto j : itensor::range1(L))
+        {
+            func.position2 = j;
+            sz_i_sz_j(i - 1, j - 1) = ::compute_two_point(psi, sites, func);
+        }
+    }
+    return {{"sz_i_sz_j"s, sz_i_sz_j}};
 }

@@ -28,6 +28,8 @@ public:
     itensor::MPO get_total_sigma_z() const;
 
     std::vector<Observable> get_observables() const;
+    std::map<std::string, xt::xarray<double>> compute_one_point(itensor::MPS &psi) const;
+    std::map<std::string, xt::xarray<double>> compute_two_point(itensor::MPS &psi) const;
 };
 
 #endif /* DMRG_TRANSVERSE_ISING_1D */

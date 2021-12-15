@@ -3,8 +3,8 @@
 
 #include <functional>
 #include <vector>
-
 #include <itensor/mps/autompo.h>
+#include <xtensor/xarray.hpp>
 
 #include "point_functions.hpp"
 
@@ -17,6 +17,8 @@ public:
     virtual itensor::MPS get_initial_state() const = 0;
 
     virtual std::vector<Observable> get_observables() const = 0;
+    virtual std::map<std::string, xt::xarray<double>> compute_one_point(itensor::MPS &psi) const = 0;
+    virtual std::map<std::string, xt::xarray<double>> compute_two_point(itensor::MPS &psi) const = 0;
 };
 
 struct Observable

@@ -22,8 +22,7 @@ ExternalProject_Add(
 ExternalProject_Get_property(itensor_project SOURCE_DIR)
 set(ITENSOR_SOURCE_DIR ${SOURCE_DIR})
 
-add_subdirectory(fmt)
-add_subdirectory(json)
+add_subdirectory(dependencies/fmt)
 
 find_package(fmt)
 find_package(HDF5)
@@ -37,10 +36,17 @@ add_executable(
     dmrg/util.cpp
 )
 add_dependencies(dmrg itensor_project)
-target_include_directories(dmrg SYSTEM BEFORE PUBLIC ${ITENSOR_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/highfive/include)
+target_include_directories(dmrg SYSTEM BEFORE PRIVATE
+    dependencies/highfive/include
+    dependencies/json/single_include
+    dependencies/xtensor/include
+    dependencies/xtl/include
+)
+target_include_directories(dmrg SYSTEM BEFORE PRIVATE ${ITENSOR_SOURCE_DIR})
 target_link_directories(dmrg BEFORE PUBLIC ${ITENSOR_SOURCE_DIR}/lib)
 target_link_libraries(dmrg lapack blas itensor pthread)
-target_link_libraries(dmrg fmt::fmt nlohmann_json::nlohmann_json HDF5::HDF5 Boost::boost)
+target_link_libraries(dmrg fmt::fmt HDF5::HDF5 Boost::boost)
+target_compile_definitions(dmrg PRIVATE H5_USE_XTENSOR)
 target_compile_options(dmrg PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -Wconversion -Wsign-conversion -pedantic -Werror -pedantic-errors>
 )
