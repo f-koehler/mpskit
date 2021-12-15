@@ -7,7 +7,7 @@
 
 class BoseHubbard1D : public Model
 {
-private:
+protected:
     int L;
     int N;
     double J;

@@ -7,7 +7,7 @@
 
 class TransverseIsing1D : public Model
 {
-private:
+protected:
     int L;
     double J;
     double hx;
