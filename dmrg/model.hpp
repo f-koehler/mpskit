@@ -6,16 +6,17 @@
 
 #include <itensor/mps/autompo.h>
 
+#include "point_functions.hpp"
+
 struct Observable;
-struct TwoPointCorrelation;
 
 class Model
 {
 public:
     virtual itensor::MPO get_hamiltonian() const = 0;
     virtual itensor::MPS get_initial_state() const = 0;
+
     virtual std::vector<Observable> get_observables() const = 0;
-    virtual std::vector<TwoPointCorrelation> get_two_point_correlations() const = 0;
 };
 
 struct Observable
@@ -23,12 +24,6 @@ struct Observable
     std::string name;
     itensor::MPO mpo;
     bool compute_variance = true;
-};
-
-struct TwoPointCorrelation
-{
-    std::string name;
-    itensor::MPO mpo1, mpo2;
 };
 
 #endif /* DMRG_MODEL */

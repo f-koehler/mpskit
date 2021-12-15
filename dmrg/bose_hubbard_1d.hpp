@@ -22,9 +22,7 @@ public:
     itensor::MPS get_initial_state() const;
     itensor::MPO get_hamiltonian() const;
     itensor::MPO get_particle_number_operator() const;
-    itensor::MPO get_site_occupation_operator(int j) const;
     std::vector<Observable> get_observables() const;
-    std::vector<TwoPointCorrelation> get_two_point_correlations() const;
 };
 
 #endif /* DMRG_BOSE_HUBBARD_1D */

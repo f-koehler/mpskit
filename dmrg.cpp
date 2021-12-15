@@ -9,6 +9,7 @@
 #include "dmrg/util.hpp"
 #include "dmrg/bose_hubbard_1d.hpp"
 #include "dmrg/transverse_ising_1d.hpp"
+#include "dmrg/point_functions.hpp"
 
 using namespace std::string_literals;
 
@@ -42,7 +43,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    std::map<std::string, double> expvals, variances, two_point;
+    std::map<std::string, double> expvals, variances;
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
@@ -55,16 +56,13 @@ int main(int argc, char **argv)
 
     for (const auto &observable : model->get_observables())
     {
+        std::cout << "Computing expectation value: " << observable.name << "\n";
         expvals.insert({observable.name, compute_expectation_value(psi, observable.mpo)});
         if (observable.compute_variance)
         {
+            std::cout << "Computing variance: " << observable.name << "\n";
             variances.insert({observable.name, compute_variance(psi, observable.mpo)});
         }
-    }
-
-    for (const auto &correlation : model->get_two_point_correlations())
-    {
-        two_point.insert({correlation.name, compute_two_point(psi, correlation.mpo1, correlation.mpo2)});
     }
 
     auto duration_monotonic = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) / 1e9;
@@ -80,10 +78,6 @@ int main(int argc, char **argv)
     for (const auto &[name, value] : variances)
     {
         H5Easy::dump(file, "/variances/"s + name, value);
-    }
-    for (const auto &[name, value] : two_point)
-    {
-        H5Easy::dump(file, "/two_point/"s + name, value);
     }
 
     return 0;

@@ -48,36 +48,11 @@ itensor::MPO BoseHubbard1D::get_particle_number_operator() const
     return itensor::toMPO(ampo);
 }
 
-itensor::MPO BoseHubbard1D::get_site_occupation_operator(int j) const
-{
-    auto ampo = itensor::AutoMPO(sites);
-    ampo += 1.0, "N", j;
-    return itensor::toMPO(ampo);
-}
-
 std::vector<Observable> BoseHubbard1D::get_observables() const
 {
     std::vector<Observable> observables = {
         Observable{"H", get_hamiltonian()},
         Observable{"N", get_particle_number_operator()}};
 
-    for (auto i : itensor::range1(L))
-    {
-        observables.emplace_back(Observable{fmt::format("n_{}", i), get_site_occupation_operator(i)});
-    }
-
     return observables;
-}
-
-std::vector<TwoPointCorrelation> BoseHubbard1D::get_two_point_correlations() const
-{
-    std::vector<TwoPointCorrelation> correlations;
-    for (auto i : itensor::range1(L))
-    {
-        for (auto j : itensor::range1(L))
-        {
-            correlations.emplace_back(TwoPointCorrelation{fmt::format("n_{}_n_{}", i, j), get_site_occupation_operator(i), get_site_occupation_operator(j)});
-        }
-    }
-    return correlations;
 }
