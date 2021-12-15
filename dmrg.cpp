@@ -6,6 +6,7 @@
 
 #include "dmrg/util.hpp"
 #include "dmrg/bose_hubbard_1d.hpp"
+#include "dmrg/transverse_ising_1d.hpp"
 
 int main(int argc, char **argv)
 {
@@ -26,6 +27,10 @@ int main(int argc, char **argv)
     if (model_name == "BoseHubbard1D")
     {
         model = std::unique_ptr<Model>(new BoseHubbard1D(input));
+    }
+    else if (model_name == "TransverseIsing1D")
+    {
+        model = std::unique_ptr<Model>(new TransverseIsing1D(input));
     }
     else
     {
