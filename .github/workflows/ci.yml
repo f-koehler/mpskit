@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Install boost and HDf5.
+      - name: Install boost and HDF5.
         run: |
           sudo apt-get update
           sudo apt-get install -yq libboost-all-dev libhdf5-serial-dev
