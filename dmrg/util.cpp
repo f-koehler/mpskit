@@ -1,24 +1,32 @@
 #include "util.hpp"
+#include <fmt/core.h>
+
+inline double require_real_valued(std::complex<double> x, double threshold = 1e-10)
+{
+    if (x.imag() > threshold)
+        throw std::domain_error(fmt::format("Encountered large imaginary part ({} > {})", x.imag(), threshold));
+    return x.real();
+}
 
 double compute_expectation_value(const itensor::MPS &psi, const itensor::MPO &op)
 {
-    return itensor::inner(psi, op, psi);
+    return require_real_valued(itensor::innerC(psi, op, psi));
 }
 
 double compute_expectation_value_2(const itensor::MPS &psi, const itensor::MPO &op)
 {
-    return itensor::inner(op, psi, op, psi);
+    return require_real_valued(itensor::innerC(op, psi, op, psi));
 }
 
 double compute_variance(const itensor::MPS &psi, const itensor::MPO &op)
 {
-    double exp = itensor::inner(psi, op, psi);
-    return itensor::inner(op, psi, op, psi) - (exp * exp);
+    double exp = require_real_valued(itensor::innerC(psi, op, psi));
+    return require_real_valued(itensor::innerC(op, psi, op, psi) - (exp * exp));
 }
 
 double compute_two_point(const itensor::MPS &psi, const itensor::MPO &op1, const itensor::MPO &op2)
 {
-    return itensor::inner(op1, psi, op2, psi) - (itensor::inner(psi, op1, psi) * itensor::inner(psi, op2, psi));
+    return require_real_valued(itensor::innerC(op1, psi, op2, psi) - (itensor::innerC(psi, op1, psi) * itensor::innerC(psi, op2, psi)));
 }
 
 itensor::Sweeps get_sweeps_from_json(const json &j)
