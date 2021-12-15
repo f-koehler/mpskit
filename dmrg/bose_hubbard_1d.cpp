@@ -21,7 +21,6 @@ itensor::MPO BoseHubbard1D::get_hamiltonian() const
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L - 1))
     {
-        std::cout << "### " << i << '\n';
         ampo += -J, "Adag", i, "A", i + 1;
         ampo += -J, "Adag", i + 1, "A", i;
     }
