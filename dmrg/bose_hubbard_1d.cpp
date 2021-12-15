@@ -19,8 +19,9 @@ itensor::MPS BoseHubbard1D::get_initial_state() const
 itensor::MPO BoseHubbard1D::get_hamiltonian() const
 {
     auto ampo = itensor::AutoMPO(sites);
-    for (int i = 1; i < L; ++i)
+    for (auto i : itensor::range1(L - 1))
     {
+        std::cout << "### " << i << '\n';
         ampo += -J, "Adag", i, "A", i + 1;
         ampo += -J, "Adag", i + 1, "A", i;
     }
@@ -29,7 +30,7 @@ itensor::MPO BoseHubbard1D::get_hamiltonian() const
         ampo += -J, "Adag", 1, "A", L;
         ampo += -J, "Adag", L, "A", 1;
     }
-    for (int i = 1; i <= L; ++i)
+    for (auto i : itensor::range1(L))
     {
         ampo += (U / 2.0), "N", i, "N", i;
         ampo += -(U / 2.0), "N", i;
@@ -41,7 +42,7 @@ itensor::MPO BoseHubbard1D::get_hamiltonian() const
 itensor::MPO BoseHubbard1D::get_particle_number_operator() const
 {
     auto ampo = itensor::AutoMPO(sites);
-    for (int i = 1; i <= L; ++i)
+    for (auto i : itensor::range1(L))
     {
         ampo += 1.0, "N", i;
     }
@@ -61,7 +62,7 @@ std::vector<Observable> BoseHubbard1D::get_observables() const
         Observable{"H", get_hamiltonian()},
         Observable{"N", get_particle_number_operator()}};
 
-    for (int i = 1; i < L; ++i)
+    for (auto i : itensor::range1(L))
     {
         observables.emplace_back(Observable{fmt::format("n_{}", i), get_site_occupation_operator(i)});
     }
@@ -72,9 +73,9 @@ std::vector<Observable> BoseHubbard1D::get_observables() const
 std::vector<TwoPointCorrelation> BoseHubbard1D::get_two_point_correlations() const
 {
     std::vector<TwoPointCorrelation> correlations;
-    for (int i = 1; i < L; ++i)
+    for (auto i : itensor::range1(L))
     {
-        for (int j = 1; j < L; ++j)
+        for (auto j : itensor::range1(L))
         {
             correlations.emplace_back(TwoPointCorrelation{fmt::format("n_{}_n_{}", i, j), get_site_occupation_operator(i), get_site_occupation_operator(j)});
         }
