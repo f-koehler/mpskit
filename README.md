@@ -10,3 +10,10 @@
 - Bose-Hubbard Model (1D)
   - [example input](examples/bose_hubbard_1d.json)
   - [Wikipedia](https://en.wikipedia.org/wiki/Bose%E2%80%93Hubbard_model)
+
+## Dependencies
+
+- `cmake`
+- C++17 compatible compiler
+- `boost`
+- `hdf5`

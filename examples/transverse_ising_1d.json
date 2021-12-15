@@ -1,8 +1,8 @@
 {
     "model": "TransverseIsing1D",
-    "L": 64,
+    "L": 16,
     "J": 1.0,
-    "hx": 0.0,
+    "hx": 1.0,
     "hy": 0.0,
     "hz": 0.0,
     "periodic": true,
