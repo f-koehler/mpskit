@@ -23,11 +23,11 @@ double compute_two_point(const itensor::MPS &psi, const itensor::MPO &op1, const
 
 itensor::Sweeps get_sweeps_from_json(const json &j)
 {
-    int num_sweeps = j.size();
+    int num_sweeps = static_cast<int>(j.size());
     auto sweeps = itensor::Sweeps(num_sweeps);
     for (int i = 0; i < num_sweeps; ++i)
     {
-        const auto &entry = j[i];
+        const auto &entry = j[static_cast<std::size_t>(i)];
         if (entry.contains("maxdim"))
         {
             sweeps.setmaxdim(i, entry["maxdim"].get<int>());
