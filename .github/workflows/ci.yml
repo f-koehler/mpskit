@@ -13,6 +13,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
+      - name: Install boost and HDf5.
+        run: apt install -yq libboost-dev-all libhdf5-serial-dev
       - name: CMake configure.
         run: cmake -B build
       - name: CMake build.
