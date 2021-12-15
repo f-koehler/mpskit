@@ -1,10 +1,8 @@
-#include <itensor/all.h>
-#include <itensor/util/print_macro.h>
 #include <fstream>
 #include <iostream>
-#include <iomanip>
-#include <limits>
 #include <chrono>
+#include <memory>
+#include <itensor/mps/dmrg.h>
 
 #include "dmrg/util.hpp"
 #include "dmrg/bose_hubbard_1d.hpp"
@@ -23,11 +21,11 @@ int main(int argc, char **argv)
 
     const auto sweeps = get_sweeps_from_json(input["sweeps"]);
 
-    Model *model;
+    std::unique_ptr<Model> model;
     const auto model_name = input["model"].get<std::string>();
     if (model_name == "BoseHubbard1D")
     {
-        model = new BoseHubbard1D(input);
+        model = std::unique_ptr<Model>(new BoseHubbard1D(input));
     }
     else
     {
@@ -40,6 +38,7 @@ int main(int argc, char **argv)
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
+
     const auto [energy, psi] = dmrg(hamiltonian, psi0, sweeps);
 
     json expvals, variances, two_point;
