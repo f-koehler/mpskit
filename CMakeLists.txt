@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(dmrg LANGUAGES CXX)
+project(dmrg LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O")
 
 include(ExternalProject)
 ExternalProject_Add(
@@ -23,7 +24,10 @@ set(ITENSOR_SOURCE_DIR ${SOURCE_DIR})
 
 add_subdirectory(fmt)
 add_subdirectory(json)
+
 find_package(fmt)
+find_package(HDF5)
+find_package(Boost)
 
 add_executable(
     dmrg
@@ -33,15 +37,13 @@ add_executable(
     dmrg/util.cpp
 )
 add_dependencies(dmrg itensor_project)
-target_include_directories(dmrg SYSTEM BEFORE PUBLIC ${ITENSOR_SOURCE_DIR})
+target_include_directories(dmrg SYSTEM BEFORE PUBLIC ${ITENSOR_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/highfive/include)
 target_link_directories(dmrg BEFORE PUBLIC ${ITENSOR_SOURCE_DIR}/lib)
 target_link_libraries(dmrg lapack blas itensor pthread)
-target_link_libraries(dmrg fmt::fmt)
-target_link_libraries(dmrg nlohmann_json::nlohmann_json)
+target_link_libraries(dmrg fmt::fmt nlohmann_json::nlohmann_json HDF5::HDF5 Boost::boost)
 target_compile_options(dmrg PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -Wconversion -Wsign-conversion -pedantic -Werror -pedantic-errors>
 )
-
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result OUTPUT output)
 if(result)

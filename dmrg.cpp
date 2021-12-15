@@ -3,10 +3,14 @@
 #include <chrono>
 #include <memory>
 #include <itensor/mps/dmrg.h>
+#include <highfive/H5Easy.hpp>
+#include <map>
 
 #include "dmrg/util.hpp"
 #include "dmrg/bose_hubbard_1d.hpp"
 #include "dmrg/transverse_ising_1d.hpp"
+
+using namespace std::string_literals;
 
 int main(int argc, char **argv)
 {
@@ -38,43 +42,49 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    const auto start_monotonic = std::chrono::steady_clock::now();
-    const auto start_hires = std::chrono::high_resolution_clock::now();
+    std::map<std::string, double> expvals, variances, two_point;
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
 
+    const auto start_monotonic = std::chrono::steady_clock::now();
+    const auto start_hires = std::chrono::high_resolution_clock::now();
     const auto [energy, psi] = dmrg(hamiltonian, psi0, sweeps);
-
-    json expvals, variances, two_point;
+    const auto stop_hires = std::chrono::high_resolution_clock::now();
+    const auto stop_monotonic = std::chrono::steady_clock::now();
 
     for (const auto &observable : model->get_observables())
     {
-        expvals[observable.name] = compute_expectation_value(psi, observable.mpo);
+        expvals.insert({observable.name, compute_expectation_value(psi, observable.mpo)});
         if (observable.compute_variance)
         {
-            variances[observable.name] = compute_variance(psi, observable.mpo);
+            variances.insert({observable.name, compute_variance(psi, observable.mpo)});
         }
     }
 
     for (const auto &correlation : model->get_two_point_correlations())
     {
-        two_point[correlation.name] = compute_two_point(psi, correlation.mpo1, correlation.mpo2);
+        two_point.insert({correlation.name, compute_two_point(psi, correlation.mpo1, correlation.mpo2)});
     }
 
-    const auto stop_monotonic = std::chrono::steady_clock::now();
-    const auto stop_hires = std::chrono::high_resolution_clock::now();
+    auto duration_monotonic = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) / 1e9;
+    auto duration_hires = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) / 1e9;
 
-    json data;
-    data["expvals"] = expvals;
-    data["variances"] = variances;
-    data["two_point"] = two_point;
-    data["runtime"] = {
-        {"hires", static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) / 1e9},
-        {"monotonic", static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) / 1e9}};
-
-    std::ofstream strm("results.json");
-    strm << data << '\n';
+    H5Easy::File file("results.h5", H5Easy::File::Overwrite);
+    H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
+    H5Easy::dump(file, "/runtimes/hires", duration_hires);
+    for (const auto &[name, value] : expvals)
+    {
+        H5Easy::dump(file, "/expvals/"s + name, value);
+    }
+    for (const auto &[name, value] : variances)
+    {
+        H5Easy::dump(file, "/variances/"s + name, value);
+    }
+    for (const auto &[name, value] : two_point)
+    {
+        H5Easy::dump(file, "/two_point/"s + name, value);
+    }
 
     return 0;
 }
