@@ -37,6 +37,9 @@ target_link_directories(dmrg BEFORE PUBLIC ${ITENSOR_SOURCE_DIR}/lib)
 target_link_libraries(dmrg lapack blas itensor pthread)
 target_link_libraries(dmrg fmt::fmt)
 target_link_libraries(dmrg nlohmann_json::nlohmann_json)
+target_compile_options(dmrg PRIVATE
+    $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -Wconversion -Wsign-conversion -pedantic -Werror -pedantic-errors>
+)
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result OUTPUT output)
