@@ -14,7 +14,9 @@ jobs:
         with:
           submodules: true
       - name: Install boost and HDf5.
-        run: sudo apt update && sudo apt install -yq libboost-dev-all libhdf5-serial-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install -yq libboost-all-dev libhdf5-serial-dev
       - name: CMake configure.
         run: cmake -B build
       - name: CMake build.
