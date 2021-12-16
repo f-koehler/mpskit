@@ -24,6 +24,11 @@ int main(int argc, char **argv)
     }
 
     std::ifstream istrm(argv[1]);
+    if (!istrm.is_open())
+    {
+        std::cerr << "Failed to open input file: " << argv[1] << '\n';
+        return 1;
+    }
     json input;
     istrm >> input;
 
