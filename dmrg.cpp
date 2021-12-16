@@ -5,6 +5,8 @@
 #include <itensor/mps/dmrg.h>
 #include <highfive/H5Easy.hpp>
 #include <map>
+#include <xtensor/xcomplex.hpp>
+#include <fmt/core.h>
 
 #include "dmrg/util.hpp"
 #include "dmrg/bose_hubbard_1d.hpp"
@@ -43,7 +45,7 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    std::map<std::string, double> expvals, variances;
+    std::map<std::string, Complex> expvals, variances;
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
@@ -68,29 +70,36 @@ int main(int argc, char **argv)
     const auto one_point = model->compute_one_point(psi);
     const auto two_point = model->compute_two_point(psi);
 
-    auto duration_monotonic = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) / 1e9;
-    auto duration_hires = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) / 1e9;
+    auto duration_monotonic = static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) / 1e9;
+    auto duration_hires = static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) / 1e9;
 
     H5Easy::File file("results.h5", H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
     H5Easy::dump(file, "/runtimes/hires", duration_hires);
     for (const auto &[name, value] : expvals)
     {
-        H5Easy::dump(file, "/expvals/"s + name, value);
+        H5Easy::dump(file, fmt::format("/expvals/{}/real", name), xt::real(value));
+        H5Easy::dump(file, fmt::format("/expvals/{}/imag", name), xt::imag(value));
     }
     for (const auto &[name, value] : variances)
     {
-        H5Easy::dump(file, "/variances/"s + name, value);
+        H5Easy::dump(file, fmt::format("/variances/{}/real", name), xt::real(value));
+        H5Easy::dump(file, fmt::format("/variances/{}/imag", name), xt::imag(value));
     }
 
+    // we have to create new array from the real/imaginary view on the value arrays
+    // HighFive does not support the return type of xt::real
+    // maybe its worthwile to report this issue to the HighFive library
     for (auto &[name, values] : one_point)
     {
-        H5Easy::dump(file, "/one_point/"s + name, values);
+        H5Easy::dump(file, fmt::format("/one_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
+        H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
     }
 
     for (auto &[name, values] : two_point)
     {
-        H5Easy::dump(file, "/two_point/"s + name, values);
+        H5Easy::dump(file, fmt::format("/two_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
+        H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
     }
 
     return 0;

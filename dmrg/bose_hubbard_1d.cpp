@@ -3,11 +3,11 @@
 
 using namespace std::string_literals;
 
-BoseHubbard1D::BoseHubbard1D(int L, int N, double J, double U, bool periodic) : L(L), N(N), J(J), U(U), periodic(periodic), sites(L, {"MaxOcc=", N})
+BoseHubbard1D::BoseHubbard1D(int L, int N, Real J, Real U, bool periodic) : L(L), N(N), J(J), U(U), periodic(periodic), sites(L, {"MaxOcc=", N})
 {
 }
 
-BoseHubbard1D::BoseHubbard1D(const json &j) : L(j["L"].get<int>()), N(j["N"].get<int>()), J(j["J"].get<double>()), U(j["U"].get<double>()), periodic(j["periodic"].get<bool>()), sites(L, {"MaxOcc=", N})
+BoseHubbard1D::BoseHubbard1D(const json &j) : L(j["L"].get<int>()), N(j["N"].get<int>()), J(j["J"].get<Real>()), U(j["U"].get<Real>()), periodic(j["periodic"].get<bool>()), sites(L, {"MaxOcc=", N})
 {
 }
 
@@ -59,9 +59,9 @@ std::vector<Observable> BoseHubbard1D::get_observables() const
     return observables;
 }
 
-std::map<std::string, xt::xarray<double>> BoseHubbard1D::compute_one_point(itensor::MPS &psi) const
+std::map<std::string, ComplexArray> BoseHubbard1D::compute_one_point(itensor::MPS &psi) const
 {
-    xt::xarray<double> n_i = xt::zeros<double>({L});
+    ComplexArray n_i = xt::zeros<Complex>({L});
     auto func = OnePoint{1.0, 1, "N"};
     for (auto i : itensor::range1(L))
     {
@@ -71,9 +71,9 @@ std::map<std::string, xt::xarray<double>> BoseHubbard1D::compute_one_point(itens
     return {{"n_i"s, n_i}};
 }
 
-std::map<std::string, xt::xarray<double>> BoseHubbard1D::compute_two_point(itensor::MPS &psi) const
+std::map<std::string, ComplexArray> BoseHubbard1D::compute_two_point(itensor::MPS &psi) const
 {
-    xt::xarray<double> n_i_n_j = xt::zeros<double>({L, L});
+    ComplexArray n_i_n_j = xt::zeros<Complex>({L, L});
     auto func = TwoPoint{1.0, 1, "N", 1, "N"};
     for (auto i : itensor::range1(L))
     {
