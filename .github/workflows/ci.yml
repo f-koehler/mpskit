@@ -74,8 +74,6 @@ jobs:
         run: CC=${{ matrix.toolchain.cc }} CXX=${{ matrix.toolchain.cxx }} cmake -B build
       - name: CMake build.
         run: cmake --build build
-      - name: Lint with cppcheck.
-        run: tools/cppcheck.sh
       - name: Run BoseHubbard1D.
         run: build/dmrg examples/bose_hubbard_1d.json
       - name: Run TransverseIsing1D.
