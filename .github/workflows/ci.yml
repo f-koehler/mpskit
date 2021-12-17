@@ -8,17 +8,70 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain:
+          - {
+              name: "GCC 8",
+              cc: "gcc-8",
+              cxx: "g++-8",
+              dependencies: "gcc-8 g++-8",
+            }
+          - {
+              name: "GCC 9",
+              cc: "gcc-9",
+              cxx: "g++-9",
+              dependencies: "gcc-9 g++-9",
+            }
+          - {
+              name: "GCC 10",
+              cc: "gcc-10",
+              cxx: "g++-10",
+              dependencies: "gcc-10 g++-10",
+            }
+          - {
+              name: "GCC 11",
+              cc: "gcc-11",
+              cxx: "g++-11",
+              dependencies: "gcc-11 g++-11",
+            }
+          - {
+              name: "Clang 7",
+              cc: "clang-7",
+              cxx: "clang++-7",
+              dependencies: "clang-7",
+            }
+          - {
+              name: "Clang 8",
+              cc: "clang-8",
+              cxx: "clang++-8",
+              dependencies: "clang-8",
+            }
+          - {
+              name: "Clang 9",
+              cc: "clang-9",
+              cxx: "clang++-9",
+              dependencies: "clang-9",
+            }
+          - {
+              name: "Clang 10",
+              cc: "clang-10",
+              cxx: "clang++-10",
+              dependencies: "clang-10",
+            }
     steps:
       - name: Checkout repository.
         uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Install boost and HDF5.
+      - name: Install dependencies.
         run: |
           sudo apt-get update
           sudo apt-get install -yq libboost-all-dev libhdf5-serial-dev
+      - name: Install compiler.
+        run: sudo apt-get install -yq ${{ matrix.compiler }}
       - name: CMake configure.
-        run: cmake -B build
+        run: CC=${{ matrix.toolchain.cc }} CXX=${{ matrix.toolchain.cxx }} cmake -B build
       - name: CMake build.
         run: cmake --build build
       - name: Lint with cppcheck.
