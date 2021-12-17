@@ -49,9 +49,9 @@ jobs:
             }
           - {
               name: "Clang 6",
-              cc: "clang-6",
-              cxx: "clang++-6",
-              dependencies: "clang-6",
+              cc: "clang-6.0",
+              cxx: "clang++-6.0",
+              dependencies: "clang-6.0",
               os: ubuntu-20.04,
             }
           - {
