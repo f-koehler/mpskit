@@ -11,14 +11,13 @@
 
 using namespace std::string_literals;
 
-TransverseIsing1D::TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic)
-    : L(L), J(J), hx(hx), hy(hy), hz(hz), periodic(periodic), sites(L, {"ConserveQNs=", false})
+TransverseIsing1D::TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic, bool use_paulis)
+    : SpinHalf1D(L, periodic, use_paulis), J(J), hx(hx), hy(hy), hz(hz)
 {
 }
 
 TransverseIsing1D::TransverseIsing1D(const json &j)
-    : L(j["L"].get<int>()), J(j["J"].get<Real>()), hx(j["hx"].get<Real>()), hy(j["hy"].get<Real>()),
-      hz(j["hz"].get<Real>()), periodic(j["periodic"].get<bool>()), sites(L, {"ConserveQNs=", false})
+    : SpinHalf1D(j), J(j["J"].get<Real>()), hx(j["hx"].get<Real>()), hy(j["hy"].get<Real>()), hz(j["hz"].get<Real>())
 {
 }
 
@@ -32,17 +31,17 @@ auto TransverseIsing1D::get_hamiltonian() const -> itensor::MPO
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L - 1))
     {
-        ampo += -4 * J, "Sz", i, "Sz", i + 1;
+        ampo += -get_prefactor(2) * J, "Sz", i, "Sz", i + 1;
     }
     if (periodic)
     {
-        ampo += -4 * J, "Sz", 1, "Sz", L;
+        ampo += -get_prefactor(2) * J, "Sz", 1, "Sz", L;
     }
     for (auto i : itensor::range1(L))
     {
-        ampo += -2 * hx, "Sx", i;
-        ampo += -2 * hy, "Sy", i;
-        ampo += -2 * hz, "Sz", i;
+        ampo += -get_prefactor(1) * hx, "Sx", i;
+        ampo += -get_prefactor(1) * hy, "Sy", i;
+        ampo += -get_prefactor(1) * hz, "Sz", i;
     }
 
     return itensor::toMPO(ampo);
@@ -53,7 +52,7 @@ auto TransverseIsing1D::get_total_sigma_x() const -> itensor::MPO
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L))
     {
-        ampo += 2 * hx, "Sx", i;
+        ampo += get_prefactor(1) * hx, "Sx", i;
     }
 
     return itensor::toMPO(ampo);
@@ -64,7 +63,7 @@ auto TransverseIsing1D::get_total_sigma_y() const -> itensor::MPO
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L))
     {
-        ampo += 2 * hx, "Sy", i;
+        ampo += get_prefactor(1) * hx, "Sy", i;
     }
 
     return itensor::toMPO(ampo);
@@ -75,7 +74,7 @@ auto TransverseIsing1D::get_total_sigma_z() const -> itensor::MPO
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L))
     {
-        ampo += 2 * hx, "Sz", i;
+        ampo += get_prefactor(1) * hx, "Sz", i;
     }
 
     return itensor::toMPO(ampo);
@@ -93,9 +92,9 @@ auto TransverseIsing1D::compute_one_point(itensor::MPS &psi) const -> std::map<s
     ComplexArray sx = xt::zeros<Complex>({L});
     ComplexArray sy = xt::zeros<Complex>({L});
     ComplexArray sz = xt::zeros<Complex>({L});
-    auto func_x = OnePoint{2.0, 1, "Sx"};
-    auto func_y = OnePoint{2.0, 1, "Sy"};
-    auto func_z = OnePoint{2.0, 1, "Sz"};
+    auto func_x = OnePoint{get_prefactor(1), 1, "Sx"};
+    auto func_y = OnePoint{get_prefactor(1), 1, "Sy"};
+    auto func_z = OnePoint{get_prefactor(1), 1, "Sz"};
     for (auto i : itensor::range1(L))
     {
         func_x.position = i;
@@ -112,9 +111,9 @@ auto TransverseIsing1D::compute_two_point(itensor::MPS &psi) const -> std::map<s
     ComplexArray sx_sx = xt::zeros<Complex>({L, L});
     ComplexArray sy_sy = xt::zeros<Complex>({L, L});
     ComplexArray sz_sz = xt::zeros<Complex>({L, L});
-    auto func_xx = TwoPoint{4.0, 1, "Sx", 1, "Sx"};
-    auto func_yy = TwoPoint{4.0, 1, "Sy", 1, "Sy"};
-    auto func_zz = TwoPoint{4.0, 1, "Sz", 1, "Sz"};
+    auto func_xx = TwoPoint{get_prefactor(2), 1, "Sx", 1, "Sx"};
+    auto func_yy = TwoPoint{get_prefactor(2), 1, "Sy", 1, "Sy"};
+    auto func_zz = TwoPoint{get_prefactor(2), 1, "Sz", 1, "Sz"};
     for (auto i : itensor::range1(L))
     {
         func_xx.position1 = i;

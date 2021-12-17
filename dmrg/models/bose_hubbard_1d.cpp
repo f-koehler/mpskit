@@ -18,7 +18,7 @@ BoseHubbard1D::BoseHubbard1D(int L, int N, Real J, Real U, bool periodic)
 
 BoseHubbard1D::BoseHubbard1D(const json &j)
     : L(j["L"].get<int>()), N(j["N"].get<int>()), J(j["J"].get<Real>()), U(j["U"].get<Real>()),
-      periodic(j["periodic"].get<bool>()), sites(L, {"MaxOcc=", N})
+      periodic(json_get_default<bool>(j, "periodic", true)), sites(L, {"MaxOcc=", N})
 {
 }
 

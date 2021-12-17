@@ -9,22 +9,19 @@
 #include <vector>
 
 #include "../json.hpp"
-#include "../model.hpp"
 #include "../types.hpp"
+#include "spin_half_1d.hpp"
 
-class TransverseIsing1D : public Model
+class TransverseIsing1D : public SpinHalf1D
 {
   protected:
-    int L;
     Real J;
     Real hx;
     Real hy;
     Real hz;
-    bool periodic;
-    itensor::SpinHalf sites;
 
   public:
-    explicit TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic);
+    explicit TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic, bool use_paulis = true);
     explicit TransverseIsing1D(const json &j);
 
     itensor::MPS get_initial_state() const override;

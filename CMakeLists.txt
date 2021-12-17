@@ -31,6 +31,7 @@ add_executable(
     dmrg.cpp
     dmrg/models/bose_hubbard_1d.cpp
     dmrg/models/transverse_ising_1d.cpp
+    dmrg/models/spin_half_1d.cpp
     dmrg/util.cpp
     dmrg/observer.cpp
 )
