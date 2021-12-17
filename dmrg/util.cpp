@@ -2,10 +2,8 @@
 
 #include <complex>
 #include <cstddef>
-#include <fmt/core.h>
 #include <itensor/types.h>
 #include <nlohmann/json.hpp>
-#include <stdexcept>
 
 auto compute_expectation_value(const itensor::MPS &psi, const itensor::MPO &op) -> Complex
 {

@@ -1,7 +1,6 @@
 #include "transverse_ising_1d.hpp"
 
 #include <complex>
-#include <itensor/itensor.h>
 #include <itensor/mps/autompo.h>
 #include <itensor/util/iterate.h>
 #include <nlohmann/json.hpp>
