@@ -34,6 +34,7 @@ add_executable(
     dmrg/bose_hubbard_1d.cpp
     dmrg/transverse_ising_1d.cpp
     dmrg/util.cpp
+    dmrg/observer.cpp
 )
 add_dependencies(dmrg itensor_project)
 target_include_directories(dmrg SYSTEM BEFORE PRIVATE

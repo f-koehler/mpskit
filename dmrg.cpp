@@ -12,6 +12,7 @@
 #include "dmrg/bose_hubbard_1d.hpp"
 #include "dmrg/transverse_ising_1d.hpp"
 #include "dmrg/point_functions.hpp"
+#include "dmrg/observer.hpp"
 
 using namespace std::string_literals;
 
@@ -54,10 +55,11 @@ int main(int argc, char **argv)
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
+    auto observer = Observer(psi0);
 
     const auto start_monotonic = std::chrono::steady_clock::now();
     const auto start_hires = std::chrono::high_resolution_clock::now();
-    auto [energy, psi] = dmrg(hamiltonian, psi0, sweeps);
+    auto [energy, psi] = dmrg(hamiltonian, psi0, sweeps, observer);
     const auto stop_hires = std::chrono::high_resolution_clock::now();
     const auto stop_monotonic = std::chrono::steady_clock::now();
 
@@ -81,6 +83,7 @@ int main(int argc, char **argv)
     H5Easy::File file("results.h5", H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
     H5Easy::dump(file, "/runtimes/hires", duration_hires);
+    H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
     for (const auto &[name, value] : expvals)
     {
         H5Easy::dump(file, fmt::format("/expvals/{}/real", name), xt::real(value));
