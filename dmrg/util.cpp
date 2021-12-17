@@ -7,15 +7,6 @@
 #include <nlohmann/json.hpp>
 #include <stdexcept>
 
-inline auto require_real_valued(Complex x, double threshold = 1e-10) -> Real
-{
-    if (x.imag() > threshold)
-    {
-        throw std::domain_error(fmt::format("Encountered large imaginary part ({} > {})", x.imag(), threshold));
-    }
-    return x.real();
-}
-
 auto compute_expectation_value(const itensor::MPS &psi, const itensor::MPO &op) -> Complex
 {
     return itensor::innerC(psi, op, psi);
