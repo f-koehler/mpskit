@@ -13,13 +13,6 @@ jobs:
       matrix:
         toolchain:
           - {
-              name: "GCC 7",
-              cc: "gcc-7",
-              cxx: "g++-7",
-              dependencies: "gcc-7 g++-7",
-              os: ubuntu-18.04,
-            }
-          - {
               name: "GCC 8",
               cc: "gcc-8",
               cxx: "g++-8",
