@@ -13,6 +13,8 @@ struct Observable;
 class Model
 {
 public:
+    virtual ~Model() = default;
+
     virtual itensor::MPO get_hamiltonian() const = 0;
     virtual itensor::MPS get_initial_state() const = 0;
 
