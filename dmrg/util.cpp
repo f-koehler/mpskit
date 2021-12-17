@@ -19,7 +19,7 @@ auto compute_expectation_value_2(const itensor::MPS &psi, const itensor::MPO &op
 
 auto compute_variance(const itensor::MPS &psi, const itensor::MPO &op) -> Complex
 {
-    Complex exp = require_real_valued(itensor::innerC(psi, op, psi));
+    Complex exp = itensor::innerC(psi, op, psi);
     return itensor::innerC(op, psi, op, psi) - (exp * exp);
 }
 
