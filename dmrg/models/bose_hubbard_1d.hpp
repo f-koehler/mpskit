@@ -1,5 +1,5 @@
-#ifndef DMRG_BOSE_HUBBARD_1D
-#define DMRG_BOSE_HUBBARD_1D
+#ifndef DMRG_MODELS_BOSE_HUBBARD_1D
+#define DMRG_MODELS_BOSE_HUBBARD_1D
 
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
@@ -35,4 +35,4 @@ class BoseHubbard1D : public Model
     std::map<std::string, ComplexArray> compute_two_point(itensor::MPS &psi) const override;
 };
 
-#endif /* DMRG_BOSE_HUBBARD_1D */
+#endif /* DMRG_MODELS_BOSE_HUBBARD_1D */
