@@ -13,52 +13,74 @@ jobs:
       matrix:
         toolchain:
           - {
+              name: "GCC 7",
+              cc: "gcc-7",
+              cxx: "g++-7",
+              dependencies: "gcc-7 g++-7",
+              os: ubuntu-18.04,
+            }
+          - {
               name: "GCC 8",
               cc: "gcc-8",
               cxx: "g++-8",
               dependencies: "gcc-8 g++-8",
+              os: ubuntu-20.04,
             }
           - {
               name: "GCC 9",
               cc: "gcc-9",
               cxx: "g++-9",
               dependencies: "gcc-9 g++-9",
+              os: ubuntu-20.04,
             }
           - {
               name: "GCC 10",
               cc: "gcc-10",
               cxx: "g++-10",
               dependencies: "gcc-10 g++-10",
+              os: ubuntu-20.04,
             }
           - {
               name: "GCC 11",
               cc: "gcc-11",
               cxx: "g++-11",
               dependencies: "gcc-11 g++-11",
+              os: ubuntu-20.04,
+            }
+          - {
+              name: "Clang 6",
+              cc: "clang-6",
+              cxx: "clang++-6",
+              dependencies: "clang-6",
+              os: ubuntu-20.04,
             }
           - {
               name: "Clang 7",
               cc: "clang-7",
               cxx: "clang++-7",
               dependencies: "clang-7",
+              os: ubuntu-20.04,
             }
           - {
               name: "Clang 8",
               cc: "clang-8",
               cxx: "clang++-8",
               dependencies: "clang-8",
+              os: ubuntu-20.04,
             }
           - {
               name: "Clang 9",
               cc: "clang-9",
               cxx: "clang++-9",
               dependencies: "clang-9",
+              os: ubuntu-20.04,
             }
           - {
               name: "Clang 10",
               cc: "clang-10",
               cxx: "clang++-10",
               dependencies: "clang-10",
+              os: ubuntu-20.04,
             }
     steps:
       - name: Checkout repository.
