@@ -31,6 +31,8 @@
 
 using namespace std::string_literals;
 
+constexpr Real nanoseconds_to_seconds = 1e9;
+
 auto main(int argc, char **argv) -> int
 {
     if (argc != 2)
@@ -96,9 +98,10 @@ auto main(int argc, char **argv) -> int
     auto duration_monotonic =
         static_cast<Real>(
             std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) /
-        1e9;
+        nanoseconds_to_seconds;
     auto duration_hires =
-        static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) / 1e9;
+        static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) /
+        nanoseconds_to_seconds;
 
     H5Easy::File file("results.h5", H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
