@@ -29,8 +29,8 @@ find_package(Boost)
 add_executable(
     dmrg
     dmrg.cpp
-    dmrg/bose_hubbard_1d.cpp
-    dmrg/transverse_ising_1d.cpp
+    dmrg/models/bose_hubbard_1d.cpp
+    dmrg/models/transverse_ising_1d.cpp
     dmrg/util.cpp
     dmrg/observer.cpp
 )

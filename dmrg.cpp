@@ -22,11 +22,11 @@
 #include <xtensor/xcomplex.hpp>
 #include <xtensor/xfunctor_view.hpp>
 
-#include "dmrg/bose_hubbard_1d.hpp"
 #include "dmrg/json.hpp"
 #include "dmrg/model.hpp"
+#include "dmrg/models/bose_hubbard_1d.hpp"
+#include "dmrg/models/transverse_ising_1d.hpp"
 #include "dmrg/observer.hpp"
-#include "dmrg/transverse_ising_1d.hpp"
 #include "dmrg/types.hpp"
 #include "dmrg/util.hpp"
 

@@ -1,4 +1,5 @@
 #include "bose_hubbard_1d.hpp"
+#include "../point_functions.hpp"
 
 #include <complex>
 #include <itensor/mps/autompo.h>
@@ -7,8 +8,6 @@
 #include <xtensor/xbroadcast.hpp>
 #include <xtensor/xbuilder.hpp>
 #include <xtensor/xcontainer.hpp>
-
-#include "point_functions.hpp"
 
 using namespace std::string_literals;
 

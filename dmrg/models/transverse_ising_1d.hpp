@@ -8,9 +8,9 @@
 #include <string>
 #include <vector>
 
-#include "json.hpp"
-#include "model.hpp"
-#include "types.hpp"
+#include "../json.hpp"
+#include "../model.hpp"
+#include "../types.hpp"
 
 class TransverseIsing1D : public Model
 {

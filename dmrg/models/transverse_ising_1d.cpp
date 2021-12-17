@@ -1,4 +1,5 @@
 #include "transverse_ising_1d.hpp"
+#include "../point_functions.hpp"
 
 #include <complex>
 #include <itensor/mps/autompo.h>
@@ -7,8 +8,6 @@
 #include <xtensor/xbroadcast.hpp>
 #include <xtensor/xbuilder.hpp>
 #include <xtensor/xcontainer.hpp>
-
-#include "point_functions.hpp"
 
 using namespace std::string_literals;
 
@@ -25,15 +24,6 @@ TransverseIsing1D::TransverseIsing1D(const json &j)
 
 auto TransverseIsing1D::get_initial_state() const -> itensor::MPS
 {
-    // auto state = itensor::InitState(L);
-    // for (auto i : itensor::range1(L))
-    // {
-    //     if (i % 2)
-    //         state.set(i, "Up");
-    //     else
-    //         state.set(i, "Down");
-    // }
-    // return itensor::MPS(state);
     return itensor::randomMPS(sites);
 }
 
