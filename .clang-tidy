@@ -1,0 +1,2 @@
+Checks: "clang-diagnostic-*,clang-analyzer-*,bug-prone-*,cert-*,clang-analyzer-*,cppcoreguidelines-*,misc-*,modernize-*,performance-*,portability-*,readability-*"
+FormatStyle: Microsoft

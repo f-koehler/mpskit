@@ -24,7 +24,7 @@ TransverseIsing1D::TransverseIsing1D(const json &j)
 {
 }
 
-itensor::MPS TransverseIsing1D::get_initial_state() const
+auto TransverseIsing1D::get_initial_state() const -> itensor::MPS
 {
     // auto state = itensor::InitState(L);
     // for (auto i : itensor::range1(L))
@@ -38,7 +38,7 @@ itensor::MPS TransverseIsing1D::get_initial_state() const
     return itensor::randomMPS(sites);
 }
 
-itensor::MPO TransverseIsing1D::get_hamiltonian() const
+auto TransverseIsing1D::get_hamiltonian() const -> itensor::MPO
 {
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L - 1))
@@ -59,7 +59,7 @@ itensor::MPO TransverseIsing1D::get_hamiltonian() const
     return itensor::toMPO(ampo);
 }
 
-itensor::MPO TransverseIsing1D::get_total_sigma_x() const
+auto TransverseIsing1D::get_total_sigma_x() const -> itensor::MPO
 {
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L))
@@ -70,7 +70,7 @@ itensor::MPO TransverseIsing1D::get_total_sigma_x() const
     return itensor::toMPO(ampo);
 }
 
-itensor::MPO TransverseIsing1D::get_total_sigma_y() const
+auto TransverseIsing1D::get_total_sigma_y() const -> itensor::MPO
 {
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L))
@@ -81,7 +81,7 @@ itensor::MPO TransverseIsing1D::get_total_sigma_y() const
     return itensor::toMPO(ampo);
 }
 
-itensor::MPO TransverseIsing1D::get_total_sigma_z() const
+auto TransverseIsing1D::get_total_sigma_z() const -> itensor::MPO
 {
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L))
@@ -92,14 +92,14 @@ itensor::MPO TransverseIsing1D::get_total_sigma_z() const
     return itensor::toMPO(ampo);
 }
 
-std::vector<Observable> TransverseIsing1D::get_observables() const
+auto TransverseIsing1D::get_observables() const -> std::vector<Observable>
 {
     std::vector<Observable> observables = {Observable{"H", get_hamiltonian()}, Observable{"X", get_total_sigma_x()},
                                            Observable{"Y", get_total_sigma_y()}, Observable{"Z", get_total_sigma_z()}};
     return observables;
 }
 
-std::map<std::string, ComplexArray> TransverseIsing1D::compute_one_point(itensor::MPS &psi) const
+auto TransverseIsing1D::compute_one_point(itensor::MPS &psi) const -> std::map<std::string, ComplexArray>
 {
     ComplexArray sx = xt::zeros<Complex>({L});
     ComplexArray sy = xt::zeros<Complex>({L});
@@ -118,7 +118,7 @@ std::map<std::string, ComplexArray> TransverseIsing1D::compute_one_point(itensor
     }
     return {{"sx"s, sx}, {"sy"s, sy}, {"sz"s, sz}};
 }
-std::map<std::string, ComplexArray> TransverseIsing1D::compute_two_point(itensor::MPS &psi) const
+auto TransverseIsing1D::compute_two_point(itensor::MPS &psi) const -> std::map<std::string, ComplexArray>
 {
     ComplexArray sx_sx = xt::zeros<Complex>({L, L});
     ComplexArray sy_sy = xt::zeros<Complex>({L, L});

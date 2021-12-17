@@ -6,7 +6,7 @@ Observer::Observer(const itensor::MPS &psi, const itensor::Args &args) : itensor
 {
 }
 
-bool Observer::checkDone(const itensor::Args &args)
+auto Observer::checkDone(const itensor::Args &args) -> bool
 {
     const auto energy = args.getReal("Energy", 0.0);
     auto retval = DMRGObserver::checkDone(args);
@@ -14,7 +14,7 @@ bool Observer::checkDone(const itensor::Args &args)
     return retval;
 }
 
-const std::vector<double> &Observer::getEnergies() const
+auto Observer::getEnergies() const -> const std::vector<double> &
 {
     return m_energies;
 }

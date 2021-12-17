@@ -31,7 +31,7 @@
 
 using namespace std::string_literals;
 
-int main(int argc, char **argv)
+auto main(int argc, char **argv) -> int
 {
     if (argc != 2)
     {
@@ -66,7 +66,8 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    std::map<std::string, Complex> expvals, variances;
+    std::map<std::string, Complex> expvals;
+    std::map<std::string, Complex> variances;
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
@@ -117,13 +118,13 @@ int main(int argc, char **argv)
     // we have to create new array from the real/imaginary view on the value arrays
     // HighFive does not support the return type of xt::real
     // maybe its worthwile to report this issue to the HighFive library
-    for (auto &[name, values] : one_point)
+    for (const auto &[name, values] : one_point)
     {
         H5Easy::dump(file, fmt::format("/one_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
         H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
     }
 
-    for (auto &[name, values] : two_point)
+    for (const auto &[name, values] : two_point)
     {
         H5Easy::dump(file, fmt::format("/two_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
         H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));

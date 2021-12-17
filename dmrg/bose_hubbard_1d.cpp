@@ -24,14 +24,14 @@ BoseHubbard1D::BoseHubbard1D(const json &j)
 {
 }
 
-itensor::MPS BoseHubbard1D::get_initial_state() const
+auto BoseHubbard1D::get_initial_state() const -> itensor::MPS
 {
     auto state = itensor::InitState(sites);
     state.set(1, std::to_string(N));
     return itensor::randomMPS(state);
 }
 
-itensor::MPO BoseHubbard1D::get_hamiltonian() const
+auto BoseHubbard1D::get_hamiltonian() const -> itensor::MPO
 {
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L - 1))
@@ -53,7 +53,7 @@ itensor::MPO BoseHubbard1D::get_hamiltonian() const
     return itensor::toMPO(ampo);
 }
 
-itensor::MPO BoseHubbard1D::get_particle_number_operator() const
+auto BoseHubbard1D::get_particle_number_operator() const -> itensor::MPO
 {
     auto ampo = itensor::AutoMPO(sites);
     for (auto i : itensor::range1(L))
@@ -63,7 +63,7 @@ itensor::MPO BoseHubbard1D::get_particle_number_operator() const
     return itensor::toMPO(ampo);
 }
 
-std::vector<Observable> BoseHubbard1D::get_observables() const
+auto BoseHubbard1D::get_observables() const -> std::vector<Observable>
 {
     std::vector<Observable> observables = {Observable{"H", get_hamiltonian()},
                                            Observable{"N", get_particle_number_operator()}};
@@ -71,7 +71,7 @@ std::vector<Observable> BoseHubbard1D::get_observables() const
     return observables;
 }
 
-std::map<std::string, ComplexArray> BoseHubbard1D::compute_one_point(itensor::MPS &psi) const
+auto BoseHubbard1D::compute_one_point(itensor::MPS &psi) const -> std::map<std::string, ComplexArray>
 {
     ComplexArray n_i = xt::zeros<Complex>({L});
     auto func = OnePoint{1.0, 1, "N"};
@@ -80,10 +80,10 @@ std::map<std::string, ComplexArray> BoseHubbard1D::compute_one_point(itensor::MP
         func.position = i;
         n_i(i - 1) = ::compute_one_point(psi, sites, func);
     }
-    return {{"n_i" s, n_i}};
+    return {{"n_i"s, n_i}};
 }
 
-std::map<std::string, ComplexArray> BoseHubbard1D::compute_two_point(itensor::MPS &psi) const
+auto BoseHubbard1D::compute_two_point(itensor::MPS &psi) const -> std::map<std::string, ComplexArray>
 {
     ComplexArray n_i_n_j = xt::zeros<Complex>({L, L});
     auto func = TwoPoint{1.0, 1, "N", 1, "N"};
@@ -96,5 +96,5 @@ std::map<std::string, ComplexArray> BoseHubbard1D::compute_two_point(itensor::MP
             n_i_n_j(i - 1, j - 1) = ::compute_two_point(psi, sites, func);
         }
     }
-    return {{"n_i_n_j" s, n_i_n_j}};
+    return {{"n_i_n_j"s, n_i_n_j}};
 }
