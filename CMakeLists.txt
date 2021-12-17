@@ -23,9 +23,6 @@ ExternalProject_Add(
 ExternalProject_Get_property(itensor_project SOURCE_DIR)
 set(ITENSOR_SOURCE_DIR ${SOURCE_DIR})
 
-add_subdirectory(dependencies/fmt)
-
-find_package(fmt)
 find_package(HDF5)
 find_package(Boost)
 
@@ -43,12 +40,13 @@ target_include_directories(dmrg SYSTEM BEFORE PRIVATE
     dependencies/json/single_include
     dependencies/xtensor/include
     dependencies/xtl/include
+    dependencies/fmt/include
 )
 target_include_directories(dmrg SYSTEM BEFORE PRIVATE ${ITENSOR_SOURCE_DIR})
 target_link_directories(dmrg BEFORE PUBLIC ${ITENSOR_SOURCE_DIR}/lib)
 target_link_libraries(dmrg lapack blas itensor pthread)
-target_link_libraries(dmrg fmt::fmt HDF5::HDF5 Boost::boost)
-target_compile_definitions(dmrg PRIVATE H5_USE_XTENSOR)
+target_link_libraries(dmrg HDF5::HDF5 Boost::boost)
+target_compile_definitions(dmrg PRIVATE H5_USE_XTENSOR FMT_HEADER_ONLY)
 target_compile_options(dmrg PRIVATE
     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -Wconversion -Wsign-conversion -pedantic -Werror -pedantic-errors>
 )

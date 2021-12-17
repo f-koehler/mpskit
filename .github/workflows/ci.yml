@@ -16,11 +16,13 @@ jobs:
       - name: Install boost and HDF5.
         run: |
           sudo apt-get update
-          sudo apt-get install -yq libboost-all-dev libhdf5-serial-dev
+          sudo apt-get install -yq libboost-all-dev libhdf5-serial-dev cppcheck
       - name: CMake configure.
         run: cmake -B build
       - name: CMake build.
         run: cmake --build build
+      - name: Lint with cppcheck.
+        run: tools/cppcheck.sh
       - name: Run BoseHubbard1D.
         run: build/dmrg examples/bose_hubbard_1d.json
       - name: Run TransverseIsing1D.

@@ -24,19 +24,19 @@ protected:
     itensor::SpinHalf sites;
 
 public:
-    TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic);
-    TransverseIsing1D(const json &j);
+    explicit TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic);
+    explicit TransverseIsing1D(const json &j);
 
-    itensor::MPS get_initial_state() const;
-    itensor::MPO get_hamiltonian() const;
+    itensor::MPS get_initial_state() const override;
+    itensor::MPO get_hamiltonian() const override;
 
     itensor::MPO get_total_sigma_x() const;
     itensor::MPO get_total_sigma_y() const;
     itensor::MPO get_total_sigma_z() const;
 
-    std::vector<Observable> get_observables() const;
-    std::map<std::string, ComplexArray> compute_one_point(itensor::MPS &psi) const;
-    std::map<std::string, ComplexArray> compute_two_point(itensor::MPS &psi) const;
+    std::vector<Observable> get_observables() const override;
+    std::map<std::string, ComplexArray> compute_one_point(itensor::MPS &psi) const override;
+    std::map<std::string, ComplexArray> compute_two_point(itensor::MPS &psi) const override;
 };
 
 #endif /* DMRG_TRANSVERSE_ISING_1D */

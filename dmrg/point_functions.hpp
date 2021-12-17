@@ -2,6 +2,8 @@
 #define DMRG_POINT_FUNCTIONS
 
 #include "types.hpp"
+#include <itensor/itensor.h>
+#include <itensor/mps/mps.h>
 
 struct OnePoint
 {
