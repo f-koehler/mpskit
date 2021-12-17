@@ -1,10 +1,10 @@
 #include "util.hpp"
 
+#include <complex>
+#include <cstddef>
 #include <fmt/core.h>
 #include <itensor/types.h>
 #include <nlohmann/json.hpp>
-#include <complex>
-#include <cstddef>
 #include <stdexcept>
 
 inline Real require_real_valued(Complex x, double threshold = 1e-10)

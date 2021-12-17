@@ -1,20 +1,20 @@
 #ifndef DMRG_BOSE_HUBBARD_1D
 #define DMRG_BOSE_HUBBARD_1D
 
-#include <itensor/mps/sites/boson.h>
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
+#include <itensor/mps/sites/boson.h>
 #include <map>
 #include <string>
 #include <vector>
 
-#include "model.hpp"
 #include "json.hpp"
+#include "model.hpp"
 #include "types.hpp"
 
 class BoseHubbard1D : public Model
 {
-protected:
+  protected:
     int L;
     int N;
     Real J;
@@ -22,7 +22,7 @@ protected:
     bool periodic;
     itensor::Boson sites;
 
-public:
+  public:
     explicit BoseHubbard1D(int L, int N, Real J, Real U, bool periodic);
     explicit BoseHubbard1D(const json &j);
 

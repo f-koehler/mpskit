@@ -1,5 +1,6 @@
 #include "bose_hubbard_1d.hpp"
 
+#include <complex>
 #include <itensor/itensor.h>
 #include <itensor/mps/autompo.h>
 #include <itensor/util/iterate.h>
@@ -7,17 +8,19 @@
 #include <xtensor/xbroadcast.hpp>
 #include <xtensor/xbuilder.hpp>
 #include <xtensor/xcontainer.hpp>
-#include <complex>
 
 #include "point_functions.hpp"
 
 using namespace std::string_literals;
 
-BoseHubbard1D::BoseHubbard1D(int L, int N, Real J, Real U, bool periodic) : L(L), N(N), J(J), U(U), periodic(periodic), sites(L, {"MaxOcc=", N})
+BoseHubbard1D::BoseHubbard1D(int L, int N, Real J, Real U, bool periodic)
+    : L(L), N(N), J(J), U(U), periodic(periodic), sites(L, {"MaxOcc=", N})
 {
 }
 
-BoseHubbard1D::BoseHubbard1D(const json &j) : L(j["L"].get<int>()), N(j["N"].get<int>()), J(j["J"].get<Real>()), U(j["U"].get<Real>()), periodic(j["periodic"].get<bool>()), sites(L, {"MaxOcc=", N})
+BoseHubbard1D::BoseHubbard1D(const json &j)
+    : L(j["L"].get<int>()), N(j["N"].get<int>()), J(j["J"].get<Real>()), U(j["U"].get<Real>()),
+      periodic(j["periodic"].get<bool>()), sites(L, {"MaxOcc=", N})
 {
 }
 
@@ -62,9 +65,8 @@ itensor::MPO BoseHubbard1D::get_particle_number_operator() const
 
 std::vector<Observable> BoseHubbard1D::get_observables() const
 {
-    std::vector<Observable> observables = {
-        Observable{"H", get_hamiltonian()},
-        Observable{"N", get_particle_number_operator()}};
+    std::vector<Observable> observables = {Observable{"H", get_hamiltonian()},
+                                           Observable{"N", get_particle_number_operator()}};
 
     return observables;
 }
@@ -78,7 +80,7 @@ std::map<std::string, ComplexArray> BoseHubbard1D::compute_one_point(itensor::MP
         func.position = i;
         n_i(i - 1) = ::compute_one_point(psi, sites, func);
     }
-    return {{"n_i"s, n_i}};
+    return {{"n_i" s, n_i}};
 }
 
 std::map<std::string, ComplexArray> BoseHubbard1D::compute_two_point(itensor::MPS &psi) const
@@ -94,5 +96,5 @@ std::map<std::string, ComplexArray> BoseHubbard1D::compute_two_point(itensor::MP
             n_i_n_j(i - 1, j - 1) = ::compute_two_point(psi, sites, func);
         }
     }
-    return {{"n_i_n_j"s, n_i_n_j}};
+    return {{"n_i_n_j" s, n_i_n_j}};
 }

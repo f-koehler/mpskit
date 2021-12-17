@@ -1,9 +1,9 @@
 #ifndef DMRG_TRANSVERSE_ISING_1D
 #define DMRG_TRANSVERSE_ISING_1D
 
-#include <itensor/mps/sites/spinhalf.h>
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
+#include <itensor/mps/sites/spinhalf.h>
 #include <map>
 #include <string>
 #include <vector>
@@ -14,7 +14,7 @@
 
 class TransverseIsing1D : public Model
 {
-protected:
+  protected:
     int L;
     Real J;
     Real hx;
@@ -23,7 +23,7 @@ protected:
     bool periodic;
     itensor::SpinHalf sites;
 
-public:
+  public:
     explicit TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic);
     explicit TransverseIsing1D(const json &j);
 

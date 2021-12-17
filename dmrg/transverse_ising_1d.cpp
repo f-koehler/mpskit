@@ -1,5 +1,6 @@
 #include "transverse_ising_1d.hpp"
 
+#include <complex>
 #include <itensor/itensor.h>
 #include <itensor/mps/autompo.h>
 #include <itensor/util/iterate.h>
@@ -7,17 +8,19 @@
 #include <xtensor/xbroadcast.hpp>
 #include <xtensor/xbuilder.hpp>
 #include <xtensor/xcontainer.hpp>
-#include <complex>
 
 #include "point_functions.hpp"
 
 using namespace std::string_literals;
 
-TransverseIsing1D::TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic) : L(L), J(J), hx(hx), hy(hy), hz(hz), periodic(periodic), sites(L, {"ConserveQNs=", false})
+TransverseIsing1D::TransverseIsing1D(int L, Real J, Real hx, Real hy, Real hz, bool periodic)
+    : L(L), J(J), hx(hx), hy(hy), hz(hz), periodic(periodic), sites(L, {"ConserveQNs=", false})
 {
 }
 
-TransverseIsing1D::TransverseIsing1D(const json &j) : L(j["L"].get<int>()), J(j["J"].get<Real>()), hx(j["hx"].get<Real>()), hy(j["hy"].get<Real>()), hz(j["hz"].get<Real>()), periodic(j["periodic"].get<bool>()), sites(L, {"ConserveQNs=", false})
+TransverseIsing1D::TransverseIsing1D(const json &j)
+    : L(j["L"].get<int>()), J(j["J"].get<Real>()), hx(j["hx"].get<Real>()), hy(j["hy"].get<Real>()),
+      hz(j["hz"].get<Real>()), periodic(j["periodic"].get<bool>()), sites(L, {"ConserveQNs=", false})
 {
 }
 
@@ -91,11 +94,8 @@ itensor::MPO TransverseIsing1D::get_total_sigma_z() const
 
 std::vector<Observable> TransverseIsing1D::get_observables() const
 {
-    std::vector<Observable> observables = {
-        Observable{"H", get_hamiltonian()},
-        Observable{"X", get_total_sigma_x()},
-        Observable{"Y", get_total_sigma_y()},
-        Observable{"Z", get_total_sigma_z()}};
+    std::vector<Observable> observables = {Observable{"H", get_hamiltonian()}, Observable{"X", get_total_sigma_x()},
+                                           Observable{"Y", get_total_sigma_y()}, Observable{"Z", get_total_sigma_z()}};
     return observables;
 }
 

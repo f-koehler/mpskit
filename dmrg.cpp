@@ -1,5 +1,5 @@
-#include <itensor/mps/dmrg.h>
-#include <xtensor/xcomplex.hpp>
+#include <array>
+#include <chrono>
 #include <fmt/core.h>
 #include <highfive/H5DataSet.hpp>
 #include <highfive/H5File.hpp>
@@ -10,24 +10,24 @@
 #include <highfive/bits/H5PropertyList_misc.hpp>
 #include <highfive/bits/H5Slice_traits_misc.hpp>
 #include <highfive/h5easy_bits/H5Easy_public.hpp>
-#include <nlohmann/json.hpp>
-#include <xtensor/xfunctor_view.hpp>
-#include <iostream>
-#include <chrono>
-#include <memory>
-#include <map>
-#include <array>
 #include <initializer_list>
+#include <iostream>
+#include <itensor/mps/dmrg.h>
+#include <map>
+#include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
 #include <vector>
+#include <xtensor/xcomplex.hpp>
+#include <xtensor/xfunctor_view.hpp>
 
-#include "dmrg/util.hpp"
 #include "dmrg/bose_hubbard_1d.hpp"
-#include "dmrg/transverse_ising_1d.hpp"
-#include "dmrg/observer.hpp"
 #include "dmrg/json.hpp"
 #include "dmrg/model.hpp"
+#include "dmrg/observer.hpp"
+#include "dmrg/transverse_ising_1d.hpp"
 #include "dmrg/types.hpp"
+#include "dmrg/util.hpp"
 
 using namespace std::string_literals;
 
@@ -92,8 +92,12 @@ int main(int argc, char **argv)
     const auto one_point = model->compute_one_point(psi);
     const auto two_point = model->compute_two_point(psi);
 
-    auto duration_monotonic = static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) / 1e9;
-    auto duration_hires = static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) / 1e9;
+    auto duration_monotonic =
+        static_cast<Real>(
+            std::chrono::duration_cast<std::chrono::nanoseconds>(stop_monotonic - start_monotonic).count()) /
+        1e9;
+    auto duration_hires =
+        static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) / 1e9;
 
     H5Easy::File file("results.h5", H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);

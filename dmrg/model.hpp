@@ -2,8 +2,8 @@
 #define DMRG_MODEL
 
 #include <functional>
-#include <vector>
 #include <itensor/mps/autompo.h>
+#include <vector>
 #include <xtensor/xarray.hpp>
 
 #include "point_functions.hpp"
@@ -12,7 +12,7 @@ struct Observable;
 
 class Model
 {
-public:
+  public:
     virtual ~Model() = default;
 
     virtual itensor::MPO get_hamiltonian() const = 0;
