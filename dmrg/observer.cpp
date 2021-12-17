@@ -1,5 +1,7 @@
 #include "observer.hpp"
 
+#include <algorithm>
+
 Observer::Observer(const itensor::MPS &psi, const itensor::Args &args) : itensor::DMRGObserver(psi, args)
 {
 }

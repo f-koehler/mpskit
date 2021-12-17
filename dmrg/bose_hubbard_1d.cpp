@@ -1,5 +1,15 @@
 #include "bose_hubbard_1d.hpp"
-#include <fmt/core.h>
+
+#include <itensor/itensor.h>
+#include <itensor/mps/autompo.h>
+#include <itensor/util/iterate.h>
+#include <nlohmann/json.hpp>
+#include <xtensor/xbroadcast.hpp>
+#include <xtensor/xbuilder.hpp>
+#include <xtensor/xcontainer.hpp>
+#include <complex>
+
+#include "point_functions.hpp"
 
 using namespace std::string_literals;
 

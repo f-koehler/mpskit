@@ -1,9 +1,16 @@
 #ifndef DMRG_TRANSVERSE_ISING_1D
 #define DMRG_TRANSVERSE_ISING_1D
 
+#include <itensor/mps/sites/spinhalf.h>
+#include <itensor/mps/mpo.h>
+#include <itensor/mps/mps.h>
+#include <map>
+#include <string>
+#include <vector>
+
 #include "json.hpp"
 #include "model.hpp"
-#include <itensor/mps/sites/spinhalf.h>
+#include "types.hpp"
 
 class TransverseIsing1D : public Model
 {

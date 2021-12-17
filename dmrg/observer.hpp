@@ -1,8 +1,10 @@
 #ifndef DMRG_OBSERVER
 #define DMRG_OBSERVER
 
-#include <vector>
 #include <itensor/mps/DMRGObserver.h>
+#include <itensor/mps/mps.h>
+#include <itensor/util/args.h>
+#include <vector>
 
 class Observer : public itensor::DMRGObserver
 {
