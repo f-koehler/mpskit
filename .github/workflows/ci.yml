@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    name: ${{ matrix.toolchain.name }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -69,7 +70,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -yq libboost-all-dev libhdf5-serial-dev
       - name: Install compiler.
-        run: sudo apt-get install -yq ${{ matrix.compiler }}
+        run: sudo apt-get install -yq ${{ matrix.toolchain.dependencies }}
       - name: CMake configure.
         run: CC=${{ matrix.toolchain.cc }} CXX=${{ matrix.toolchain.cxx }} cmake -B build
       - name: CMake build.
