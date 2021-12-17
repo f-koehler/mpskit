@@ -14,6 +14,6 @@
 ## Dependencies
 
 - `cmake`
-- C++17 compatible compiler
+- `gcc>=8` or `clang>=6`
 - `boost`
 - `hdf5`
