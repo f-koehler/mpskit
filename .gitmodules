@@ -13,3 +13,6 @@
 [submodule "dependencies/xtensor"]
 	path = dependencies/xtensor
 	url = https://github.com/xtensor-stack/xtensor.git
+[submodule "dependencies/CLI11"]
+	path = dependencies/CLI11
+	url = https://github.com/CLIUtils/CLI11.git

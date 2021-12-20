@@ -42,6 +42,7 @@ target_include_directories(dmrg SYSTEM BEFORE PRIVATE
     dependencies/xtensor/include
     dependencies/xtl/include
     dependencies/fmt/include
+    dependencies/CLI11/include
 )
 target_include_directories(dmrg SYSTEM BEFORE PRIVATE ${ITENSOR_SOURCE_DIR})
 target_link_directories(dmrg BEFORE PUBLIC ${ITENSOR_SOURCE_DIR}/lib)

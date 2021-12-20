@@ -1,3 +1,4 @@
+#include <CLI/CLI.hpp>
 #include <algorithm>
 #include <array>
 #include <chrono>
@@ -36,16 +37,17 @@ constexpr Real nanoseconds_to_seconds = 1e9;
 
 auto main(int argc, char **argv) -> int
 {
-    if (argc != 2)
-    {
-        std::cerr << "usage: dmrg input_file\n";
-        return 1;
-    }
+    CLI::App app{"Calculate groundstates using DMRG"};
+    std::string input_file;
+    std::string psi_file;
+    app.add_option("-f,--file", input_file, "Input file specifying the model and it's parameters.")->required();
+    app.add_option("--psi", psi_file, "File to write the final matrix-product state to.");
+    CLI11_PARSE(app, argc, argv);
 
-    std::ifstream istrm(argv[1]);
+    std::ifstream istrm(input_file);
     if (!istrm.is_open())
     {
-        std::cerr << "Failed to open input file: " << argv[1] << '\n';
+        std::cerr << "Failed to open input file: " << input_file << '\n';
         return 1;
     }
     json input;
@@ -132,6 +134,11 @@ auto main(int argc, char **argv) -> int
     {
         H5Easy::dump(file, fmt::format("/two_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
         H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
+    }
+
+    if (app.count("--psi"))
+    {
+        itensor::writeToFile(psi_file, psi);
     }
 
     return 0;
