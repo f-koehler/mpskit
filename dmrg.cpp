@@ -39,9 +39,12 @@ auto main(int argc, char **argv) -> int
 {
     CLI::App app{"Calculate groundstates using DMRG"};
     std::string input_file;
+    std::string output_file;
     std::string psi_file;
     app.add_option("-f,--file", input_file, "Input file specifying the model and it's parameters.")->required();
-    app.add_option("--psi", psi_file, "File to write the final matrix-product state to.");
+    app.add_option("-o,--output", output_file, "File to write the results to.")->required();
+    app.add_option("--psi", psi_file,
+                   "File to write the final matrix-product state to, can be used as input for TEBD.");
     CLI11_PARSE(app, argc, argv);
 
     std::ifstream istrm(input_file);
@@ -106,7 +109,7 @@ auto main(int argc, char **argv) -> int
         static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) /
         nanoseconds_to_seconds;
 
-    H5Easy::File file("results.h5", H5Easy::File::Overwrite);
+    H5Easy::File file(output_file, H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
     H5Easy::dump(file, "/runtimes/hires", duration_hires);
     H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
