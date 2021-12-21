@@ -18,6 +18,53 @@ endif()
 find_package(HDF5 REQUIRED)
 find_package(Boost REQUIRED)
 find_package(LAPACK REQUIRED)
+find_package(Threads REQUIRED)
+
+message(STATUS "BLAS/LAPACK vendor: ${BLA_VENDOR}")
+
+macro(dmrg_compile_options target)
+    target_compile_options(itensor PRIVATE $<$<CXX_COMPILER_ID:GNU>:-fconcepts>)
+    target_compile_definitions(${target} PRIVATE H5_USE_XTENSOR)
+    target_compile_definitions(${target} PRIVATE FMT_HEADER_ONLY)
+    if (${BLA_VENDOR} MATCHES "Intel" OR "mkl")
+        target_compile_definitions(${target} PRIVATE -DPLATFORM_mkl)
+    elseif(${BLA_VENDOR} MATCHES ACML)
+        target_compile_definitions(${target} PRIVATE -DPLATFORM_mkl)
+    elseif(${BLA_VENDOR} MATCHES Apple)
+        target_compile_definitions(${target} PRIVATE -DPLATFORM_macos)
+    else()
+        target_compile_definitions(${target} PRIVATE -DPLATFORM_lapack)
+    endif()
+    if(IPO_SUPPORTED)
+        set_property(TARGET ${target} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+    endif()
+endmacro()
+
+macro(dmrg_enable_warnings target)
+    target_compile_options(${target} PRIVATE
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -Wconversion -Wsign-conversion -pedantic -Werror -pedantic-errors>
+    )
+endmacro()
+
+macro(dmrg_include_directories target)
+    target_include_directories(${target} SYSTEM BEFORE PRIVATE
+        dependencies/CLI11/include
+        dependencies/fmt/include
+        dependencies/highfive/include
+        dependencies/json/include
+        dependencies/xtensor/include
+        dependencies/xtl/include
+        dependencies/itensor
+        ${CMAKE_CURRENT_BINARY_DIR}
+    )
+endmacro()
+
+macro(dmrg_link_libraries target)
+    target_link_libraries(${target} PRIVATE LAPACK::LAPACK)
+    target_link_libraries(${target} PRIVATE Threads::Threads)
+    target_link_libraries(${target} PRIVATE HDF5::HDF5)
+    target_link_libraries(${target} PRIVATE Boost::boost)
+endmacro()
 
 configure_file(itensor_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/itensor/config.h COPYONLY)
 add_library(itensor STATIC
@@ -54,45 +101,9 @@ add_library(itensor STATIC
     dependencies/itensor/itensor/util/cputime.cc
     dependencies/itensor/itensor/util/input.cc
 )
-target_include_directories(itensor SYSTEM BEFORE PRIVATE dependencies/itensor ${CMAKE_CURRENT_BINARY_DIR})
-target_compile_options(itensor PRIVATE $<$<CXX_COMPILER_ID:GNU>:-fconcepts>)
-if(IPO_SUPPORTED)
-    set_property(TARGET itensor PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-endif()
-if (${BLA_VENDOR} MATCHES "Intel" OR "mkl")
-    add_definitions(-DPLATFORM_mkl)
-elseif(${BLA_VENDOR} MATCHES ACML)
-    add_definitions(-PLATFORM_mkl)
-elseif(${BLA_VENDOR} MATCHES Apple)
-    add_definitions(-DPLATFORM_macos)
-else()
-    add_definitions(-DPLATFORM_lapack)
-endif()
-target_link_libraries(LAPACK::LAPACK)
-
-macro(configure_dmrg_binary target)
-    target_include_directories(${target} SYSTEM BEFORE PRIVATE
-        dependencies/CLI11/include
-        dependencies/fmt/include
-        dependencies/highfive/include
-        dependencies/json/include
-        dependencies/xtensor/include
-        dependencies/xtl/include
-        dependencies/itensor
-        ${CMAKE_CURRENT_BINARY_DIR}
-    )
-    target_link_libraries(${target} PRIVATE lapack blas itensor pthread)
-    target_link_libraries(${target} PRIVATE HDF5::HDF5 Boost::boost)
-
-    target_compile_definitions(${target} PRIVATE H5_USE_XTENSOR FMT_HEADER_ONLY)
-    target_compile_options(${target} PRIVATE
-        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -Wconversion -Wsign-conversion -pedantic -Werror -pedantic-errors>
-    )
-
-    if(IPO_SUPPORTED)
-        set_property(TARGET ${target} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-    endif()
-endmacro()
+dmrg_compile_options(itensor)
+dmrg_include_directories(itensor)
+dmrg_link_libraries(itensor)
 
 add_library(dmrg_common STATIC
     dmrg/models/bose_hubbard_1d.cpp
@@ -101,12 +112,20 @@ add_library(dmrg_common STATIC
     dmrg/util.cpp
     dmrg/observer.cpp
 )
-configure_dmrg_binary(dmrg_common)
+dmrg_compile_options(dmrg_common)
+dmrg_enable_warnings(dmrg_common)
+dmrg_include_directories(dmrg_common)
+dmrg_link_libraries(dmrg_common)
+target_link_libraries(dmrg_common PRIVATE itensor)
 
 
 add_executable(
     dmrg
     dmrg.cpp
 )
-configure_dmrg_binary(dmrg)
+dmrg_compile_options(dmrg)
+dmrg_enable_warnings(dmrg)
+dmrg_include_directories(dmrg)
+dmrg_link_libraries(dmrg)
+target_link_libraries(dmrg PRIVATE itensor)
 target_link_libraries(dmrg PRIVATE dmrg_common)
