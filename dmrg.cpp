@@ -44,7 +44,7 @@ auto main(int argc, char **argv) -> int
     app.add_option("-f,--file", input_file, "Input file specifying the model and it's parameters.")->required();
     app.add_option("-o,--output", output_file, "File to write the results to.")->required();
     app.add_option("--psi", psi_file,
-                   "File to write the final matrix-product state to, can be used as input for TEBD.");
+                   "File to write the final matrix product state to, can be used as input for TEBD.");
     CLI11_PARSE(app, argc, argv);
 
     std::ifstream istrm(input_file);
