@@ -15,22 +15,60 @@ if(NOT result)
     message(WARNING "IPO is not supported: ${output}")
 endif()
 
-include(ExternalProject)
-ExternalProject_Add(
-    itensor_project
-    GIT_REPOSITORY https://github.com/ITensor/ITensor.git
-    GIT_TAG v3.1.10
-    PATCH_COMMAND cp ${CMAKE_SOURCE_DIR}/options.mk <SOURCE_DIR>
-    CONFIGURE_COMMAND ""
-    # BUILD_COMMAND make
-    BUILD_IN_SOURCE ON
-    INSTALL_COMMAND ""
-)
-ExternalProject_Get_property(itensor_project SOURCE_DIR)
-set(ITENSOR_SOURCE_DIR ${SOURCE_DIR})
+find_package(HDF5 REQUIRED)
+find_package(Boost REQUIRED)
+find_package(LAPACK REQUIRED)
 
-find_package(HDF5)
-find_package(Boost)
+configure_file(itensor_config.h.in ${CMAKE_CURRENT_BINARY_DIR}/itensor/config.h COPYONLY)
+add_library(itensor STATIC
+    dependencies/itensor/itensor/decomp.cc
+    dependencies/itensor/itensor/global.cc
+    dependencies/itensor/itensor/hermitian.cc
+    dependencies/itensor/itensor/index.cc
+    dependencies/itensor/itensor/indexset.cc
+    dependencies/itensor/itensor/itensor.cc
+    dependencies/itensor/itensor/qn.cc
+    dependencies/itensor/itensor/spectrum.cc
+    dependencies/itensor/itensor/svd.cc
+    dependencies/itensor/itensor/tagset.cc
+    dependencies/itensor/itensor/itdata/combiner.cc
+    dependencies/itensor/itensor/itdata/dense.cc
+    dependencies/itensor/itensor/itdata/diag.cc
+    # dependencies/itensor/itensor/itdata/itlazy.cc
+    dependencies/itensor/itensor/itdata/qcombiner.cc
+    dependencies/itensor/itensor/itdata/qdense.cc
+    dependencies/itensor/itensor/itdata/qdiag.cc
+    dependencies/itensor/itensor/itdata/scalar.cc
+    dependencies/itensor/itensor/mps/autompo.cc
+    dependencies/itensor/itensor/mps/mpo.cc
+    dependencies/itensor/itensor/mps/mpoalgs.cc
+    dependencies/itensor/itensor/mps/mps.cc
+    dependencies/itensor/itensor/mps/mpsalgs.cc
+    dependencies/itensor/itensor/tensor/algs.cc
+    dependencies/itensor/itensor/tensor/contract.cc
+    dependencies/itensor/itensor/tensor/gemm.cc
+    dependencies/itensor/itensor/tensor/lapack_wrap.cc
+    dependencies/itensor/itensor/tensor/mat.cc
+    dependencies/itensor/itensor/tensor/vec.cc
+    dependencies/itensor/itensor/util/args.cc
+    dependencies/itensor/itensor/util/cputime.cc
+    dependencies/itensor/itensor/util/input.cc
+)
+target_include_directories(itensor SYSTEM BEFORE PRIVATE dependencies/itensor ${CMAKE_CURRENT_BINARY_DIR})
+target_compile_options(itensor PRIVATE $<$<CXX_COMPILER_ID:GNU>:-fconcepts>)
+if(IPO_SUPPORTED)
+    set_property(TARGET itensor PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif()
+if (${BLA_VENDOR} MATCHES "Intel" OR "mkl")
+    add_definitions(-DPLATFORM_mkl)
+elseif(${BLA_VENDOR} MATCHES ACML)
+    add_definitions(-PLATFORM_mkl)
+elseif(${BLA_VENDOR} MATCHES Apple)
+    add_definitions(-DPLATFORM_macos)
+else()
+    add_definitions(-DPLATFORM_lapack)
+endif()
+target_link_libraries(LAPACK::LAPACK)
 
 macro(configure_dmrg_binary target)
     target_include_directories(${target} SYSTEM BEFORE PRIVATE
@@ -40,9 +78,9 @@ macro(configure_dmrg_binary target)
         dependencies/json/include
         dependencies/xtensor/include
         dependencies/xtl/include
+        dependencies/itensor
+        ${CMAKE_CURRENT_BINARY_DIR}
     )
-    target_include_directories(${target} SYSTEM BEFORE PRIVATE ${ITENSOR_SOURCE_DIR})
-    target_link_directories(${target} BEFORE PRIVATE ${ITENSOR_SOURCE_DIR}/lib)
     target_link_libraries(${target} PRIVATE lapack blas itensor pthread)
     target_link_libraries(${target} PRIVATE HDF5::HDF5 Boost::boost)
 
@@ -64,7 +102,6 @@ add_library(dmrg_common STATIC
     dmrg/observer.cpp
 )
 configure_dmrg_binary(dmrg_common)
-add_dependencies(dmrg_common itensor_project)
 
 
 add_executable(
