@@ -13,7 +13,7 @@ struct Observable
     Complex value, squared, variance;
 
     explicit Observable(itensor::MPO op);
-    void operator()(const itensor::MPS &mps);
+    Complex &operator()(const itensor::MPS &mps);
 };
 
 #endif /* DMRG_OBSERVABLE */

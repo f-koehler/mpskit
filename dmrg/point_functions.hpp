@@ -4,50 +4,40 @@
 #include "types.hpp"
 #include <itensor/itensor.h>
 #include <itensor/mps/mps.h>
+#include <itensor/mps/siteset.h>
+#include <string>
 
-struct OnePoint
+struct OnePointFunction
 {
-    Real prefactor;
-    int position;
-    std::string opname;
+  protected:
+    int m_index;
+    Real m_prefactor;
+    Complex m_value;
+    itensor::ITensor m_op;
+
+  public:
+    OnePointFunction(const itensor::SiteSet &sites, int index, const std::string &op, Real prefactor = 1.0);
+    const Complex &getValue() const;
+    int getIndex() const;
+    const Complex &operator()(itensor::MPS &mps);
 };
 
-struct TwoPoint
+struct TwoPointFunction
 {
-    Real prefactor;
-    int position1;
-    std::string opname1;
-    int position2;
-    std::string opname2;
+  protected:
+    int m_index1;
+    int m_index2;
+    Real m_prefactor;
+    Complex m_value;
+    itensor::ITensor m_op;
+
+  public:
+    TwoPointFunction(const itensor::SiteSet &sites, int index1, int index2, const std::string &op1,
+                     const std::string &op2, Real prefactor = 1.0);
+    const Complex &getValue() const;
+    int getIndex1() const;
+    int getIndex2() const;
+    const Complex &operator()(itensor::MPS &mps);
 };
-
-template <typename SiteSet> Complex compute_one_point(itensor::MPS &psi, const SiteSet &sites, const OnePoint &spec)
-{
-    psi.position(spec.position);
-    auto ket = psi(spec.position);
-    auto bra = itensor::dag(itensor::prime(ket, "Site"));
-    auto op = spec.prefactor * itensor::op(sites, spec.opname, spec.position);
-    return itensor::eltC(bra * op * ket);
-}
-
-template <typename SiteSet> Complex compute_two_point(itensor::MPS &psi, const SiteSet &sites, const TwoPoint &spec)
-{
-    if (spec.position1 == spec.position2)
-    {
-        psi.position(spec.position1);
-        auto ket = psi(spec.position1);
-        auto bra = itensor::dag(itensor::prime(ket, "Site"));
-        auto op = spec.prefactor * itensor::multSiteOps(itensor::op(sites, spec.opname1, spec.position1),
-                                                        itensor::op(sites, spec.opname2, spec.position1));
-        return itensor::eltC(bra * op * ket);
-    }
-
-    psi.position(spec.position1);
-    auto bondket = psi(spec.position1) * psi(spec.position2);
-    auto bondbra = itensor::dag(itensor::prime(bondket, "Site"));
-    auto op = spec.prefactor * itensor::op(sites, spec.opname1, spec.position1) *
-              itensor::op(sites, spec.opname2, spec.position2);
-    return itensor::eltC(bondbra * op * bondket);
-}
 
 #endif /* DMRG_POINT_FUNCTIONS */

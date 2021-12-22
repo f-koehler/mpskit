@@ -116,6 +116,7 @@ add_library(dmrg_common STATIC
     dmrg/models/spin_half_1d.cpp
     dmrg/models/transverse_ising_1d.cpp
     dmrg/observer.cpp
+    dmrg/point_functions.cpp
     dmrg/util.cpp
     dmrg/terms.cpp
     dmrg/observable.cpp

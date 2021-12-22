@@ -22,6 +22,53 @@ auto Model1D::get_hamiltonian() const -> itensor::MPO
     return itensor::toMPO(ampo);
 }
 
+// std::vector<OnePointFunction> Model1D::generate_one_point_functions(const std::string &op, const Real &prefactor,
+//                                                                     bool full) const
+// {
+//     std::vector<OnePointFunction> functions;
+//     if (full || !m_periodic)
+//     {
+//         functions.reserve(static_cast<std::size_t>(m_L));
+//         for (auto i : itensor::range1(m_L))
+//         {
+//             functions.emplace_back(m_sites, i, op, prefactor);
+//         }
+//     }
+//     else
+//     {
+//         functions.emplace_back(m_sites, 1, op, prefactor);
+//     }
+//     return functions;
+// }
+
+// std::vector<TwoPointFunction> Model1D::generate_two_point_functions(const std::string &op1, const std::string &op2,
+//                                                                     const Real &prefactor, bool full) const
+// {
+//     std::vector<TwoPointFunction> functions;
+//     if (m_periodic && !full)
+//     {
+//         functions.reserve(static_cast<std::size_t>(m_L));
+//         for (auto i : itensor::range1(m_L))
+//         {
+//             functions.emplace_back(m_sites, 1, i, "op1", "op2", prefactor);
+//         }
+//         return functions;
+//     }
+//     if(!full && (op1 == op2)) {
+//         functions.reserve((L*(L+1))
+//     }
+
+//     // if(full) {
+//     //     functions.reserve(m_L*m_L);
+//     //     for (auto i : itensor::range1(m_L)) {
+//     //     for (auto j : itensor::range1(m_L)) {
+//     //         functions.emplace_back(m_sites, i,j,)
+//     //     }
+//     //     }
+//     // }
+//     return functions;
+// }
+
 auto Model1D::get_one_body_terms() const -> const std::vector<OneSiteTerm> &
 {
     return m_one_body_terms;
