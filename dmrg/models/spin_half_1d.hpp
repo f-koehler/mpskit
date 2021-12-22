@@ -1,9 +1,9 @@
 #ifndef DMRG_MODELS_SPIN_HALF_1D
 #define DMRG_MODELS_SPIN_HALF_1D
 
-#include <itensor/mps/sites/spinhalf.h>
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
+#include <itensor/mps/sites/spinhalf.h>
 #include <map>
 #include <string>
 

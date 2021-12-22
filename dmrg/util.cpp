@@ -1,8 +1,8 @@
 #include "util.hpp"
 
-#include <nlohmann/json.hpp>
 #include <cstddef>
 #include <map>
+#include <nlohmann/json.hpp>
 
 #include "types.hpp"
 

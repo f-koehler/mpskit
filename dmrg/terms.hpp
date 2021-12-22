@@ -6,9 +6,10 @@
 
 #include "types.hpp"
 
-namespace itensor {
+namespace itensor
+{
 class AutoMPO;
-}  // namespace itensor
+} // namespace itensor
 
 struct OneSiteTerm
 {
