@@ -1,9 +1,11 @@
 {
     "model": "BoseHubbard1D",
     "L": 8,
-    "N": 8,
+    "max_N": 8,
+    "conserve_N": true,
     "J": 1.0,
     "U": 1.0,
+    "mu": 0.0,
     "periodic": true,
     "sweeps": [
         {"maxdim": 50, "mindim": 20, "cutoff": 1e-6, "niter": 4, "noise": 1e-7},
