@@ -1,17 +1,19 @@
 #include "model.hpp"
 
+#include <utility>
+
 #include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/observable.hpp"
 
-Model::Model(const itensor::SiteSet &sites) : m_sites(sites)
+Model::Model(itensor::SiteSet sites) : m_sites(std::move(sites))
 {
 }
 
-std::map<std::string, Observable> Model::get_observables() const
+auto Model::get_observables() const -> std::map<std::string, Observable>
 {
     return {{"H", Observable(get_hamiltonian())}};
 }
 
-const itensor::SiteSet &Model::getSites() const
+auto Model::getSites() const -> const itensor::SiteSet &
 {
     return m_sites;
 }

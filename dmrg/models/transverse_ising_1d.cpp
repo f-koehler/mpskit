@@ -39,15 +39,15 @@ TransverseIsing1D::TransverseIsing1D(const json &js)
 {
 }
 
-const Real &TransverseIsing1D::getJ() const
+auto TransverseIsing1D::getJ() const -> const Real &
 {
     return m_J;
 }
-const Real &TransverseIsing1D::getHx() const
+auto TransverseIsing1D::getHx() const -> const Real &
 {
     return m_hx;
 }
-const Real &TransverseIsing1D::getHz() const
+auto TransverseIsing1D::getHz() const -> const Real &
 {
     return m_hz;
 }

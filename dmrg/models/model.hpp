@@ -17,7 +17,7 @@ class Model
     itensor::SiteSet m_sites;
 
   public:
-    explicit Model(const itensor::SiteSet &sites);
+    explicit Model(itensor::SiteSet sites);
     virtual ~Model() = default;
 
     virtual itensor::MPS get_initial_state() const = 0;

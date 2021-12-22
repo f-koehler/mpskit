@@ -8,7 +8,7 @@ Model1D::Model1D(const itensor::SiteSet &sites, int L, bool periodic) : Model(si
 {
 }
 
-itensor::MPO Model1D::get_hamiltonian() const
+auto Model1D::get_hamiltonian() const -> itensor::MPO
 {
     itensor::AutoMPO ampo(m_sites);
     for (const auto &term : m_one_body_terms)
@@ -22,22 +22,22 @@ itensor::MPO Model1D::get_hamiltonian() const
     return itensor::toMPO(ampo);
 }
 
-const std::vector<OneSiteTerm> &Model1D::get_one_body_terms() const
+auto Model1D::get_one_body_terms() const -> const std::vector<OneSiteTerm> &
 {
     return m_one_body_terms;
 }
 
-const std::vector<TwoSiteTerm> &Model1D::get_two_body_terms() const
+auto Model1D::get_two_body_terms() const -> const std::vector<TwoSiteTerm> &
 {
     return m_two_body_terms;
 }
 
-bool Model1D::isPeriodic() const
+auto Model1D::isPeriodic() const -> bool
 {
     return m_periodic;
 }
 
-int Model1D::getL() const
+auto Model1D::getL() const -> int
 {
     return m_L;
 }

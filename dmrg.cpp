@@ -132,7 +132,7 @@ auto main(int argc, char **argv) -> int
     //     H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
     // }
 
-    if (app.count("--psi"))
+    if (app.count("--psi") != 0u)
     {
         itensor::writeToFile(psi_file, psi);
     }

@@ -41,15 +41,15 @@ BoseHubbard1D::BoseHubbard1D(const json &js)
 {
 }
 
-const Real &BoseHubbard1D::getJ() const
+auto BoseHubbard1D::getJ() const -> const Real &
 {
     return m_J;
 }
-const Real &BoseHubbard1D::getU() const
+auto BoseHubbard1D::getU() const -> const Real &
 {
     return m_U;
 }
-const Real &BoseHubbard1D::getMu() const
+auto BoseHubbard1D::getMu() const -> const Real &
 {
     return m_mu;
 }

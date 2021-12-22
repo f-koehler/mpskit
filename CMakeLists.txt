@@ -6,8 +6,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O")
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result OUTPUT output)
@@ -35,6 +33,9 @@ macro(dmrg_compile_options target)
     else()
         target_compile_definitions(${target} PRIVATE -DPLATFORM_lapack)
     endif()
+    target_compile_options(${target} PRIVATE
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-O>
+    )
     if(IPO_SUPPORTED)
         set_property(TARGET ${target} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
     endif()

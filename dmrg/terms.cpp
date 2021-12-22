@@ -4,12 +4,12 @@
 
 namespace itensor
 {
-AutoMPO &operator+=(AutoMPO &lhs, const OneSiteTerm &term)
+auto operator+=(AutoMPO &lhs, const OneSiteTerm &term) -> AutoMPO &
 {
     lhs += term.prefactor, term.op, term.index;
     return lhs;
 }
-AutoMPO &operator+=(AutoMPO &lhs, const TwoSiteTerm &term)
+auto operator+=(AutoMPO &lhs, const TwoSiteTerm &term) -> AutoMPO &
 {
     lhs += term.prefactor, term.op1, term.index1, term.op2, term.index2;
     return lhs;

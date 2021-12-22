@@ -1,8 +1,9 @@
 #include "observable.hpp"
 
 #include <complex>
+#include <utility>
 
-Observable::Observable(const itensor::MPO &op) : op(op)
+Observable::Observable(itensor::MPO op) : op(std::move(op))
 {
 }
 

@@ -12,7 +12,7 @@ struct Observable
     itensor::MPO op;
     Complex value, squared, variance;
 
-    explicit Observable(const itensor::MPO &op);
+    explicit Observable(itensor::MPO op);
     void operator()(const itensor::MPS &mps);
 };
 

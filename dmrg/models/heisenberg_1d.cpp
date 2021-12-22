@@ -45,27 +45,27 @@ Heisenberg1D::Heisenberg1D(const json &js)
 {
 }
 
-const Real &Heisenberg1D::getJx() const
+auto Heisenberg1D::getJx() const -> const Real &
 {
     return m_Jx;
 }
-const Real &Heisenberg1D::getJy() const
+auto Heisenberg1D::getJy() const -> const Real &
 {
     return m_Jy;
 }
-const Real &Heisenberg1D::getJz() const
+auto Heisenberg1D::getJz() const -> const Real &
 {
     return m_Jz;
 }
-const Real &Heisenberg1D::getHx() const
+auto Heisenberg1D::getHx() const -> const Real &
 {
     return m_hx;
 }
-const Real &Heisenberg1D::getHy() const
+auto Heisenberg1D::getHy() const -> const Real &
 {
     return m_hy;
 }
-const Real &Heisenberg1D::getHz() const
+auto Heisenberg1D::getHz() const -> const Real &
 {
     return m_hz;
 }

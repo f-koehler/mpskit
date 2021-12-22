@@ -12,12 +12,12 @@ SpinHalf1D::SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_par
 {
 }
 
-itensor::MPS SpinHalf1D::get_initial_state() const
+auto SpinHalf1D::get_initial_state() const -> itensor::MPS
 {
     return itensor::randomMPS(m_sites);
 }
 
-itensor::MPO SpinHalf1D::get_total_sx_operator() const
+auto SpinHalf1D::get_total_sx_operator() const -> itensor::MPO
 {
     itensor::AutoMPO ampo(m_sites);
     for (int i : itensor::range1(m_L))
@@ -27,7 +27,7 @@ itensor::MPO SpinHalf1D::get_total_sx_operator() const
     return itensor::toMPO(ampo);
 }
 
-itensor::MPO SpinHalf1D::get_total_sy_operator() const
+auto SpinHalf1D::get_total_sy_operator() const -> itensor::MPO
 {
     itensor::AutoMPO ampo(m_sites);
     for (int i : itensor::range1(m_L))
@@ -37,7 +37,7 @@ itensor::MPO SpinHalf1D::get_total_sy_operator() const
     return itensor::toMPO(ampo);
 }
 
-itensor::MPO SpinHalf1D::get_total_sz_operator() const
+auto SpinHalf1D::get_total_sz_operator() const -> itensor::MPO
 {
     itensor::AutoMPO ampo(m_sites);
     for (int i : itensor::range1(m_L))
@@ -47,7 +47,7 @@ itensor::MPO SpinHalf1D::get_total_sz_operator() const
     return itensor::toMPO(ampo);
 }
 
-std::map<std::string, Observable> SpinHalf1D::get_observables() const
+auto SpinHalf1D::get_observables() const -> std::map<std::string, Observable>
 {
     auto result = Model1D::get_observables();
     result.insert({"Sx", Observable(get_total_sx_operator())});
@@ -56,11 +56,11 @@ std::map<std::string, Observable> SpinHalf1D::get_observables() const
     return result;
 }
 
-bool SpinHalf1D::doesConserveSz() const
+auto SpinHalf1D::doesConserveSz() const -> bool
 {
     return m_conserve_Sz;
 }
-bool SpinHalf1D::doesConserveParity() const
+auto SpinHalf1D::doesConserveParity() const -> bool
 {
     return m_conserve_parity;
 }
