@@ -1,10 +1,10 @@
 #include "spin_half_1d.hpp"
 
-#include <itensor/mps/sites/spinhalf.h>
 #include <itensor/mps/autompo.h>
+#include <itensor/mps/sites/spinhalf.h>
 #include <itensor/util/iterate.h>
 
-#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/observable.hpp"
+#include "../observable.hpp"
 
 SpinHalf1D::SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_parity)
     : Model1D(itensor::SpinHalf(L, {"ConserveSz=", conserve_Sz, "ConserveParity=", conserve_parity}), L, periodic),

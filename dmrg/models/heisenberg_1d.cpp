@@ -1,15 +1,15 @@
 #include "heisenberg_1d.hpp"
 
-#include <itensor/util/iterate.h>
-#include <nlohmann/json.hpp>
 #include <algorithm>
 #include <cstddef>
+#include <itensor/util/iterate.h>
 #include <map>
+#include <nlohmann/json.hpp>
 #include <vector>
 
-#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/json.hpp"
-#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/terms.hpp"
-#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/types.hpp"
+#include "../json.hpp"
+#include "../terms.hpp"
+#include "../types.hpp"
 
 Heisenberg1D::Heisenberg1D(int L, bool periodic, const Real &Jx, const Real &Jy, const Real &Jz, const Real &hx,
                            const Real &hy, const Real &hz)

@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/observable.hpp"
+#include "../observable.hpp"
 
 Model::Model(itensor::SiteSet sites) : m_sites(std::move(sites))
 {

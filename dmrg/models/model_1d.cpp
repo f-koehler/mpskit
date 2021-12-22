@@ -2,7 +2,7 @@
 
 #include <itensor/mps/autompo.h>
 
-#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/terms.hpp"
+#include "../terms.hpp"
 
 Model1D::Model1D(const itensor::SiteSet &sites, int L, bool periodic) : Model(sites), m_L(L), m_periodic(periodic)
 {
