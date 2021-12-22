@@ -5,22 +5,6 @@
 #include <itensor/types.h>
 #include <nlohmann/json.hpp>
 
-auto compute_expectation_value(const itensor::MPS &psi, const itensor::MPO &op) -> Complex
-{
-    return itensor::innerC(psi, op, psi);
-}
-
-auto compute_expectation_value_2(const itensor::MPS &psi, const itensor::MPO &op) -> Complex
-{
-    return itensor::innerC(op, psi, op, psi);
-}
-
-auto compute_variance(const itensor::MPS &psi, const itensor::MPO &op) -> Complex
-{
-    Complex exp = itensor::innerC(psi, op, psi);
-    return itensor::innerC(op, psi, op, psi) - (exp * exp);
-}
-
 auto get_sweeps_from_json(const json &j) -> itensor::Sweeps
 {
     int num_sweeps = static_cast<int>(j.size());

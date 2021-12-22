@@ -14,6 +14,23 @@ itensor::MPS Bosonic1D::get_initial_state() const
     return itensor::randomMPS(state);
 }
 
+itensor::MPO Bosonic1D::get_particle_number_operator() const
+{
+    itensor::AutoMPO ampo(m_sites);
+    for (int i : itensor::range1(m_L))
+    {
+        ampo += 1.0, "N", i;
+    }
+    return itensor::toMPO(ampo);
+}
+
+std::map<std::string, Observable> Bosonic1D::get_observables() const
+{
+    auto result = Model1D::get_observables();
+    result.insert({"N", Observable(get_particle_number_operator())});
+    return result;
+}
+
 bool Bosonic1D::doesConserveN() const
 {
     return m_conserve_N;

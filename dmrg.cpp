@@ -74,9 +74,6 @@ auto main(int argc, char **argv) -> int
         return 1;
     }
 
-    std::map<std::string, Complex> expvals;
-    std::map<std::string, Complex> variances;
-
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
     auto observer = Observer(psi0);
@@ -87,16 +84,11 @@ auto main(int argc, char **argv) -> int
     const auto stop_hires = std::chrono::high_resolution_clock::now();
     const auto stop_monotonic = std::chrono::steady_clock::now();
 
-    // for (const auto &observable : model->get_observables())
-    // {
-    //     std::cout << "Computing expectation value: " << observable.name << "\n";
-    //     expvals.insert({observable.name, compute_expectation_value(psi, observable.mpo)});
-    //     if (observable.compute_variance)
-    //     {
-    //         std::cout << "Computing variance: " << observable.name << "\n";
-    //         variances.insert({observable.name, compute_variance(psi, observable.mpo)});
-    //     }
-    // }
+    auto observables = model->get_observables();
+    for (auto &[_, observable] : observables)
+    {
+        observable(psi);
+    }
 
     // const auto one_point = model->compute_one_point(psi);
     // const auto two_point = model->compute_two_point(psi);
@@ -113,15 +105,14 @@ auto main(int argc, char **argv) -> int
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
     H5Easy::dump(file, "/runtimes/hires", duration_hires);
     H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
-    for (const auto &[name, value] : expvals)
+    for (const auto &[name, observable] : observables)
     {
-        H5Easy::dump(file, fmt::format("/expvals/{}/real", name), xt::real(value));
-        H5Easy::dump(file, fmt::format("/expvals/{}/imag", name), xt::imag(value));
-    }
-    for (const auto &[name, value] : variances)
-    {
-        H5Easy::dump(file, fmt::format("/variances/{}/real", name), xt::real(value));
-        H5Easy::dump(file, fmt::format("/variances/{}/imag", name), xt::imag(value));
+        H5Easy::dump(file, fmt::format("/observables/{}/real", name), xt::real(observable.value.real()));
+        H5Easy::dump(file, fmt::format("/observables/{}/imag", name), xt::imag(observable.value.imag()));
+        H5Easy::dump(file, fmt::format("/observables/{}/squared_real", name), xt::real(observable.squared.real()));
+        H5Easy::dump(file, fmt::format("/observables/{}/squared_imag", name), xt::imag(observable.squared.imag()));
+        H5Easy::dump(file, fmt::format("/observables/{}/variance_real", name), xt::real(observable.variance.real()));
+        H5Easy::dump(file, fmt::format("/observables/{}/variance_imag", name), xt::imag(observable.variance.imag()));
     }
 
     // // we have to create new array from the real/imaginary view on the value arrays

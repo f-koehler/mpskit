@@ -116,6 +116,7 @@ add_library(dmrg_common STATIC
     dmrg/observer.cpp
     dmrg/util.cpp
     dmrg/terms.cpp
+    dmrg/observable.cpp
 )
 dmrg_compile_options(dmrg_common)
 dmrg_enable_warnings(dmrg_common)
