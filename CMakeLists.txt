@@ -107,10 +107,14 @@ dmrg_link_libraries(itensor)
 
 add_library(dmrg_common STATIC
     dmrg/models/bose_hubbard_1d.cpp
-    dmrg/models/transverse_ising_1d.cpp
+    dmrg/models/bosonic_1d.cpp
+    dmrg/models/heisenberg_1d.cpp
+    dmrg/models/model.cpp
+    dmrg/models/model_1d.cpp
     dmrg/models/spin_half_1d.cpp
-    dmrg/util.cpp
+    dmrg/models/transverse_ising_1d.cpp
     dmrg/observer.cpp
+    dmrg/util.cpp
 )
 dmrg_compile_options(dmrg_common)
 dmrg_enable_warnings(dmrg_common)

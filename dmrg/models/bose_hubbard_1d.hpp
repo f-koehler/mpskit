@@ -1,38 +1,25 @@
 #ifndef DMRG_MODELS_BOSE_HUBBARD_1D
 #define DMRG_MODELS_BOSE_HUBBARD_1D
 
-#include <itensor/mps/mpo.h>
-#include <itensor/mps/mps.h>
-#include <itensor/mps/sites/boson.h>
-#include <map>
-#include <string>
-#include <vector>
-
 #include "../json.hpp"
-#include "../model.hpp"
 #include "../types.hpp"
+#include "bosonic_1d.hpp"
 
-class BoseHubbard1D : public Model
+class BoseHubbard1D : public Bosonic1D
 {
   protected:
-    int L;
-    int N;
-    Real J;
-    Real U;
-    bool periodic;
-    itensor::Boson sites;
+    Real m_J;
+    Real m_U;
+    Real m_mu;
 
   public:
-    explicit BoseHubbard1D(int L, int N, Real J, Real U, bool periodic);
-    explicit BoseHubbard1D(const json &j);
+    explicit BoseHubbard1D(int L, bool periodic, bool conserve_N, int max_N, const Real &J, const Real &U,
+                           const Real &mu);
+    explicit BoseHubbard1D(const json &js);
 
-    itensor::MPS get_initial_state() const override;
-    itensor::MPO get_hamiltonian() const override;
-    itensor::MPO get_particle_number_operator() const;
-    std::vector<Observable> get_observables() const override;
-
-    std::map<std::string, ComplexArray> compute_one_point(itensor::MPS &psi) const override;
-    std::map<std::string, ComplexArray> compute_two_point(itensor::MPS &psi) const override;
+    const Real &getJ() const;
+    const Real &getU() const;
+    const Real &getMu() const;
 };
 
 #endif /* DMRG_MODELS_BOSE_HUBBARD_1D */

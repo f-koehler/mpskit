@@ -24,8 +24,8 @@
 #include <xtensor/xfunctor_view.hpp>
 
 #include "dmrg/json.hpp"
-#include "dmrg/model.hpp"
 #include "dmrg/models/bose_hubbard_1d.hpp"
+#include "dmrg/models/heisenberg_1d.hpp"
 #include "dmrg/models/transverse_ising_1d.hpp"
 #include "dmrg/observer.hpp"
 #include "dmrg/types.hpp"
@@ -87,19 +87,19 @@ auto main(int argc, char **argv) -> int
     const auto stop_hires = std::chrono::high_resolution_clock::now();
     const auto stop_monotonic = std::chrono::steady_clock::now();
 
-    for (const auto &observable : model->get_observables())
-    {
-        std::cout << "Computing expectation value: " << observable.name << "\n";
-        expvals.insert({observable.name, compute_expectation_value(psi, observable.mpo)});
-        if (observable.compute_variance)
-        {
-            std::cout << "Computing variance: " << observable.name << "\n";
-            variances.insert({observable.name, compute_variance(psi, observable.mpo)});
-        }
-    }
+    // for (const auto &observable : model->get_observables())
+    // {
+    //     std::cout << "Computing expectation value: " << observable.name << "\n";
+    //     expvals.insert({observable.name, compute_expectation_value(psi, observable.mpo)});
+    //     if (observable.compute_variance)
+    //     {
+    //         std::cout << "Computing variance: " << observable.name << "\n";
+    //         variances.insert({observable.name, compute_variance(psi, observable.mpo)});
+    //     }
+    // }
 
-    const auto one_point = model->compute_one_point(psi);
-    const auto two_point = model->compute_two_point(psi);
+    // const auto one_point = model->compute_one_point(psi);
+    // const auto two_point = model->compute_two_point(psi);
 
     auto duration_monotonic =
         static_cast<Real>(
@@ -124,20 +124,20 @@ auto main(int argc, char **argv) -> int
         H5Easy::dump(file, fmt::format("/variances/{}/imag", name), xt::imag(value));
     }
 
-    // we have to create new array from the real/imaginary view on the value arrays
-    // HighFive does not support the return type of xt::real
-    // maybe its worthwile to report this issue to the HighFive library
-    for (const auto &[name, values] : one_point)
-    {
-        H5Easy::dump(file, fmt::format("/one_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
-        H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
-    }
+    // // we have to create new array from the real/imaginary view on the value arrays
+    // // HighFive does not support the return type of xt::real
+    // // maybe its worthwile to report this issue to the HighFive library
+    // for (const auto &[name, values] : one_point)
+    // {
+    //     H5Easy::dump(file, fmt::format("/one_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
+    //     H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
+    // }
 
-    for (const auto &[name, values] : two_point)
-    {
-        H5Easy::dump(file, fmt::format("/two_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
-        H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
-    }
+    // for (const auto &[name, values] : two_point)
+    // {
+    //     H5Easy::dump(file, fmt::format("/two_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
+    //     H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
+    // }
 
     if (app.count("--psi"))
     {

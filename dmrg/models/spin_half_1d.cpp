@@ -1,23 +1,22 @@
 #include "spin_half_1d.hpp"
+#include <itensor/mps/sites/spinhalf.h>
 
-#include <cmath>
-
-SpinHalf1D::SpinHalf1D(int L, bool periodic, bool use_paulis)
-    : L(L), periodic(periodic), use_paulis(use_paulis), sites(itensor::SpinHalf(L, {"ConserveQNs=", false}))
+SpinHalf1D::SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_parity)
+    : Model1D(itensor::SpinHalf(L, {"ConserveSz=", conserve_Sz, "ConserveParity=", conserve_parity}), L, periodic),
+      m_conserve_Sz(conserve_Sz), m_conserve_parity(conserve_parity)
 {
 }
 
-SpinHalf1D::SpinHalf1D(const json &j)
-    : L(j["L"].get<int>()), periodic(json_get_default<bool>(j, "periodic", true)),
-      use_paulis(json_get_default<bool>(j, "use_paulis", true)), sites(L, {"ConserveQNs=", false})
+itensor::MPS SpinHalf1D::get_initial_state() const
 {
+    return itensor::randomMPS(m_sites);
 }
 
-auto SpinHalf1D::get_prefactor(int num_operators) const -> Real
+bool SpinHalf1D::doesConserveSz() const
 {
-    if (use_paulis)
-    {
-        return std::pow(2.0, num_operators);
-    }
-    return 1.0;
+    return m_conserve_Sz;
+}
+bool SpinHalf1D::doesConserveParity() const
+{
+    return m_conserve_parity;
 }
