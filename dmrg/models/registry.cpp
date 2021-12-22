@@ -4,7 +4,7 @@
 
 auto create_model_1d(const json &js) -> std::shared_ptr<Model1D>
 {
-    const auto name = js["model"].get<std::string>();
+    const auto name = js["name"].get<std::string>();
     Model1D *model = nullptr;
     if (name == "BoseHubbard1D")
     {

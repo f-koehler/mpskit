@@ -56,9 +56,9 @@ auto main(int argc, char **argv) -> int
     json input;
     istrm >> input;
 
-    const auto sweeps = get_sweeps_from_json(input["sweeps"]);
+    const auto sweeps = get_sweeps_from_json(input["dmrg"]["sweeps"]);
 
-    auto model = create_model_1d(input);
+    auto model = create_model_1d(input["model"]);
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
