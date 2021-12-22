@@ -1,5 +1,7 @@
 #include "terms.hpp"
 
+#include <itensor/mps/autompo.h>
+
 namespace itensor
 {
 AutoMPO &operator+=(AutoMPO &lhs, const OneSiteTerm &term)

@@ -1,9 +1,11 @@
 #ifndef DMRG_OBSERVABLE
 #define DMRG_OBSERVABLE
 
-#include "types.hpp"
 #include <itensor/mps/mpo.h>
+#include <itensor/mps/mps.h>
 #include <optional>
+
+#include "types.hpp"
 
 struct Observable
 {

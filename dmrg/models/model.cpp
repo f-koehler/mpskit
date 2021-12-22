@@ -1,5 +1,7 @@
 #include "model.hpp"
 
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/observable.hpp"
+
 Model::Model(const itensor::SiteSet &sites) : m_sites(sites)
 {
 }

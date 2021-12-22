@@ -1,8 +1,15 @@
 #ifndef DMRG_MODELS_SPIN_HALF_1D
 #define DMRG_MODELS_SPIN_HALF_1D
 
-#include "model_1d.hpp"
 #include <itensor/mps/sites/spinhalf.h>
+#include <itensor/mps/mpo.h>
+#include <itensor/mps/mps.h>
+#include <map>
+#include <string>
+
+#include "model_1d.hpp"
+
+struct Observable;
 
 class SpinHalf1D : public Model1D
 {

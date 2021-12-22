@@ -1,7 +1,14 @@
 #ifndef DMRG_MODELS_BOSONIC_1D
 #define DMRG_MODELS_BOSONIC_1D
 
+#include <itensor/mps/mpo.h>
+#include <itensor/mps/mps.h>
+#include <map>
+#include <string>
+
 #include "model_1d.hpp"
+
+struct Observable;
 
 class Bosonic1D : public Model1D
 {

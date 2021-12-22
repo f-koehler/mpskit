@@ -1,5 +1,16 @@
 #include "bose_hubbard_1d.hpp"
 
+#include <itensor/util/iterate.h>
+#include <nlohmann/json.hpp>
+#include <algorithm>
+#include <cstddef>
+#include <map>
+#include <vector>
+
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/json.hpp"
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/terms.hpp"
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/types.hpp"
+
 BoseHubbard1D::BoseHubbard1D(int L, bool periodic, bool conserve_N, int max_N, const Real &J, const Real &U,
                              const Real &mu)
     : Bosonic1D(L, periodic, conserve_N, max_N), m_J(J), m_U(U), m_mu(mu)

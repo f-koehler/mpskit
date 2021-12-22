@@ -1,11 +1,15 @@
 #ifndef DMRG_MODELS_MODEL
 #define DMRG_MODELS_MODEL
 
-#include "../observable.hpp"
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
 #include <itensor/mps/siteset.h>
 #include <map>
+#include <string>
+
+#include "../observable.hpp"
+
+struct Observable;
 
 class Model
 {

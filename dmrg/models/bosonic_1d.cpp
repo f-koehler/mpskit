@@ -1,5 +1,10 @@
 #include "bosonic_1d.hpp"
+
 #include <itensor/mps/sites/boson.h>
+#include <itensor/mps/autompo.h>
+#include <itensor/util/iterate.h>
+
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/observable.hpp"
 
 Bosonic1D::Bosonic1D(int L, bool periodic, bool conserve_N, int max_N)
     : Model1D(itensor::Boson(L, {"MaxOcc=", max_N, "ConserveNb=", conserve_N}), L, periodic), m_conserve_N(conserve_N),

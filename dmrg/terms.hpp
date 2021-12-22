@@ -1,9 +1,14 @@
 #ifndef DMRG_TERMS
 #define DMRG_TERMS
 
-#include "types.hpp"
 #include <itensor/mps/autompo.h>
 #include <string>
+
+#include "types.hpp"
+
+namespace itensor {
+class AutoMPO;
+}  // namespace itensor
 
 struct OneSiteTerm
 {

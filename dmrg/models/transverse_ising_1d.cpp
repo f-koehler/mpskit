@@ -1,5 +1,16 @@
 #include "transverse_ising_1d.hpp"
 
+#include <itensor/util/iterate.h>
+#include <nlohmann/json.hpp>
+#include <algorithm>
+#include <cstddef>
+#include <map>
+#include <vector>
+
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/json.hpp"
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/terms.hpp"
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/types.hpp"
+
 TransverseIsing1D::TransverseIsing1D(int L, bool periodic, const Real &J, const Real &hx, const Real &hz)
     : SpinHalf1D(L, periodic, false, false), m_J(J), m_hx(hx), m_hz(hz)
 {

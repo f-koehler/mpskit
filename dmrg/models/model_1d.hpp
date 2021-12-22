@@ -1,14 +1,15 @@
 #ifndef DMRG_MODELS_MODEL1D
 #define DMRG_MODELS_MODEL1D
 
-#include "../terms.hpp"
-#include "../types.hpp"
-#include "model.hpp"
 #include <itensor/mps/autompo.h>
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
 #include <itensor/mps/siteset.h>
 #include <vector>
+
+#include "../terms.hpp"
+#include "../types.hpp"
+#include "model.hpp"
 
 class Model1D : public Model
 {

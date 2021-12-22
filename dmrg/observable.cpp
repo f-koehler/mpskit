@@ -1,5 +1,7 @@
 #include "observable.hpp"
 
+#include <complex>
+
 Observable::Observable(const itensor::MPO &op) : op(op)
 {
 }

@@ -1,5 +1,4 @@
 #include <CLI/CLI.hpp>
-#include <algorithm>
 #include <array>
 #include <chrono>
 #include <fmt/core.h>
@@ -15,17 +14,20 @@
 #include <initializer_list>
 #include <iostream>
 #include <itensor/mps/dmrg.h>
+#include <itensor/util/readwrite.h>
 #include <map>
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <string>
+#include <tuple>
+#include <type_traits>
+#include <utility>
 #include <vector>
 #include <xtensor/xcomplex.hpp>
-#include <xtensor/xfunctor_view.hpp>
 
 #include "dmrg/json.hpp"
 #include "dmrg/models/bose_hubbard_1d.hpp"
-#include "dmrg/models/heisenberg_1d.hpp"
+#include "dmrg/models/model.hpp"
 #include "dmrg/models/transverse_ising_1d.hpp"
 #include "dmrg/observer.hpp"
 #include "dmrg/types.hpp"

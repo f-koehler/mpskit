@@ -1,5 +1,16 @@
 #include "heisenberg_1d.hpp"
 
+#include <itensor/util/iterate.h>
+#include <nlohmann/json.hpp>
+#include <algorithm>
+#include <cstddef>
+#include <map>
+#include <vector>
+
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/json.hpp"
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/terms.hpp"
+#include "/home/fkoehler/code/ising/dependencies/dmrg/dmrg/types.hpp"
+
 Heisenberg1D::Heisenberg1D(int L, bool periodic, const Real &Jx, const Real &Jy, const Real &Jz, const Real &hx,
                            const Real &hy, const Real &hz)
     : SpinHalf1D(L, periodic, false, false), m_Jx(Jx), m_Jy(Jy), m_Jz(Jz), m_hx(hx), m_hy(hy), m_hz(hz)
