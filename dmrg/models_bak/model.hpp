@@ -8,8 +8,8 @@
 
 #include "point_functions.hpp"
 
-// struct OneBodyTerm;
-// struct TwoBodyTerm;
+// struct OneSiteTerm;
+// struct TwoSiteTerm;
 struct Observable;
 
 class Model
@@ -29,14 +29,14 @@ class Model
     virtual std::map<std::string, ComplexArray> compute_two_point(itensor::MPS &psi) const = 0;
 };
 
-// struct OneBodyTerm
+// struct OneSiteTerm
 // {
 //     Real prefactor;
 //     int index;
 //     std::string op;
 // };
 
-// struct TwoBodyTerm
+// struct TwoSiteTerm
 // {
 //     Real prefactor;
 //     int index1;
@@ -55,13 +55,13 @@ struct Observable
 // namespace itensor
 // {
 
-// AutoMPO operator+=(AutoMPO &lhs, const OneBodyTerm &rhs)
+// AutoMPO operator+=(AutoMPO &lhs, const OneSiteTerm &rhs)
 // {
 //     lhs += rhs.prefactor, rhs.op, rhs.index;
 //     return lhs;
 // }
 
-// AutoMPO operator+=(AutoMPO &lhs, const TwoBodyTerm &rhs)
+// AutoMPO operator+=(AutoMPO &lhs, const TwoSiteTerm &rhs)
 // {
 //     lhs += rhs.prefactor, rhs.op1, rhs.index1, rhs.op2, rhs.index2;
 //     return lhs;

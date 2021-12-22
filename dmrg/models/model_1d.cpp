@@ -18,12 +18,12 @@ itensor::MPO Model1D::get_hamiltonian() const
     return itensor::toMPO(ampo);
 }
 
-const std::vector<OneBodyTerm> &Model1D::get_one_body_terms() const
+const std::vector<OneSiteTerm> &Model1D::get_one_body_terms() const
 {
     return m_one_body_terms;
 }
 
-const std::vector<TwoBodyTerm> &Model1D::get_two_body_terms() const
+const std::vector<TwoSiteTerm> &Model1D::get_two_body_terms() const
 {
     return m_two_body_terms;
 }
@@ -37,17 +37,3 @@ int Model1D::getL() const
 {
     return m_L;
 }
-
-namespace itensor
-{
-AutoMPO &operator+=(AutoMPO &lhs, const OneBodyTerm &term)
-{
-    lhs += term.prefactor, term.op, term.index;
-    return lhs;
-}
-AutoMPO &operator+=(AutoMPO &lhs, const TwoBodyTerm &term)
-{
-    lhs += term.prefactor, term.op1, term.index1, term.op2, term.index2;
-    return lhs;
-}
-} // namespace itensor
