@@ -112,6 +112,7 @@ add_library(dmrg_common STATIC
     dmrg/models/heisenberg_1d.cpp
     dmrg/models/model.cpp
     dmrg/models/model_1d.cpp
+    dmrg/models/registry.cpp
     dmrg/models/spin_half_1d.cpp
     dmrg/models/transverse_ising_1d.cpp
     dmrg/observer.cpp

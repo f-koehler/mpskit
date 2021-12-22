@@ -26,9 +26,7 @@
 #include <xtensor/xcomplex.hpp>
 
 #include "dmrg/json.hpp"
-#include "dmrg/models/bose_hubbard_1d.hpp"
-#include "dmrg/models/model.hpp"
-#include "dmrg/models/transverse_ising_1d.hpp"
+#include "dmrg/models/registry.hpp"
 #include "dmrg/observer.hpp"
 #include "dmrg/types.hpp"
 #include "dmrg/util.hpp"
@@ -60,21 +58,7 @@ auto main(int argc, char **argv) -> int
 
     const auto sweeps = get_sweeps_from_json(input["sweeps"]);
 
-    std::unique_ptr<Model> model;
-    const auto model_name = input["model"].get<std::string>();
-    if (model_name == "BoseHubbard1D")
-    {
-        model = std::unique_ptr<Model>(new BoseHubbard1D(input));
-    }
-    else if (model_name == "TransverseIsing1D")
-    {
-        model = std::unique_ptr<Model>(new TransverseIsing1D(input));
-    }
-    else
-    {
-        std::cerr << "unknown model: " << model_name << '\n';
-        return 1;
-    }
+    auto model = create_model_1d(input);
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
