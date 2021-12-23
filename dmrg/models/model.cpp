@@ -18,12 +18,12 @@ auto Model::getSites() const -> const itensor::SiteSet &
     return m_sites;
 }
 
-// std::map<std::string, std::vector<OnePointFunction>> Model::get_one_point_functions() const
-// {
-//     return {};
-// }
+std::map<std::string, std::vector<OnePointFunction>> Model::get_one_point_functions() const
+{
+    return {};
+}
 
-// std::map<std::string, std::vector<TwoPointFunction>> Model::get_two_point_functions() const
-// {
-//     return {};
-// }
+std::map<std::string, std::vector<TwoPointFunction>> Model::get_two_point_functions() const
+{
+    return {};
+}

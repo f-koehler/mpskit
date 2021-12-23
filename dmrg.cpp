@@ -23,7 +23,7 @@
 #include <type_traits>
 #include <utility>
 #include <vector>
-#include <xtensor/xcomplex.hpp>
+#include <xtensor/xtensor.hpp>
 
 #include "dmrg/json.hpp"
 #include "dmrg/models/registry.hpp"
@@ -76,8 +76,23 @@ auto main(int argc, char **argv) -> int
         observable(psi);
     }
 
-    // const auto one_point = model->compute_one_point(psi);
-    // const auto two_point = model->compute_two_point(psi);
+    auto one_point_functions = model->get_one_point_functions();
+    for (auto &[_, one_point_function] : one_point_functions)
+    {
+        for (auto &instance : one_point_function)
+        {
+            instance(psi);
+        }
+    }
+
+    auto two_point_functions = model->get_two_point_functions();
+    for (auto &[_, two_point_function] : two_point_functions)
+    {
+        for (auto &instance : two_point_function)
+        {
+            instance(psi);
+        }
+    }
 
     auto duration_monotonic =
         static_cast<Real>(
@@ -93,28 +108,48 @@ auto main(int argc, char **argv) -> int
     H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
     for (const auto &[name, observable] : observables)
     {
-        H5Easy::dump(file, fmt::format("/observables/{}/real", name), xt::real(observable.value.real()));
-        H5Easy::dump(file, fmt::format("/observables/{}/imag", name), xt::imag(observable.value.imag()));
-        H5Easy::dump(file, fmt::format("/observables/{}/squared_real", name), xt::real(observable.squared.real()));
-        H5Easy::dump(file, fmt::format("/observables/{}/squared_imag", name), xt::imag(observable.squared.imag()));
-        H5Easy::dump(file, fmt::format("/observables/{}/variance_real", name), xt::real(observable.variance.real()));
-        H5Easy::dump(file, fmt::format("/observables/{}/variance_imag", name), xt::imag(observable.variance.imag()));
+        H5Easy::dump(file, fmt::format("/observables/{}/real", name), observable.value.real());
+        H5Easy::dump(file, fmt::format("/observables/{}/imag", name), observable.value.imag());
+        H5Easy::dump(file, fmt::format("/observables/{}/squared_real", name), observable.squared.real());
+        H5Easy::dump(file, fmt::format("/observables/{}/squared_imag", name), observable.squared.imag());
+        H5Easy::dump(file, fmt::format("/observables/{}/variance_real", name), observable.variance.real());
+        H5Easy::dump(file, fmt::format("/observables/{}/variance_imag", name), observable.variance.imag());
     }
 
-    // // we have to create new array from the real/imaginary view on the value arrays
-    // // HighFive does not support the return type of xt::real
-    // // maybe its worthwile to report this issue to the HighFive library
-    // for (const auto &[name, values] : one_point)
-    // {
-    //     H5Easy::dump(file, fmt::format("/one_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
-    //     H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
-    // }
+    for (const auto &[name, point_function] : one_point_functions)
+    {
+        xt::xtensor<int, 1> indices = xt::zeros<int>({point_function.size()});
+        xt::xtensor<double, 1> real = xt::zeros<double>({point_function.size()});
+        xt::xtensor<double, 1> imag = xt::zeros<double>({point_function.size()});
+        for (std::size_t i = 0; i < point_function.size(); ++i)
+        {
+            const auto &instance = point_function[i];
+            indices(i) = instance.getIndex();
+            real(i) = instance.getValue().real();
+            imag(i) = instance.getValue().imag();
+        }
+        H5Easy::dump(file, fmt::format("/one_point/{}/indices", name), indices);
+        H5Easy::dump(file, fmt::format("/one_point/{}/real", name), real);
+        H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), imag);
+    }
 
-    // for (const auto &[name, values] : two_point)
-    // {
-    //     H5Easy::dump(file, fmt::format("/two_point/{}/real", name), static_cast<RealArray>(xt::real(values)));
-    //     H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), static_cast<RealArray>(xt::imag(values)));
-    // }
+    for (const auto &[name, point_function] : two_point_functions)
+    {
+        xt::xtensor<int, 2> indices = xt::zeros<int>({point_function.size(), 2ul});
+        xt::xtensor<double, 1> real = xt::zeros<double>({point_function.size()});
+        xt::xtensor<double, 1> imag = xt::zeros<double>({point_function.size()});
+        for (std::size_t i = 0; i < point_function.size(); ++i)
+        {
+            const auto &instance = point_function[i];
+            indices(i, 0) = instance.getIndex1();
+            indices(i, 1) = instance.getIndex2();
+            real(i) = instance.getValue().real();
+            imag(i) = instance.getValue().imag();
+        }
+        H5Easy::dump(file, fmt::format("/two_point/{}/indices", name), indices);
+        H5Easy::dump(file, fmt::format("/two_point/{}/real", name), real);
+        H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), imag);
+    }
 
     if (app.count("--psi") != 0u)
     {

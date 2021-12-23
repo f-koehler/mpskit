@@ -25,6 +25,8 @@ class SpinHalf1D : public Model1D
     itensor::MPO get_total_sy_operator() const;
     itensor::MPO get_total_sz_operator() const;
     std::map<std::string, Observable> get_observables() const override;
+    std::map<std::string, std::vector<OnePointFunction>> get_one_point_functions() const override;
+    std::map<std::string, std::vector<TwoPointFunction>> get_two_point_functions() const override;
 
     bool doesConserveSz() const;
     bool doesConserveParity() const;

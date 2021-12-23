@@ -22,6 +22,8 @@ class Bosonic1D : public Model1D
     itensor::MPS get_initial_state() const override;
     itensor::MPO get_particle_number_operator() const;
     std::map<std::string, Observable> get_observables() const override;
+    std::map<std::string, std::vector<OnePointFunction>> get_one_point_functions() const override;
+    std::map<std::string, std::vector<TwoPointFunction>> get_two_point_functions() const override;
 
     bool doesConserveN() const;
     int getMaxN() const;

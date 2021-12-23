@@ -36,6 +36,21 @@ auto Bosonic1D::get_observables() const -> std::map<std::string, Observable>
     return result;
 }
 
+std::map<std::string, std::vector<OnePointFunction>> Bosonic1D::get_one_point_functions() const
+{
+    std::map<std::string, std::vector<OnePointFunction>> result;
+    result.insert({"n", generate_one_point_functions("N", 1.0)});
+    return result;
+}
+
+std::map<std::string, std::vector<TwoPointFunction>> Bosonic1D::get_two_point_functions() const
+{
+    std::map<std::string, std::vector<TwoPointFunction>> result;
+    result.insert({"n_n", generate_two_point_functions("N", "N", 1.0, m_L <= 32)});
+    result.insert({"bdag_b", generate_two_point_functions("Adag", "A", 1.0, m_L <= 32)});
+    return result;
+}
+
 auto Bosonic1D::doesConserveN() const -> bool
 {
     return m_conserve_N;
