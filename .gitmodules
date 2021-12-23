@@ -19,3 +19,6 @@
 [submodule "dependencies/itensor"]
 	path = dependencies/itensor
 	url = https://github.com/ITensor/ITensor
+[submodule "dependencies/xsimd"]
+	path = dependencies/xsimd
+	url = https://github.com/xtensor-stack/xsimd.git

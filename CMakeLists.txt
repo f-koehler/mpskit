@@ -24,6 +24,7 @@ macro(dmrg_compile_options target)
     target_compile_options(itensor PRIVATE $<$<CXX_COMPILER_ID:GNU>:-fconcepts>)
     target_compile_definitions(${target} PRIVATE H5_USE_XTENSOR)
     target_compile_definitions(${target} PRIVATE FMT_HEADER_ONLY)
+    target_compile_definitions(${target} PRIVATE XTENSOR_USE_XSIMD)
     if (${BLA_VENDOR} MATCHES "Intel" OR "mkl")
         target_compile_definitions(${target} PRIVATE -DPLATFORM_mkl)
     elseif(${BLA_VENDOR} MATCHES ACML)
@@ -55,6 +56,7 @@ macro(dmrg_include_directories target)
         dependencies/json/include
         dependencies/xtensor/include
         dependencies/xtl/include
+        dependencies/xsimd/include
         dependencies/itensor
         ${CMAKE_CURRENT_BINARY_DIR}
     )
