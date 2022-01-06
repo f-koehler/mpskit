@@ -35,30 +35,19 @@ using namespace std::string_literals;
 
 constexpr Real nanoseconds_to_seconds = 1e9;
 
-auto main(int argc, char **argv) -> int
+struct DMRGOptions
 {
-    CLI::App app{"Calculate groundstates using DMRG"};
-    std::string input_file;
-    std::string output_file;
-    std::string psi_file;
-    app.add_option("-f,--file", input_file, "Input file specifying the model and it's parameters.")->required();
-    app.add_option("-o,--output", output_file, "File to write the results to.")->required();
-    app.add_option("--psi", psi_file,
-                   "File to write the final matrix product state to, can be used as input for TEBD.");
-    CLI11_PARSE(app, argc, argv);
+    std::string input;
+    std::string output = "dmrg.h5";
+    std::string psi = "dmrg.itensor";
+};
 
-    std::ifstream istrm(input_file);
-    if (!istrm.is_open())
-    {
-        std::cerr << "Failed to open input file: " << input_file << '\n';
-        return 1;
-    }
-    json input;
-    istrm >> input;
+int cmd_dmrg(const DMRGOptions &opts)
+{
+    auto input = load_json(opts.input);
+    auto model = create_model_1d(input["model"]);
 
     const auto sweeps = get_sweeps_from_json(input["dmrg"]["sweeps"]);
-
-    auto model = create_model_1d(input["model"]);
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
@@ -102,58 +91,136 @@ auto main(int argc, char **argv) -> int
         static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) /
         nanoseconds_to_seconds;
 
-    H5Easy::File file(output_file, H5Easy::File::Overwrite);
+    H5Easy::File file(opts.output, H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
     H5Easy::dump(file, "/runtimes/hires", duration_hires);
     H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
-    for (const auto &[name, observable] : observables)
+    // for (const auto &[name, observable] : observables)
+    // {
+    //     H5Easy::dump(file, fmt::format("/observables/{}/real", name), observable.value.real());
+    //     H5Easy::dump(file, fmt::format("/observables/{}/imag", name), observable.value.imag());
+    //     H5Easy::dump(file, fmt::format("/observables/{}/squared_real", name), observable.squared.real());
+    //     H5Easy::dump(file, fmt::format("/observables/{}/squared_imag", name), observable.squared.imag());
+    //     H5Easy::dump(file, fmt::format("/observables/{}/variance_real", name), observable.variance.real());
+    //     H5Easy::dump(file, fmt::format("/observables/{}/variance_imag", name), observable.variance.imag());
+    // }
+
+    // for (const auto &[name, point_function] : one_point_functions)
+    // {
+    //     xt::xtensor<int, 1> indices = xt::zeros<int>({point_function.size()});
+    //     xt::xtensor<double, 1> real = xt::zeros<double>({point_function.size()});
+    //     xt::xtensor<double, 1> imag = xt::zeros<double>({point_function.size()});
+    //     for (std::size_t i = 0; i < point_function.size(); ++i)
+    //     {
+    //         const auto &instance = point_function[i];
+    //         indices(i) = instance.getIndex();
+    //         real(i) = instance.getValue().real();
+    //         imag(i) = instance.getValue().imag();
+    //     }
+    //     H5Easy::dump(file, fmt::format("/one_point/{}/indices", name), indices);
+    //     H5Easy::dump(file, fmt::format("/one_point/{}/real", name), real);
+    //     H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), imag);
+    // }
+
+    // for (const auto &[name, point_function] : two_point_functions)
+    // {
+    //     xt::xtensor<int, 2> indices = xt::zeros<int>({point_function.size(), 2ul});
+    //     xt::xtensor<double, 1> real = xt::zeros<double>({point_function.size()});
+    //     xt::xtensor<double, 1> imag = xt::zeros<double>({point_function.size()});
+    //     for (std::size_t i = 0; i < point_function.size(); ++i)
+    //     {
+    //         const auto &instance = point_function[i];
+    //         indices(i, 0) = instance.getIndex1();
+    //         indices(i, 1) = instance.getIndex2();
+    //         real(i) = instance.getValue().real();
+    //         imag(i) = instance.getValue().imag();
+    //     }
+    //     H5Easy::dump(file, fmt::format("/two_point/{}/indices", name), indices);
+    //     H5Easy::dump(file, fmt::format("/two_point/{}/real", name), real);
+    //     H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), imag);
+    // }
+
+    itensor::writeToFile(opts.psi, psi);
+
+    return 0;
+}
+
+int cmd_list_observables(const std::string &input)
+{
+    auto config = load_json(input);
+    auto model = create_model_1d(config["model"]);
+    for (const auto &[name, _] : model->get_observables())
     {
-        H5Easy::dump(file, fmt::format("/observables/{}/real", name), observable.value.real());
-        H5Easy::dump(file, fmt::format("/observables/{}/imag", name), observable.value.imag());
-        H5Easy::dump(file, fmt::format("/observables/{}/squared_real", name), observable.squared.real());
-        H5Easy::dump(file, fmt::format("/observables/{}/squared_imag", name), observable.squared.imag());
-        H5Easy::dump(file, fmt::format("/observables/{}/variance_real", name), observable.variance.real());
-        H5Easy::dump(file, fmt::format("/observables/{}/variance_imag", name), observable.variance.imag());
+        std::cout << name << '\n';
+    }
+    return 0;
+}
+
+int cmd_list_one_point(const std::string &input)
+{
+    auto config = load_json(input);
+    auto model = create_model_1d(config["model"]);
+    for (const auto &[name, _] : model->get_one_point_functions())
+    {
+        std::cout << name << '\n';
+    }
+    return 0;
+}
+
+int cmd_list_two_point(const std::string &input)
+{
+    auto config = load_json(input);
+    auto model = create_model_1d(config["model"]);
+    for (const auto &[name, _] : model->get_two_point_functions())
+    {
+        std::cout << name << '\n';
+    }
+    return 0;
+}
+
+auto main(int argc, char **argv) -> int
+{
+    CLI::App app{"Perform computations using matrix product states (MPS)"};
+    app.require_subcommand();
+
+    std::string input;
+
+    DMRGOptions opts_dmrg;
+    auto app_dmrg = app.add_subcommand("dmrg", "Compute ground states using DMRG.");
+    app_dmrg->add_option("input,-i, --input", opts_dmrg.input, "Input file specifying model and DMRG parameters.")
+        ->required();
+    app_dmrg->add_option("-o, --output", opts_dmrg.output, "Output file containing DMRG output.");
+    app_dmrg->add_option("-p, --psi", opts_dmrg.psi, "File to write the final matrix product state to.");
+
+    auto app_list_observables = app.add_subcommand("list-observables", "List available observables for model.");
+    app_list_observables->add_option("input,-i, --input", input, "Input file specifying model.")->required();
+
+    auto app_list_one_point = app.add_subcommand("list-one-point", "List available one-point functions for model.");
+    app_list_one_point->add_option("input,-i, --input", input, "Input file specifying model.")->required();
+
+    auto app_list_two_point = app.add_subcommand("list-two-point", "List available two-point functions for model.");
+    app_list_two_point->add_option("input,-i, --input", input, "Input file specifying model.")->required();
+
+    CLI11_PARSE(app, argc, argv);
+
+    if (app_dmrg->parsed())
+    {
+        return cmd_dmrg(opts_dmrg);
     }
 
-    for (const auto &[name, point_function] : one_point_functions)
+    if (app_list_observables->parsed())
     {
-        xt::xtensor<int, 1> indices = xt::zeros<int>({point_function.size()});
-        xt::xtensor<double, 1> real = xt::zeros<double>({point_function.size()});
-        xt::xtensor<double, 1> imag = xt::zeros<double>({point_function.size()});
-        for (std::size_t i = 0; i < point_function.size(); ++i)
-        {
-            const auto &instance = point_function[i];
-            indices(i) = instance.getIndex();
-            real(i) = instance.getValue().real();
-            imag(i) = instance.getValue().imag();
-        }
-        H5Easy::dump(file, fmt::format("/one_point/{}/indices", name), indices);
-        H5Easy::dump(file, fmt::format("/one_point/{}/real", name), real);
-        H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), imag);
+        return cmd_list_observables(input);
     }
 
-    for (const auto &[name, point_function] : two_point_functions)
+    if (app_list_one_point->parsed())
     {
-        xt::xtensor<int, 2> indices = xt::zeros<int>({point_function.size(), 2ul});
-        xt::xtensor<double, 1> real = xt::zeros<double>({point_function.size()});
-        xt::xtensor<double, 1> imag = xt::zeros<double>({point_function.size()});
-        for (std::size_t i = 0; i < point_function.size(); ++i)
-        {
-            const auto &instance = point_function[i];
-            indices(i, 0) = instance.getIndex1();
-            indices(i, 1) = instance.getIndex2();
-            real(i) = instance.getValue().real();
-            imag(i) = instance.getValue().imag();
-        }
-        H5Easy::dump(file, fmt::format("/two_point/{}/indices", name), indices);
-        H5Easy::dump(file, fmt::format("/two_point/{}/real", name), real);
-        H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), imag);
+        return cmd_list_one_point(input);
     }
 
-    if (app.count("--psi") != 0u)
+    if (app_list_two_point->parsed())
     {
-        itensor::writeToFile(psi_file, psi);
+        return cmd_list_two_point(input);
     }
 
     return 0;

@@ -122,6 +122,7 @@ add_library(mpskit_common STATIC
     mpskit/util.cpp
     mpskit/terms.cpp
     mpskit/observable.cpp
+    mpskit/json.cpp
 )
 mpskit_compile_options(mpskit_common)
 mpskit_enable_warnings(mpskit_common)
