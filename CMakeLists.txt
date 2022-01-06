@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(dmrg LANGUAGES CXX C)
+project(mpskit LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -20,7 +20,7 @@ find_package(Threads REQUIRED)
 
 message(STATUS "BLAS/LAPACK vendor: ${BLA_VENDOR}")
 
-macro(dmrg_compile_options target)
+macro(mpskit_compile_options target)
     target_compile_options(itensor PRIVATE $<$<CXX_COMPILER_ID:GNU>:-fconcepts>)
     target_compile_definitions(${target} PRIVATE H5_USE_XTENSOR)
     target_compile_definitions(${target} PRIVATE FMT_HEADER_ONLY)
@@ -42,13 +42,13 @@ macro(dmrg_compile_options target)
     endif()
 endmacro()
 
-macro(dmrg_enable_warnings target)
+macro(mpskit_enable_warnings target)
     target_compile_options(${target} PRIVATE
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall -Wextra -Wconversion -Wsign-conversion -pedantic -Werror -pedantic-errors>
     )
 endmacro()
 
-macro(dmrg_include_directories target)
+macro(mpskit_include_directories target)
     target_include_directories(${target} SYSTEM BEFORE PRIVATE
         dependencies/CLI11/include
         dependencies/fmt/include
@@ -62,7 +62,7 @@ macro(dmrg_include_directories target)
     )
 endmacro()
 
-macro(dmrg_link_libraries target)
+macro(mpskit_link_libraries target)
     target_link_libraries(${target} PRIVATE LAPACK::LAPACK)
     target_link_libraries(${target} PRIVATE Threads::Threads)
     target_link_libraries(${target} PRIVATE HDF5::HDF5)
@@ -104,39 +104,39 @@ add_library(itensor STATIC
     dependencies/itensor/itensor/util/cputime.cc
     dependencies/itensor/itensor/util/input.cc
 )
-dmrg_compile_options(itensor)
-dmrg_include_directories(itensor)
-dmrg_link_libraries(itensor)
+mpskit_compile_options(itensor)
+mpskit_include_directories(itensor)
+mpskit_link_libraries(itensor)
 
-add_library(dmrg_common STATIC
-    dmrg/models/bose_hubbard_1d.cpp
-    dmrg/models/bosonic_1d.cpp
-    dmrg/models/heisenberg_1d.cpp
-    dmrg/models/model.cpp
-    dmrg/models/model_1d.cpp
-    dmrg/models/registry.cpp
-    dmrg/models/spin_half_1d.cpp
-    dmrg/models/transverse_ising_1d.cpp
-    dmrg/observer.cpp
-    dmrg/point_functions.cpp
-    dmrg/util.cpp
-    dmrg/terms.cpp
-    dmrg/observable.cpp
+add_library(mpskit_common STATIC
+    mpskit/models/bose_hubbard_1d.cpp
+    mpskit/models/bosonic_1d.cpp
+    mpskit/models/heisenberg_1d.cpp
+    mpskit/models/model.cpp
+    mpskit/models/model_1d.cpp
+    mpskit/models/registry.cpp
+    mpskit/models/spin_half_1d.cpp
+    mpskit/models/transverse_ising_1d.cpp
+    mpskit/observer.cpp
+    mpskit/point_functions.cpp
+    mpskit/util.cpp
+    mpskit/terms.cpp
+    mpskit/observable.cpp
 )
-dmrg_compile_options(dmrg_common)
-dmrg_enable_warnings(dmrg_common)
-dmrg_include_directories(dmrg_common)
-dmrg_link_libraries(dmrg_common)
-target_link_libraries(dmrg_common PRIVATE itensor)
+mpskit_compile_options(mpskit_common)
+mpskit_enable_warnings(mpskit_common)
+mpskit_include_directories(mpskit_common)
+mpskit_link_libraries(mpskit_common)
+target_link_libraries(mpskit_common PRIVATE itensor)
 
 
 add_executable(
-    dmrg
-    dmrg.cpp
+    mpskit
+    mpskit.cpp
 )
-dmrg_compile_options(dmrg)
-dmrg_enable_warnings(dmrg)
-dmrg_include_directories(dmrg)
-dmrg_link_libraries(dmrg)
-target_link_libraries(dmrg PRIVATE itensor)
-target_link_libraries(dmrg PRIVATE dmrg_common)
+mpskit_compile_options(mpskit)
+mpskit_enable_warnings(mpskit)
+mpskit_include_directories(mpskit)
+mpskit_link_libraries(mpskit)
+target_link_libraries(mpskit PRIVATE itensor)
+target_link_libraries(mpskit PRIVATE mpskit_common)

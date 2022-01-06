@@ -1,5 +1,5 @@
-#ifndef DMRG_MODELS_BOSONIC_1D
-#define DMRG_MODELS_BOSONIC_1D
+#ifndef MPSKIT_MODELS_BOSONIC_1D
+#define MPSKIT_MODELS_BOSONIC_1D
 
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
@@ -29,4 +29,4 @@ class Bosonic1D : public Model1D
     int getMaxN() const;
 };
 
-#endif /* DMRG_MODELS_BOSONIC_1D */
+#endif /* MPSKIT_MODELS_BOSONIC_1D */

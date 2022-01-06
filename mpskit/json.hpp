@@ -1,5 +1,5 @@
-#ifndef DMRG_JSON
-#define DMRG_JSON
+#ifndef MPSKIT_JSON
+#define MPSKIT_JSON
 
 #include <nlohmann/json.hpp>
 
@@ -14,4 +14,4 @@ template <typename T> T json_get_default(const json &j, const std::string &key, 
     return default_;
 }
 
-#endif /* DMRG_JSON */
+#endif /* MPSKIT_JSON */

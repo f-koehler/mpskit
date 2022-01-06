@@ -1,5 +1,5 @@
-#ifndef DMRG_MODELS_MODEL
-#define DMRG_MODELS_MODEL
+#ifndef MPSKIT_MODELS_MODEL
+#define MPSKIT_MODELS_MODEL
 
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
@@ -30,4 +30,4 @@ class Model
     const itensor::SiteSet &getSites() const;
 };
 
-#endif /* DMRG_MODELS_MODEL */
+#endif /* MPSKIT_MODELS_MODEL */

@@ -1,5 +1,5 @@
-#ifndef DMRG_OBSERVABLE
-#define DMRG_OBSERVABLE
+#ifndef MPSKIT_OBSERVABLE
+#define MPSKIT_OBSERVABLE
 
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
@@ -16,4 +16,4 @@ struct Observable
     Complex &operator()(const itensor::MPS &mps);
 };
 
-#endif /* DMRG_OBSERVABLE */
+#endif /* MPSKIT_OBSERVABLE */

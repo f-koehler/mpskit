@@ -1,5 +1,5 @@
-#ifndef DMRG_OBSERVER
-#define DMRG_OBSERVER
+#ifndef MPSKIT_OBSERVER
+#define MPSKIT_OBSERVER
 
 #include <itensor/mps/DMRGObserver.h>
 #include <itensor/mps/mps.h>
@@ -19,4 +19,4 @@ class Observer : public itensor::DMRGObserver
     const std::vector<double> &getEnergies() const;
 };
 
-#endif /* DMRG_OBSERVER */
+#endif /* MPSKIT_OBSERVER */

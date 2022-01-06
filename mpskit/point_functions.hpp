@@ -1,5 +1,5 @@
-#ifndef DMRG_POINT_FUNCTIONS
-#define DMRG_POINT_FUNCTIONS
+#ifndef MPSKIT_POINT_FUNCTIONS
+#define MPSKIT_POINT_FUNCTIONS
 
 #include "types.hpp"
 #include <itensor/itensor.h>
@@ -40,4 +40,4 @@ struct TwoPointFunction
     const Complex &operator()(itensor::MPS &mps);
 };
 
-#endif /* DMRG_POINT_FUNCTIONS */
+#endif /* MPSKIT_POINT_FUNCTIONS */

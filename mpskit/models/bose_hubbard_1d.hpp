@@ -1,5 +1,5 @@
-#ifndef DMRG_MODELS_BOSE_HUBBARD_1D
-#define DMRG_MODELS_BOSE_HUBBARD_1D
+#ifndef MPSKIT_MODELS_BOSE_HUBBARD_1D
+#define MPSKIT_MODELS_BOSE_HUBBARD_1D
 
 #include "../json.hpp"
 #include "../types.hpp"
@@ -22,4 +22,4 @@ class BoseHubbard1D : public Bosonic1D
     const Real &getMu() const;
 };
 
-#endif /* DMRG_MODELS_BOSE_HUBBARD_1D */
+#endif /* MPSKIT_MODELS_BOSE_HUBBARD_1D */

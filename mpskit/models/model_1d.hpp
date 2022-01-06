@@ -1,5 +1,5 @@
-#ifndef DMRG_MODELS_MODEL1D
-#define DMRG_MODELS_MODEL1D
+#ifndef MPSKIT_MODELS_MODEL_1D
+#define MPSKIT_MODELS_MODEL_1D
 
 #include <itensor/mps/autompo.h>
 #include <itensor/mps/mpo.h>
@@ -35,4 +35,4 @@ class Model1D : public Model
     int getL() const;
 };
 
-#endif /* DMRG_MODELS_MODEL1D */
+#endif /* MPSKIT_MODELS_MODEL_1D */

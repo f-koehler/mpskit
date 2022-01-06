@@ -1,5 +1,5 @@
-#ifndef DMRG_TERMS
-#define DMRG_TERMS
+#ifndef MPSKIT_TERMS
+#define MPSKIT_TERMS
 
 #include <itensor/mps/autompo.h>
 #include <string>
@@ -33,4 +33,4 @@ AutoMPO &operator+=(AutoMPO &lhs, const OneSiteTerm &term);
 AutoMPO &operator+=(AutoMPO &lhs, const TwoSiteTerm &term);
 } // namespace itensor
 
-#endif /* DMRG_TERMS */
+#endif /* MPSKIT_TERMS */

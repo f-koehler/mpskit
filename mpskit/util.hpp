@@ -1,5 +1,5 @@
-#ifndef DMRG_UTIL
-#define DMRG_UTIL
+#ifndef MPSKIT_UTIL
+#define MPSKIT_UTIL
 
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
@@ -10,4 +10,4 @@
 
 itensor::Sweeps get_sweeps_from_json(const json &j);
 
-#endif /* DMRG_UTIL */
+#endif /* MPSKIT_UTIL */

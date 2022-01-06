@@ -25,11 +25,11 @@
 #include <vector>
 #include <xtensor/xtensor.hpp>
 
-#include "dmrg/json.hpp"
-#include "dmrg/models/registry.hpp"
-#include "dmrg/observer.hpp"
-#include "dmrg/types.hpp"
-#include "dmrg/util.hpp"
+#include "mpskit/json.hpp"
+#include "mpskit/models/registry.hpp"
+#include "mpskit/observer.hpp"
+#include "mpskit/types.hpp"
+#include "mpskit/util.hpp"
 
 using namespace std::string_literals;
 

@@ -1,5 +1,5 @@
-#ifndef DMRG_MODELS_TRANSVERSE_ISING_1D
-#define DMRG_MODELS_TRANSVERSE_ISING_1D
+#ifndef MPSKIT_MODELS_TRANSVERSE_ISING_1D
+#define MPSKIT_MODELS_TRANSVERSE_ISING_1D
 
 #include "../json.hpp"
 #include "../types.hpp"
@@ -21,4 +21,4 @@ class TransverseIsing1D : public SpinHalf1D
     const Real &getHz() const;
 };
 
-#endif /* DMRG_MODELS_TRANSVERSE_ISING_1D */
+#endif /* MPSKIT_MODELS_TRANSVERSE_ISING_1D */

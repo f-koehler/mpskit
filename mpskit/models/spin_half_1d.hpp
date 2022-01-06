@@ -1,5 +1,5 @@
-#ifndef DMRG_MODELS_SPIN_HALF_1D
-#define DMRG_MODELS_SPIN_HALF_1D
+#ifndef MPSKIT_MODELS_SPIN_HALF_1D
+#define MPSKIT_MODELS_SPIN_HALF_1D
 
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
@@ -32,4 +32,4 @@ class SpinHalf1D : public Model1D
     bool doesConserveParity() const;
 };
 
-#endif /* DMRG_MODELS_SPIN_HALF_1D */
+#endif /* MPSKIT_MODELS_SPIN_HALF_1D */
