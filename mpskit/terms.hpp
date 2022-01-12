@@ -11,20 +11,40 @@ namespace itensor
 class AutoMPO;
 } // namespace itensor
 
-struct OneSiteTerm
+class OneSiteTerm
 {
-    Real prefactor;
-    std::string op;
-    int index;
+  protected:
+    Real m_prefactor;
+    std::string m_op;
+    int m_index;
+
+  public:
+    explicit OneSiteTerm(const Real &prefactor, const std::string &op, int index);
+
+    const Real &getPrefactor() const;
+    const std::string &getOperator() const;
+    const int &getIndex() const;
 };
 
-struct TwoSiteTerm
+class TwoSiteTerm
 {
-    Real prefactor;
-    std::string op1;
-    int index1;
-    std::string op2;
-    int index2;
+  protected:
+    Real m_prefactor;
+    std::string m_op1;
+    int m_index1;
+    std::string m_op2;
+    int m_index2;
+
+  public:
+    explicit TwoSiteTerm(const Real &prefactor, const std::string &op1, int index1, const std::string &op2, int index2);
+
+    void orderTerm();
+
+    const Real &getPrefactor() const;
+    const std::string &getOperator1() const;
+    const int &getIndex1() const;
+    const std::string &getOperator2() const;
+    const int &getIndex2() const;
 };
 
 namespace itensor

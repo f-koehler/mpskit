@@ -23,6 +23,8 @@ class Model1D : public Model
     explicit Model1D(const itensor::SiteSet &sites, int L, bool periodic);
     virtual ~Model1D() = default;
 
+    void orderTerms();
+
     std::vector<OnePointFunction> generateOnePointFunctions(const std::string &op, const Real &prefactor = 1.0,
                                                             bool full = true) const;
     std::vector<TwoPointFunction> generateTwoPointFunctions(const std::string &op1, const std::string &op2,

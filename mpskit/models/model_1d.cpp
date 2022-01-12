@@ -1,11 +1,20 @@
 #include "model_1d.hpp"
-
-#include <itensor/mps/autompo.h>
-
 #include "../terms.hpp"
+
+#include <algorithm>
+#include <itensor/mps/autompo.h>
 
 Model1D::Model1D(const itensor::SiteSet &sites, int L, bool periodic) : Model(sites), m_L(L), m_periodic(periodic)
 {
+}
+
+void Model1D::orderTerms()
+{
+    std::for_each(m_two_body_terms.begin(), m_two_body_terms.end(), [](TwoSiteTerm &t) { t.orderTerm(); });
+    std::sort(m_one_body_terms.begin(), m_one_body_terms.end(),
+              [](const OneSiteTerm &a, const OneSiteTerm &b) { return a.getIndex() < b.getIndex(); });
+    std::sort(m_two_body_terms.begin(), m_two_body_terms.end(),
+              [](const TwoSiteTerm &a, const TwoSiteTerm &b) { return a.getIndex1() < b.getIndex2(); });
 }
 
 auto Model1D::getHamiltonian() const -> itensor::MPO

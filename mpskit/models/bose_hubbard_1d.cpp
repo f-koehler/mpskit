@@ -20,18 +20,18 @@ BoseHubbard1D::BoseHubbard1D(int L, bool periodic, bool conserve_N, int max_N, c
 
     for (auto i : itensor::range1(L - 1))
     {
-        m_two_body_terms.push_back({-J, "Adag", i, "A", i + 1});
-        m_two_body_terms.push_back({-J, "Adag", i + 1, "A", i});
+        m_two_body_terms.emplace_back(-J, "Adag", i, "A", i + 1);
+        m_two_body_terms.emplace_back(-J, "Adag", i + 1, "A", i);
     }
     if (periodic)
     {
-        m_two_body_terms.push_back({-J, "Adag", 1, "A", L});
-        m_two_body_terms.push_back({-J, "Adag", L, "A", 1});
+        m_two_body_terms.emplace_back(-J, "Adag", 1, "A", L);
+        m_two_body_terms.emplace_back(-J, "Adag", L, "A", 1);
     }
     for (auto i : itensor::range1(L))
     {
-        m_two_body_terms.push_back({U / 2.0, "N", i, "N", i});
-        m_one_body_terms.push_back({-U / 2.0, "N", i});
+        m_two_body_terms.emplace_back(U / 2.0, "N", i, "N", i);
+        m_one_body_terms.emplace_back(-U / 2.0, "N", i);
     }
 }
 
