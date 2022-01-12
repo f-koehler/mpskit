@@ -6,10 +6,14 @@
 #include <itensor/mps/mps.h>
 #include <itensor/mps/siteset.h>
 #include <vector>
+#include <string>
 
 #include "../terms.hpp"
 #include "../types.hpp"
 #include "model.hpp"
+
+struct OnePointFunction;
+struct TwoPointFunction;
 
 class Model1D : public Model
 {

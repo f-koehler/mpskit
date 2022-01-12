@@ -1,10 +1,6 @@
 #ifndef MPSKIT_OBSERVER
 #define MPSKIT_OBSERVER
 
-#include "models/model.hpp"
-#include "observable.hpp"
-#include "types.hpp"
-
 #include <itensor/mps/DMRGObserver.h>
 #include <itensor/mps/mps.h>
 #include <itensor/util/args.h>
@@ -12,6 +8,12 @@
 #include <memory>
 #include <string>
 #include <vector>
+
+#include "models/model.hpp"
+#include "observable.hpp"
+#include "types.hpp"
+
+class Model;
 
 class Observer : public itensor::DMRGObserver
 {

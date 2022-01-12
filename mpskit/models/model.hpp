@@ -6,11 +6,14 @@
 #include <itensor/mps/siteset.h>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "../observable.hpp"
 #include "../point_functions.hpp"
 
 struct Observable;
+struct OnePointFunction;
+struct TwoPointFunction;
 
 class Model
 {

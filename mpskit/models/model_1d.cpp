@@ -1,8 +1,13 @@
 #include "model_1d.hpp"
-#include "../terms.hpp"
 
 #include <algorithm>
+#include <cstddef>
 #include <itensor/mps/autompo.h>
+#include <itensor/util/iterate.h>
+
+#include "../point_functions.hpp"
+#include "../terms.hpp"
+#include "../types.hpp"
 
 Model1D::Model1D(const itensor::SiteSet &sites, int L, bool periodic) : Model(sites), m_L(L), m_periodic(periodic)
 {

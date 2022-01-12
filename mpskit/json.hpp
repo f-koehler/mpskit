@@ -2,6 +2,8 @@
 #define MPSKIT_JSON
 
 #include <nlohmann/json.hpp>
+#include <nlohmann/json_fwd.hpp>
+#include <string>
 
 using json = nlohmann::json;
 

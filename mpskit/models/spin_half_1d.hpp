@@ -6,10 +6,13 @@
 #include <itensor/mps/sites/spinhalf.h>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "model_1d.hpp"
 
 struct Observable;
+struct OnePointFunction;
+struct TwoPointFunction;
 
 class SpinHalf1D : public Model1D
 {

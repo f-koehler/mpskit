@@ -1,9 +1,14 @@
 #include "list_observables.hpp"
-#include "../json.hpp"
-#include "../models/registry.hpp"
 
 #include <iostream>
+#include <map>
+#include <memory>
+#include <nlohmann/json.hpp>
 #include <string>
+
+#include "../json.hpp"
+#include "../models/model_1d.hpp"
+#include "../models/registry.hpp"
 
 int cmdListObservables(const std::string &input)
 {

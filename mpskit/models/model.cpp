@@ -4,6 +4,9 @@
 
 #include "../observable.hpp"
 
+struct OnePointFunction;
+struct TwoPointFunction;
+
 Model::Model(itensor::SiteSet sites) : m_sites(std::move(sites))
 {
 }

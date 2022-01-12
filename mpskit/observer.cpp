@@ -1,6 +1,9 @@
 #include "observer.hpp"
 
-#include <algorithm>
+#include <utility>
+#include <vector>
+
+#include "models/model.hpp"
 
 Observer::Observer(const itensor::MPS &psi, std::shared_ptr<Model> model, const itensor::Args &args)
     : itensor::DMRGObserver(psi, args), m_observables(model->getObservables())

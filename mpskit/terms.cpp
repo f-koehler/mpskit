@@ -1,7 +1,8 @@
 #include "terms.hpp"
 
-#include <algorithm>
 #include <itensor/mps/autompo.h>
+#include <stdexcept>
+#include <utility>
 
 OneSiteTerm::OneSiteTerm(const Real &prefactor, const std::string &op, int index)
     : m_prefactor(prefactor), m_op(op), m_index(index)

@@ -1,11 +1,16 @@
 #ifndef MPSKIT_POINT_FUNCTIONS
 #define MPSKIT_POINT_FUNCTIONS
 
-#include "types.hpp"
 #include <itensor/itensor.h>
 #include <itensor/mps/mps.h>
 #include <itensor/mps/siteset.h>
 #include <string>
+
+#include "types.hpp"
+
+namespace itensor {
+class MPS;
+}  // namespace itensor
 
 struct OnePointFunction
 {

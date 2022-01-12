@@ -5,10 +5,13 @@
 #include <itensor/mps/mps.h>
 #include <map>
 #include <string>
+#include <vector>
 
 #include "model_1d.hpp"
 
 struct Observable;
+struct OnePointFunction;
+struct TwoPointFunction;
 
 class Bosonic1D : public Model1D
 {

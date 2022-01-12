@@ -1,6 +1,8 @@
 #include "json.hpp"
+
 #include <fmt/core.h>
 #include <fstream>
+#include <stdexcept>
 
 auto loadJSON(const std::string &path) -> json
 {

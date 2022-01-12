@@ -1,8 +1,13 @@
 #include "list_two_point.hpp"
-#include "../json.hpp"
-#include "../models/registry.hpp"
 
 #include <iostream>
+#include <map>
+#include <memory>
+#include <nlohmann/json.hpp>
+
+#include "../json.hpp"
+#include "../models/model_1d.hpp"
+#include "../models/registry.hpp"
 
 int cmdListTwoPoint(const std::string &input)
 {
