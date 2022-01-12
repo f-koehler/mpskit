@@ -93,4 +93,4 @@ jobs:
       - name: Run BoseHubbard1D.
         run: build/mpskit dmrg --input examples/bose_hubbard_1d.json --psi dmrg.itensor --output results.h5
       - name: Run TransverseIsing1D.
-        run: build/dmrg dmrg --input examples/transverse_ising_1d.json --psi dmrg.itensor --output results.h5
+        run: build/mpskit dmrg --input examples/transverse_ising_1d.json --psi dmrg.itensor --output results.h5
