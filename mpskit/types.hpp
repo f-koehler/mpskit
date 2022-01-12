@@ -14,4 +14,6 @@ using ComplexArray = xt::xarray<Complex>;
 using RealSeries = std::vector<Complex>;
 using ComplexSeries = std::vector<Complex>;
 
+constexpr Real nanoseconds_to_seconds = 1e9;
+
 #endif /* MPSKIT_TYPES */
