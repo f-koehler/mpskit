@@ -91,6 +91,6 @@ jobs:
       - name: CMake build.
         run: cmake --build build
       - name: Run BoseHubbard1D.
-        run: build/dmrg -f examples/bose_hubbard_1d.json --psi psi -o results.h5
+        run: build/mpskit --input examples/bose_hubbard_1d.json --psi dmrg.itensor --output results.h5
       - name: Run TransverseIsing1D.
-        run: build/dmrg -f examples/transverse_ising_1d.json --psi psi -o results.h5
+        run: build/dmrg --input examples/transverse_ising_1d.json --psi dmrg.itensor --output results.h5
