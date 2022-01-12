@@ -35,23 +35,16 @@ using namespace std::string_literals;
 
 constexpr Real nanoseconds_to_seconds = 1e9;
 
-struct DMRGOptions
+int cmd_dmrg(const std::string &input_path, const std::string &output_path, const std::string &psi_path)
 {
-    std::string input;
-    std::string output = "dmrg.h5";
-    std::string psi = "dmrg.itensor";
-};
-
-int cmd_dmrg(const DMRGOptions &opts)
-{
-    auto input = load_json(opts.input);
+    auto input = load_json(input_path);
     auto model = create_model_1d(input["model"]);
 
     const auto sweeps = get_sweeps_from_json(input["dmrg"]["sweeps"]);
 
     const auto hamiltonian = model->get_hamiltonian();
     auto psi0 = model->get_initial_state();
-    auto observer = Observer(psi0);
+    auto observer = Observer(psi0, model);
 
     const auto start_monotonic = std::chrono::steady_clock::now();
     const auto start_hires = std::chrono::high_resolution_clock::now();
@@ -60,28 +53,28 @@ int cmd_dmrg(const DMRGOptions &opts)
     const auto stop_monotonic = std::chrono::steady_clock::now();
 
     auto observables = model->get_observables();
-    for (auto &[_, observable] : observables)
-    {
-        observable(psi);
-    }
+    // for (auto &[_, observable] : observables)
+    // {
+    //     observable(psi);
+    // }
 
-    auto one_point_functions = model->get_one_point_functions();
-    for (auto &[_, one_point_function] : one_point_functions)
-    {
-        for (auto &instance : one_point_function)
-        {
-            instance(psi);
-        }
-    }
+    // auto one_point_functions = model->get_one_point_functions();
+    // for (auto &[_, one_point_function] : one_point_functions)
+    // {
+    //     for (auto &instance : one_point_function)
+    //     {
+    //         instance(psi);
+    //     }
+    // }
 
-    auto two_point_functions = model->get_two_point_functions();
-    for (auto &[_, two_point_function] : two_point_functions)
-    {
-        for (auto &instance : two_point_function)
-        {
-            instance(psi);
-        }
-    }
+    // auto two_point_functions = model->get_two_point_functions();
+    // for (auto &[_, two_point_function] : two_point_functions)
+    // {
+    //     for (auto &instance : two_point_function)
+    //     {
+    //         instance(psi);
+    //     }
+    // }
 
     auto duration_monotonic =
         static_cast<Real>(
@@ -91,10 +84,25 @@ int cmd_dmrg(const DMRGOptions &opts)
         static_cast<Real>(std::chrono::duration_cast<std::chrono::nanoseconds>(stop_hires - start_hires).count()) /
         nanoseconds_to_seconds;
 
-    H5Easy::File file(opts.output, H5Easy::File::Overwrite);
+    H5Easy::File file(output_path, H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
     H5Easy::dump(file, "/runtimes/hires", duration_hires);
     H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
+
+    for (const auto &[name, values] : observer.getObservableValues())
+    {
+        H5Easy::dump(file, fmt::format("/convergence/observables/{}/value", name), values);
+    }
+
+    for (const auto &[name, values] : observer.getObservableSquaredValues())
+    {
+        H5Easy::dump(file, fmt::format("/convergence/observables/{}/squared", name), values);
+    }
+
+    for (const auto &[name, values] : observer.getObservableVariances())
+    {
+        H5Easy::dump(file, fmt::format("/convergence/observables/{}/variance", name), values);
+    }
     // for (const auto &[name, observable] : observables)
     // {
     //     H5Easy::dump(file, fmt::format("/observables/{}/real", name), observable.value.real());
@@ -140,7 +148,7 @@ int cmd_dmrg(const DMRGOptions &opts)
     //     H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), imag);
     // }
 
-    itensor::writeToFile(opts.psi, psi);
+    itensor::writeToFile(psi_path, psi);
 
     return 0;
 }
@@ -183,44 +191,45 @@ auto main(int argc, char **argv) -> int
     CLI::App app{"Perform computations using matrix product states (MPS)"};
     app.require_subcommand();
 
-    std::string input;
+    std::string input_path;
+    std::string output_path;
+    std::string psi_path;
 
-    DMRGOptions opts_dmrg;
     auto app_dmrg = app.add_subcommand("dmrg", "Compute ground states using DMRG.");
-    app_dmrg->add_option("input,-i, --input", opts_dmrg.input, "Input file specifying model and DMRG parameters.")
+    app_dmrg->add_option("input,-i, --input", input_path, "Input file specifying model and DMRG parameters.")
         ->required();
-    app_dmrg->add_option("-o, --output", opts_dmrg.output, "Output file containing DMRG output.");
-    app_dmrg->add_option("-p, --psi", opts_dmrg.psi, "File to write the final matrix product state to.");
+    app_dmrg->add_option("-o, --output", input_path, "Output file containing DMRG output.")->required();
+    app_dmrg->add_option("-p, --psi", psi_path, "File to write the final matrix product state to.")->required();
 
     auto app_list_observables = app.add_subcommand("list-observables", "List available observables for model.");
-    app_list_observables->add_option("input,-i, --input", input, "Input file specifying model.")->required();
+    app_list_observables->add_option("input,-i, --input", input_path, "Input file specifying model.")->required();
 
     auto app_list_one_point = app.add_subcommand("list-one-point", "List available one-point functions for model.");
-    app_list_one_point->add_option("input,-i, --input", input, "Input file specifying model.")->required();
+    app_list_one_point->add_option("input,-i, --input", input_path, "Input file specifying model.")->required();
 
     auto app_list_two_point = app.add_subcommand("list-two-point", "List available two-point functions for model.");
-    app_list_two_point->add_option("input,-i, --input", input, "Input file specifying model.")->required();
+    app_list_two_point->add_option("input,-i, --input", input_path, "Input file specifying model.")->required();
 
     CLI11_PARSE(app, argc, argv);
 
     if (app_dmrg->parsed())
     {
-        return cmd_dmrg(opts_dmrg);
+        return cmd_dmrg(input_path, output_path, psi_path);
     }
 
     if (app_list_observables->parsed())
     {
-        return cmd_list_observables(input);
+        return cmd_list_observables(input_path);
     }
 
     if (app_list_one_point->parsed())
     {
-        return cmd_list_one_point(input);
+        return cmd_list_one_point(input_path);
     }
 
     if (app_list_two_point->parsed())
     {
-        return cmd_list_two_point(input);
+        return cmd_list_two_point(input_path);
     }
 
     return 0;
