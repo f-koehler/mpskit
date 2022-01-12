@@ -6,7 +6,7 @@
 
 #include "types.hpp"
 
-auto get_sweeps_from_json(const json &j) -> itensor::Sweeps
+auto getSweepsFromJSON(const json &j) -> itensor::Sweeps
 {
     int num_sweeps = static_cast<int>(j.size());
     auto sweeps = itensor::Sweeps(num_sweeps);

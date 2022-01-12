@@ -8,7 +8,7 @@ Model1D::Model1D(const itensor::SiteSet &sites, int L, bool periodic) : Model(si
 {
 }
 
-auto Model1D::get_hamiltonian() const -> itensor::MPO
+auto Model1D::getHamiltonian() const -> itensor::MPO
 {
     itensor::AutoMPO ampo(m_sites);
     for (const auto &term : m_one_body_terms)
@@ -22,8 +22,8 @@ auto Model1D::get_hamiltonian() const -> itensor::MPO
     return itensor::toMPO(ampo);
 }
 
-std::vector<OnePointFunction> Model1D::generate_one_point_functions(const std::string &op, const Real &prefactor,
-                                                                    bool full) const
+std::vector<OnePointFunction> Model1D::generateOnePointFunctions(const std::string &op, const Real &prefactor,
+                                                                 bool full) const
 {
     std::vector<OnePointFunction> functions;
     if (full || !m_periodic)
@@ -41,8 +41,8 @@ std::vector<OnePointFunction> Model1D::generate_one_point_functions(const std::s
     return functions;
 }
 
-std::vector<TwoPointFunction> Model1D::generate_two_point_functions(const std::string &op1, const std::string &op2,
-                                                                    const Real &prefactor, bool full) const
+std::vector<TwoPointFunction> Model1D::generateTwoPointFunctions(const std::string &op1, const std::string &op2,
+                                                                 const Real &prefactor, bool full) const
 {
     std::vector<TwoPointFunction> functions;
     if (!full)
@@ -81,12 +81,12 @@ std::vector<TwoPointFunction> Model1D::generate_two_point_functions(const std::s
     return functions;
 }
 
-auto Model1D::get_one_body_terms() const -> const std::vector<OneSiteTerm> &
+auto Model1D::getOneBodyTerms() const -> const std::vector<OneSiteTerm> &
 {
     return m_one_body_terms;
 }
 
-auto Model1D::get_two_body_terms() const -> const std::vector<TwoSiteTerm> &
+auto Model1D::getTwoBodyTerms() const -> const std::vector<TwoSiteTerm> &
 {
     return m_two_body_terms;
 }

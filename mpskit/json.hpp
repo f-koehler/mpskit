@@ -5,7 +5,7 @@
 
 using json = nlohmann::json;
 
-template <typename T> T json_get_default(const json &j, const std::string &key, const T &default_)
+template <typename T> T jsonGetDefault(const json &j, const std::string &key, const T &default_)
 {
     if (j.contains(key))
     {
@@ -14,6 +14,6 @@ template <typename T> T json_get_default(const json &j, const std::string &key, 
     return default_;
 }
 
-auto load_json(const std::string &path) -> json;
+auto loadJSON(const std::string &path) -> json;
 
 #endif /* MPSKIT_JSON */

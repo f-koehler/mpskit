@@ -7,6 +7,6 @@
 #include "transverse_ising_1d.hpp"
 #include <memory>
 
-auto create_model_1d(const json &js) -> std::shared_ptr<Model1D>;
+auto createModel1D(const json &js) -> std::shared_ptr<Model1D>;
 
 #endif /* MPSKIT_MODELS_REGISTRY */

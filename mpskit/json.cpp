@@ -2,7 +2,7 @@
 #include <fmt/core.h>
 #include <fstream>
 
-auto load_json(const std::string &path) -> json
+auto loadJSON(const std::string &path) -> json
 {
     std::ifstream istrm(path);
     if (!istrm.is_open())

@@ -12,12 +12,12 @@ SpinHalf1D::SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_par
 {
 }
 
-auto SpinHalf1D::get_initial_state() const -> itensor::MPS
+auto SpinHalf1D::getInitialState() const -> itensor::MPS
 {
     return itensor::randomMPS(m_sites);
 }
 
-auto SpinHalf1D::get_total_sx_operator() const -> itensor::MPO
+auto SpinHalf1D::getTotalSxOperator() const -> itensor::MPO
 {
     itensor::AutoMPO ampo(m_sites);
     for (int i : itensor::range1(m_L))
@@ -27,7 +27,7 @@ auto SpinHalf1D::get_total_sx_operator() const -> itensor::MPO
     return itensor::toMPO(ampo);
 }
 
-auto SpinHalf1D::get_total_sy_operator() const -> itensor::MPO
+auto SpinHalf1D::getTotalSyOperator() const -> itensor::MPO
 {
     itensor::AutoMPO ampo(m_sites);
     for (int i : itensor::range1(m_L))
@@ -37,7 +37,7 @@ auto SpinHalf1D::get_total_sy_operator() const -> itensor::MPO
     return itensor::toMPO(ampo);
 }
 
-auto SpinHalf1D::get_total_sz_operator() const -> itensor::MPO
+auto SpinHalf1D::getTotalSzOperator() const -> itensor::MPO
 {
     itensor::AutoMPO ampo(m_sites);
     for (int i : itensor::range1(m_L))
@@ -47,30 +47,30 @@ auto SpinHalf1D::get_total_sz_operator() const -> itensor::MPO
     return itensor::toMPO(ampo);
 }
 
-auto SpinHalf1D::get_observables() const -> std::map<std::string, Observable>
+auto SpinHalf1D::getObservables() const -> std::map<std::string, Observable>
 {
-    auto result = Model1D::get_observables();
-    result.insert({"Sx", Observable(get_total_sx_operator())});
-    result.insert({"Sy", Observable(get_total_sy_operator())});
-    result.insert({"Sz", Observable(get_total_sz_operator())});
+    auto result = Model1D::getObservables();
+    result.insert({"Sx", Observable(getTotalSxOperator())});
+    result.insert({"Sy", Observable(getTotalSyOperator())});
+    result.insert({"Sz", Observable(getTotalSzOperator())});
     return result;
 }
 
-std::map<std::string, std::vector<OnePointFunction>> SpinHalf1D::get_one_point_functions() const
+std::map<std::string, std::vector<OnePointFunction>> SpinHalf1D::getOnePointFunctions() const
 {
     std::map<std::string, std::vector<OnePointFunction>> result;
-    result.insert({"sx", generate_one_point_functions("Sx", 2.0)});
-    result.insert({"sy", generate_one_point_functions("Sy", 2.0)});
-    result.insert({"sz", generate_one_point_functions("Sz", 2.0)});
+    result.insert({"sx", generateOnePointFunctions("Sx", 2.0)});
+    result.insert({"sy", generateOnePointFunctions("Sy", 2.0)});
+    result.insert({"sz", generateOnePointFunctions("Sz", 2.0)});
     return result;
 }
 
-std::map<std::string, std::vector<TwoPointFunction>> SpinHalf1D::get_two_point_functions() const
+std::map<std::string, std::vector<TwoPointFunction>> SpinHalf1D::getTwoPointFunctions() const
 {
     std::map<std::string, std::vector<TwoPointFunction>> result;
-    result.insert({"sx_sx", generate_two_point_functions("Sx", "Sx", 4.0, m_L <= 32)});
-    result.insert({"sy_sy", generate_two_point_functions("Sy", "Sy", 4.0, m_L <= 32)});
-    result.insert({"sz_sz", generate_two_point_functions("Sz", "Sz", 4.0, m_L <= 32)});
+    result.insert({"sx_sx", generateTwoPointFunctions("Sx", "Sx", 4.0, m_L <= 32)});
+    result.insert({"sy_sy", generateTwoPointFunctions("Sy", "Sy", 4.0, m_L <= 32)});
+    result.insert({"sz_sz", generateTwoPointFunctions("Sz", "Sz", 4.0, m_L <= 32)});
     return result;
 }
 

@@ -20,13 +20,13 @@ class SpinHalf1D : public Model1D
   public:
     explicit SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_parity);
 
-    itensor::MPS get_initial_state() const override;
-    itensor::MPO get_total_sx_operator() const;
-    itensor::MPO get_total_sy_operator() const;
-    itensor::MPO get_total_sz_operator() const;
-    std::map<std::string, Observable> get_observables() const override;
-    std::map<std::string, std::vector<OnePointFunction>> get_one_point_functions() const override;
-    std::map<std::string, std::vector<TwoPointFunction>> get_two_point_functions() const override;
+    itensor::MPS getInitialState() const override;
+    itensor::MPO getTotalSxOperator() const;
+    itensor::MPO getTotalSyOperator() const;
+    itensor::MPO getTotalSzOperator() const;
+    std::map<std::string, Observable> getObservables() const override;
+    std::map<std::string, std::vector<OnePointFunction>> getOnePointFunctions() const override;
+    std::map<std::string, std::vector<TwoPointFunction>> getTwoPointFunctions() const override;
 
     bool doesConserveSz() const;
     bool doesConserveParity() const;

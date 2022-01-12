@@ -8,6 +8,6 @@
 #include "json.hpp"
 #include "types.hpp"
 
-itensor::Sweeps get_sweeps_from_json(const json &j);
+itensor::Sweeps getSweepsFromJSON(const json &j);
 
 #endif /* MPSKIT_UTIL */

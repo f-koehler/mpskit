@@ -2,7 +2,7 @@
 #include <fmt/core.h>
 #include <stdexcept>
 
-auto create_model_1d(const json &js) -> std::shared_ptr<Model1D>
+auto createModel1D(const json &js) -> std::shared_ptr<Model1D>
 {
     const auto name = js["name"].get<std::string>();
     Model1D *model = nullptr;
