@@ -1,9 +1,9 @@
 #include "point_functions.hpp"
 
+#include <complex>
 #include <itensor/itensor_impl.h>
 #include <itensor/mps/mps.h>
 #include <itensor/types.h>
-#include <complex>
 
 OnePointFunction::OnePointFunction(const itensor::SiteSet &sites, int index, const std::string &op, Real prefactor)
     : m_index(index), m_prefactor(prefactor), m_value(0.0), m_op(itensor::op(sites, op, index))

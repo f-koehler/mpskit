@@ -8,9 +8,10 @@
 
 #include "types.hpp"
 
-namespace itensor {
+namespace itensor
+{
 class MPS;
-}  // namespace itensor
+} // namespace itensor
 
 struct OnePointFunction
 {

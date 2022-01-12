@@ -1,4 +1,4 @@
 #!/usr/bin/bash
 set -euf -o pipefail
 
-clang-format -i dmrg.cpp $(find dmrg -name "*.cpp" -or -name "*.hpp")
+clang-format -i mpskit.cpp $(find mpskit -name "*.cpp" -or -name "*.hpp")

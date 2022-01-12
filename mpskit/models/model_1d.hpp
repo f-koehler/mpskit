@@ -5,8 +5,8 @@
 #include <itensor/mps/mpo.h>
 #include <itensor/mps/mps.h>
 #include <itensor/mps/siteset.h>
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "../terms.hpp"
 #include "../types.hpp"
