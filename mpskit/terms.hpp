@@ -24,6 +24,8 @@ class OneSiteTerm
     const Real &getPrefactor() const;
     const std::string &getOperator() const;
     const int &getIndex() const;
+
+    itensor::ITensor toItensor(const itensor::SiteSet &sites) const;
 };
 
 class TwoSiteTerm
@@ -38,13 +40,15 @@ class TwoSiteTerm
   public:
     explicit TwoSiteTerm(const Real &prefactor, const std::string &op1, int index1, const std::string &op2, int index2);
 
-    void orderTerm();
-
     const Real &getPrefactor() const;
     const std::string &getOperator1() const;
     const int &getIndex1() const;
     const std::string &getOperator2() const;
     const int &getIndex2() const;
+
+    void orderTerm();
+
+    itensor::ITensor toItensor(const itensor::SiteSet &sites) const;
 };
 
 namespace itensor

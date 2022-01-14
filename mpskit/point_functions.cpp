@@ -6,7 +6,7 @@
 #include <itensor/types.h>
 
 OnePointFunction::OnePointFunction(const itensor::SiteSet &sites, int index, const std::string &op, Real prefactor)
-    : m_index(index), m_prefactor(prefactor), m_value(0.0), m_op(itensor::op(sites, op, index))
+    : m_index(index), m_prefactor(prefactor), m_value(0.0), m_op(itensor::op(sites, op, index + 1))
 {
 }
 
@@ -22,8 +22,8 @@ int OnePointFunction::getIndex() const
 
 const Complex &OnePointFunction::operator()(itensor::MPS &mps)
 {
-    mps.position(m_index);
-    auto ket = mps(m_index);
+    mps.position(m_index + 1);
+    auto ket = mps(m_index + 1);
     auto bra = itensor::dag(itensor::prime(ket, "Site"));
     m_value = m_prefactor * itensor::eltC(bra * m_op * ket);
     return m_value;
@@ -35,11 +35,11 @@ TwoPointFunction::TwoPointFunction(const itensor::SiteSet &sites, int index1, in
 {
     if (index1 == index2)
     {
-        m_op = itensor::multSiteOps(itensor::op(sites, op1, index1), itensor::op(sites, op2, index1));
+        m_op = itensor::multSiteOps(itensor::op(sites, op1, index1 + 1), itensor::op(sites, op2, index1 + 1));
     }
     else
     {
-        m_op = itensor::op(sites, op1, index1) * itensor::op(sites, op2, index2);
+        m_op = itensor::op(sites, op1, index1 + 1) * itensor::op(sites, op2, index2 + 1);
     }
 }
 
@@ -63,11 +63,11 @@ const Complex &TwoPointFunction::operator()(itensor::MPS &mps)
     itensor::ITensor ket, bra;
     if (m_index1 == m_index2)
     {
-        ket = mps(m_index1);
+        ket = mps(m_index1 + 1);
     }
     else
     {
-        ket = mps(m_index1) * mps(m_index2);
+        ket = mps(m_index1 + 1) * mps(m_index2 + 1);
     }
     bra = itensor::dag(itensor::prime(ket, "Site"));
     m_value = m_prefactor * itensor::eltC(bra * m_op * ket);

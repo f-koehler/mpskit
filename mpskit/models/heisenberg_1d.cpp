@@ -18,24 +18,25 @@ Heisenberg1D::Heisenberg1D(int L, bool periodic, const Real &Jx, const Real &Jy,
     m_one_body_terms.reserve(static_cast<std::size_t>(3 * L));
     m_two_body_terms.reserve(static_cast<std::size_t>(3 * L));
 
-    for (auto i : itensor::range1(L))
+    for (int i = 0; i < L; ++i)
     {
         m_one_body_terms.emplace_back(-2.0 * hx, "Sx", i);
         m_one_body_terms.emplace_back(-2.0 * hy, "Sy", i);
         m_one_body_terms.emplace_back(-2.0 * hz, "Sz", i);
     }
 
-    for (auto i : itensor::range1(L - 1))
+    for (int i = 0; i < L - 1; ++i)
     {
         m_two_body_terms.emplace_back(-4.0 * Jx, "Sx", i, "Sx", i + 1);
         m_two_body_terms.emplace_back(-4.0 * Jy, "Sy", i, "Sy", i + 1);
         m_two_body_terms.emplace_back(-4.0 * Jz, "Sz", i, "Sz", i + 1);
     }
+
     if (periodic)
     {
-        m_two_body_terms.emplace_back(-4.0 * Jx, "Sx", L, "Sx", 1);
-        m_two_body_terms.emplace_back(-4.0 * Jy, "Sy", L, "Sy", 1);
-        m_two_body_terms.emplace_back(-4.0 * Jz, "Sz", L, "Sz", 1);
+        m_two_body_terms.emplace_back(-4.0 * Jx, "Sx", L - 1, "Sx", 0);
+        m_two_body_terms.emplace_back(-4.0 * Jy, "Sy", L - 1, "Sy", 0);
+        m_two_body_terms.emplace_back(-4.0 * Jz, "Sz", L - 1, "Sz", 0);
     }
 }
 

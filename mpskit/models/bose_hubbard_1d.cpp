@@ -18,17 +18,17 @@ BoseHubbard1D::BoseHubbard1D(int L, bool periodic, bool conserve_N, int max_N, c
     m_one_body_terms.reserve(static_cast<std::size_t>(L));
     m_two_body_terms.reserve(static_cast<std::size_t>(3 * L));
 
-    for (auto i : itensor::range1(L - 1))
+    for (int i = 0; i < L - 1; ++i)
     {
         m_two_body_terms.emplace_back(-J, "Adag", i, "A", i + 1);
         m_two_body_terms.emplace_back(-J, "A", i, "Adag", i + 1);
     }
     if (periodic)
     {
-        m_two_body_terms.emplace_back(-J, "Adag", L, "A", 1);
-        m_two_body_terms.emplace_back(-J, "A", L, "Adag", 1);
+        m_two_body_terms.emplace_back(-J, "Adag", L - 1, "A", 0);
+        m_two_body_terms.emplace_back(-J, "A", L - 1, "Adag", 0);
     }
-    for (auto i : itensor::range1(L))
+    for (int i = 0; i < L; ++i)
     {
         m_two_body_terms.emplace_back(U / 2.0, "N", i, "N", i);
         m_one_body_terms.emplace_back(-U / 2.0, "N", i);

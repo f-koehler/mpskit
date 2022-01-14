@@ -17,19 +17,20 @@ TransverseIsing1D::TransverseIsing1D(int L, bool periodic, const Real &J, const 
     m_one_body_terms.reserve(static_cast<std::size_t>(2 * L));
     m_two_body_terms.reserve(static_cast<std::size_t>(L));
 
-    for (auto i : itensor::range1(L))
+    for (int i = 0; i < L; ++i)
     {
         m_one_body_terms.emplace_back(-2.0 * hx, "Sx", i);
         m_one_body_terms.emplace_back(-2.0 * hz, "Sz", i);
     }
 
-    for (auto i : itensor::range1(L - 1))
+    for (int i = 0; i < L - 1; ++i)
     {
         m_two_body_terms.emplace_back(-4.0 * J, "Sz", i, "Sz", i + 1);
     }
+
     if (periodic)
     {
-        m_two_body_terms.emplace_back(-4.0 * J, "Sz", L, "Sz", 1);
+        m_two_body_terms.emplace_back(-4.0 * J, "Sz", L - 1, "Sz", 0);
     }
 }
 
