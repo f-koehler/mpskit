@@ -33,9 +33,9 @@ Heisenberg1D::Heisenberg1D(int L, bool periodic, const Real &Jx, const Real &Jy,
     }
     if (periodic)
     {
-        m_two_body_terms.emplace_back(-4.0 * Jx, "Sx", 1, "Sx", L);
-        m_two_body_terms.emplace_back(-4.0 * Jy, "Sy", 1, "Sy", L);
-        m_two_body_terms.emplace_back(-4.0 * Jz, "Sz", 1, "Sz", L);
+        m_two_body_terms.emplace_back(-4.0 * Jx, "Sx", L, "Sx", 1);
+        m_two_body_terms.emplace_back(-4.0 * Jy, "Sy", L, "Sy", 1);
+        m_two_body_terms.emplace_back(-4.0 * Jz, "Sz", L, "Sz", 1);
     }
 }
 

@@ -29,7 +29,7 @@ TransverseIsing1D::TransverseIsing1D(int L, bool periodic, const Real &J, const 
     }
     if (periodic)
     {
-        m_two_body_terms.emplace_back(-4.0 * J, "Sz", 1, "Sz", L);
+        m_two_body_terms.emplace_back(-4.0 * J, "Sz", L, "Sz", 1);
     }
 }
 
