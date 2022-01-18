@@ -2,11 +2,12 @@
 #define MPSKIT_TYPES
 
 #include <complex>
+#include <itensor/types.h>
 #include <vector>
 #include <xtensor/xarray.hpp>
 
-using Real = double;
-using Complex = std::complex<Real>;
+using Real = itensor::Real;
+using Complex = itensor::Complex;
 
 using RealArray = xt::xarray<Real>;
 using ComplexArray = xt::xarray<Complex>;

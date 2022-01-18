@@ -2,6 +2,7 @@
   "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
   "cmake.configureOnOpen": true,
   "files.associations": {
-    "format": "cpp"
+    "format": "cpp",
+    "*.tcc": "cpp"
   }
 }

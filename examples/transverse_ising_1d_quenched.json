@@ -1,0 +1,11 @@
+{
+  "model": {
+    "name": "TransverseIsing1D",
+    "L": 16,
+    "J": 1.0,
+    "hx": 1.5,
+    "hy": 0.0,
+    "hz": 0.5,
+    "periodic": false
+  }
+}

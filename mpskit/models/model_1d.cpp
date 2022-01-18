@@ -15,7 +15,7 @@ Model1D::Model1D(const itensor::SiteSet &sites, int L, bool periodic) : Model(si
 
 void Model1D::orderTerms()
 {
-    std::for_each(m_two_body_terms.begin(), m_two_body_terms.end(), [](TwoSiteTerm &t) { t.orderTerm(); });
+    std::for_each(m_two_body_terms.begin(), m_two_body_terms.end(), [](TwoSiteTerm &term) { term.orderTerm(); });
     std::sort(m_one_body_terms.begin(), m_one_body_terms.end(),
               [](const OneSiteTerm &a, const OneSiteTerm &b) { return a.getIndex() < b.getIndex(); });
     std::sort(m_two_body_terms.begin(), m_two_body_terms.end(),

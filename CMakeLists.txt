@@ -113,6 +113,7 @@ add_library(mpskit_common STATIC
     mpskit/cmd/list_observables.cpp
     mpskit/cmd/list_one_point.cpp
     mpskit/cmd/list_two_point.cpp
+    mpskit/cmd/tebd.cpp
     mpskit/json.cpp
     mpskit/models/bose_hubbard_1d.cpp
     mpskit/models/bosonic_1d.cpp
@@ -125,6 +126,7 @@ add_library(mpskit_common STATIC
     mpskit/observable.cpp
     mpskit/observer.cpp
     mpskit/point_functions.cpp
+    mpskit/tebd.cpp
     mpskit/terms.cpp
     mpskit/util.cpp
 )

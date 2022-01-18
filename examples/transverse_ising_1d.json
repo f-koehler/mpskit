@@ -6,7 +6,7 @@
     "hx": 1.0,
     "hy": 0.0,
     "hz": 0.5,
-    "periodic": true
+    "periodic": false
   },
   "dmrg": {
     "sweeps": [
