@@ -64,7 +64,7 @@ std::vector<TwoPointFunction> Model1D::generateTwoPointFunctions(const std::stri
         if (m_periodic)
         {
             functions.reserve(static_cast<std::size_t>(m_L));
-            for (auto i : itensor::range1(m_L))
+            for (int i = 0; i < m_L; ++i)
             {
                 functions.emplace_back(m_sites, 1, i, op1, op2, prefactor);
             }
@@ -73,9 +73,9 @@ std::vector<TwoPointFunction> Model1D::generateTwoPointFunctions(const std::stri
         if (op1 == op2)
         {
             functions.reserve(static_cast<std::size_t>((m_L * (m_L + 1)) / 2));
-            for (auto i : itensor::range1(m_L))
+            for (int i = 0; i < m_L; ++i)
             {
-                for (auto j : itensor::range1(i))
+                for (int j = 0; j <= i; ++j)
                 {
                     functions.emplace_back(m_sites, i, j, op1, op1, prefactor);
                 }
@@ -85,9 +85,9 @@ std::vector<TwoPointFunction> Model1D::generateTwoPointFunctions(const std::stri
     }
 
     functions.reserve(static_cast<std::size_t>(m_L * m_L));
-    for (auto i : itensor::range1(m_L))
+    for (int i = 0; i < m_L; ++i)
     {
-        for (auto j : itensor::range1(m_L))
+        for (int j = 0; j < m_L; ++j)
         {
             functions.emplace_back(m_sites, i, j, op1, op1, prefactor);
         }

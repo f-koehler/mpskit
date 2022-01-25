@@ -60,14 +60,14 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
         }
     }
 
-    // auto two_point_functions = model->getTwoPointFunctions();
-    // for (auto &[_, two_point_function] : two_point_functions)
-    // {
-    //     for (auto &instance : two_point_function)
-    //     {
-    //         instance(psi);
-    //     }
-    // }
+    auto two_point_functions = model->getTwoPointFunctions();
+    for (auto &[_, two_point_function] : two_point_functions)
+    {
+        for (auto &instance : two_point_function)
+        {
+            instance(psi);
+        }
+    }
 
     auto duration_monotonic =
         static_cast<Real>(
@@ -124,23 +124,23 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
         H5Easy::dump(file, fmt::format("/one_point/{}/imag", name), imag);
     }
 
-    // for (const auto &[name, point_function] : two_point_functions)
-    // {
-    //     xt::xtensor<int, 2> indices = xt::zeros<int>({point_function.size(), 2ul});
-    //     xt::xtensor<double, 1> real = xt::zeros<double>({point_function.size()});
-    //     xt::xtensor<double, 1> imag = xt::zeros<double>({point_function.size()});
-    //     for (std::size_t i = 0; i < point_function.size(); ++i)
-    //     {
-    //         const auto &instance = point_function[i];
-    //         indices(i, 0) = instance.getIndex1();
-    //         indices(i, 1) = instance.getIndex2();
-    //         real(i) = instance.getValue().real();
-    //         imag(i) = instance.getValue().imag();
-    //     }
-    //     H5Easy::dump(file, fmt::format("/two_point/{}/indices", name), indices);
-    //     H5Easy::dump(file, fmt::format("/two_point/{}/real", name), real);
-    //     H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), imag);
-    // }
+    for (const auto &[name, point_function] : two_point_functions)
+    {
+        xt::xtensor<int, 2> indices = xt::zeros<int>({point_function.size(), 2ul});
+        xt::xtensor<double, 1> real = xt::zeros<double>({point_function.size()});
+        xt::xtensor<double, 1> imag = xt::zeros<double>({point_function.size()});
+        for (std::size_t i = 0; i < point_function.size(); ++i)
+        {
+            const auto &instance = point_function[i];
+            indices(i, 0) = instance.getIndex1();
+            indices(i, 1) = instance.getIndex2();
+            real(i) = instance.getValue().real();
+            imag(i) = instance.getValue().imag();
+        }
+        H5Easy::dump(file, fmt::format("/two_point/{}/indices", name), indices);
+        H5Easy::dump(file, fmt::format("/two_point/{}/real", name), real);
+        H5Easy::dump(file, fmt::format("/two_point/{}/imag", name), imag);
+    }
 
     itensor::writeToFile(psi_path, psi);
 
