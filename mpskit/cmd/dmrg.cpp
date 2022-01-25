@@ -37,19 +37,19 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
 
     const auto hamiltonian = model->getHamiltonian();
     auto psi0 = model->getInitialState();
-    auto observer = Observer(psi0, model);
+    // auto observer = Observer(psi0, model);
 
     const auto start_monotonic = std::chrono::steady_clock::now();
     const auto start_hires = std::chrono::high_resolution_clock::now();
-    auto [energy, psi] = itensor::dmrg(hamiltonian, psi0, sweeps, observer);
+    auto [energy, psi] = itensor::dmrg(hamiltonian, psi0, sweeps);
     const auto stop_hires = std::chrono::high_resolution_clock::now();
     const auto stop_monotonic = std::chrono::steady_clock::now();
 
     auto observables = model->getObservables();
-    // for (auto &[_, observable] : observables)
-    // {
-    //     observable(psi);
-    // }
+    for (auto &[_, observable] : observables)
+    {
+        observable(psi);
+    }
 
     // auto one_point_functions = model->getOnePointFunctions();
     // for (auto &[_, one_point_function] : one_point_functions)
@@ -80,31 +80,32 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
     H5Easy::File file(output_path, H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
     H5Easy::dump(file, "/runtimes/hires", duration_hires);
-    H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
+    // H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
 
-    for (const auto &[name, values] : observer.getObservableValues())
-    {
-        H5Easy::dump(file, fmt::format("/convergence/observables/{}/value", name), values);
-    }
-
-    for (const auto &[name, values] : observer.getObservableSquaredValues())
-    {
-        H5Easy::dump(file, fmt::format("/convergence/observables/{}/squared", name), values);
-    }
-
-    for (const auto &[name, values] : observer.getObservableVariances())
-    {
-        H5Easy::dump(file, fmt::format("/convergence/observables/{}/variance", name), values);
-    }
-    // for (const auto &[name, observable] : observables)
+    // for (const auto &[name, values] : observer.getObservableValues())
     // {
-    //     H5Easy::dump(file, fmt::format("/observables/{}/real", name), observable.value.real());
-    //     H5Easy::dump(file, fmt::format("/observables/{}/imag", name), observable.value.imag());
-    //     H5Easy::dump(file, fmt::format("/observables/{}/squared_real", name), observable.squared.real());
-    //     H5Easy::dump(file, fmt::format("/observables/{}/squared_imag", name), observable.squared.imag());
-    //     H5Easy::dump(file, fmt::format("/observables/{}/variance_real", name), observable.variance.real());
-    //     H5Easy::dump(file, fmt::format("/observables/{}/variance_imag", name), observable.variance.imag());
+    //     H5Easy::dump(file, fmt::format("/convergence/observables/{}/value", name), values);
     // }
+
+    // for (const auto &[name, values] : observer.getObservableSquaredValues())
+    // {
+    //     H5Easy::dump(file, fmt::format("/convergence/observables/{}/squared", name), values);
+    // }
+
+    // for (const auto &[name, values] : observer.getObservableVariances())
+    // {
+    //     H5Easy::dump(file, fmt::format("/convergence/observables/{}/variance", name), values);
+    // }
+
+    for (const auto &[name, observable] : observables)
+    {
+        H5Easy::dump(file, fmt::format("/observables/{}/real", name), observable.value.real());
+        H5Easy::dump(file, fmt::format("/observables/{}/imag", name), observable.value.imag());
+        H5Easy::dump(file, fmt::format("/observables/{}/squared_real", name), observable.squared.real());
+        H5Easy::dump(file, fmt::format("/observables/{}/squared_imag", name), observable.squared.imag());
+        H5Easy::dump(file, fmt::format("/observables/{}/variance_real", name), observable.variance.real());
+        H5Easy::dump(file, fmt::format("/observables/{}/variance_imag", name), observable.variance.imag());
+    }
 
     // for (const auto &[name, point_function] : one_point_functions)
     // {
