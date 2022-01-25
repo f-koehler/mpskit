@@ -43,14 +43,14 @@ std::vector<OnePointFunction> Model1D::generateOnePointFunctions(const std::stri
     if (full || !m_periodic)
     {
         functions.reserve(static_cast<std::size_t>(m_L));
-        for (auto i : itensor::range1(m_L))
+        for (int i = 0; i < m_L; ++i)
         {
             functions.emplace_back(m_sites, i, op, prefactor);
         }
     }
     else
     {
-        functions.emplace_back(m_sites, 1, op, prefactor);
+        functions.emplace_back(m_sites, 0, op, prefactor);
     }
     return functions;
 }
