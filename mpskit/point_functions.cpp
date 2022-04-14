@@ -101,7 +101,7 @@ const Complex &TwoPointFunction::operator()(itensor::MPS &psi)
     {
         auto ket = psi(m_i);
         auto bra = itensor::dag(itensor::prime(ket, "Site"));
-        m_value = itensor::eltC(bra * itensor::multSiteOps(m_op_i, m_op_j) * ket);
+        m_value = m_prefactor * itensor::eltC(bra * itensor::multSiteOps(m_op_i, m_op_j) * ket);
         return m_value;
     }
 
@@ -124,7 +124,7 @@ const Complex &TwoPointFunction::operator()(itensor::MPS &psi)
     C *= itensor::prime(psi(m_j), lj) * m_op_j;
     C *= itensor::prime(psidag(m_j), "Site");
 
-    m_value = itensor::eltC(C);
+    m_value = m_prefactor * itensor::eltC(C);
     if (!m_ordered)
     {
         m_value = std::conj(m_value);
