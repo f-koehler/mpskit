@@ -31,11 +31,12 @@ struct OnePointFunction
 struct TwoPointFunction
 {
   protected:
-    int m_index1;
-    int m_index2;
+    int m_i;
+    int m_j;
     Real m_prefactor;
     Complex m_value;
-    itensor::ITensor m_op;
+    bool m_ordered, m_same_index;
+    itensor::ITensor m_op_i, m_op_j;
 
   public:
     TwoPointFunction(const itensor::SiteSet &sites, int index1, int index2, const std::string &op1,
