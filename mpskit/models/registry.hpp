@@ -8,8 +8,8 @@
 #include "heisenberg_1d.hpp"
 #include "transverse_ising_1d.hpp"
 
-class Model1D;
+class Model;
 
-auto createModel1D(const json &js) -> std::shared_ptr<Model1D>;
+auto createModel1D(const json &js) -> std::shared_ptr<Model>;
 
 #endif /* MPSKIT_MODELS_REGISTRY */
