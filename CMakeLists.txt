@@ -120,9 +120,12 @@ add_library(mpskit_common STATIC
     mpskit/models/heisenberg_1d.cpp
     mpskit/models/model.cpp
     mpskit/models/model_1d.cpp
+    mpskit/models/model_2d.cpp
     mpskit/models/registry.cpp
     mpskit/models/spin_half_1d.cpp
+    mpskit/models/spin_half_square.cpp
     mpskit/models/transverse_ising_1d.cpp
+    mpskit/models/transverse_ising_square.cpp
     mpskit/observable.cpp
     mpskit/observer.cpp
     mpskit/point_functions.cpp
