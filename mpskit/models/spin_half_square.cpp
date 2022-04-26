@@ -5,6 +5,26 @@
 #include <itensor/mps/sites/spinhalf.h>
 #include <itensor/util/iterate.h>
 
+std::vector<OnePointFunction> SpinHalfSquare::generateOnePointFunctions(const std::string &op, const Real &prefactor,
+                                                                        bool full) const
+{
+    std::vector<OnePointFunction> functions;
+    if (full)
+    {
+        auto N = m_Lx * m_Ly;
+        functions.reserve(static_cast<std::size_t>(N));
+        for (int i = 0; i < N; ++i)
+        {
+            functions.emplace_back(m_sites, i, op, prefactor);
+        }
+    }
+    else
+    {
+        functions.emplace_back(m_sites, 0, op, prefactor);
+    }
+    return functions;
+}
+
 SpinHalfSquare::SpinHalfSquare(int Lx, int Ly, bool conserve_Sz, bool conserve_parity)
     : Model2D(itensor::SpinHalf(Lx * Ly, {"ConserveSz=", conserve_Sz, "ConserveParity=", conserve_parity}),
               itensor::squareLattice(Lx, Ly, {"YPeriodic=", false})),
@@ -50,6 +70,21 @@ std::map<std::string, Observable> SpinHalfSquare::getObservables() const
     result.insert({"Sx", Observable(getTotalSxOperator())});
     result.insert({"Sy", Observable(getTotalSyOperator())});
     result.insert({"Sz", Observable(getTotalSzOperator())});
+    return result;
+}
+
+std::map<std::string, std::vector<OnePointFunction>> SpinHalfSquare::getOnePointFunctions() const
+{
+
+    std::map<std::string, std::vector<OnePointFunction>> result;
+    result.insert({"sx", generateOnePointFunctions("Sx", 2.0)});
+    result.insert({"sy", generateOnePointFunctions("Sy", 2.0)});
+    result.insert({"sz", generateOnePointFunctions("Sz", 2.0)});
+    return result;
+}
+std::map<std::string, std::vector<TwoPointFunction>> SpinHalfSquare::getTwoPointFunctions() const
+{
+    std::map<std::string, std::vector<TwoPointFunction>> result;
     return result;
 }
 

@@ -11,6 +11,9 @@ class SpinHalfSquare : public Model2D
     int m_Lx;
     int m_Ly;
 
+    std::vector<OnePointFunction> generateOnePointFunctions(const std::string &op, const Real &prefactor,
+                                                            bool full = true) const;
+
   public:
     explicit SpinHalfSquare(int Lx, int Ly, bool conserve_Sz, bool conserve_parity);
 
@@ -19,6 +22,8 @@ class SpinHalfSquare : public Model2D
     itensor::MPO getTotalSyOperator() const;
     itensor::MPO getTotalSzOperator() const;
     std::map<std::string, Observable> getObservables() const override;
+    std::map<std::string, std::vector<OnePointFunction>> getOnePointFunctions() const override;
+    std::map<std::string, std::vector<TwoPointFunction>> getTwoPointFunctions() const override;
 
     bool doesConserveSz() const;
     bool doesConserveParity() const;
