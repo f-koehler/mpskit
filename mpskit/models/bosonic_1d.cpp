@@ -1,5 +1,6 @@
 #include "bosonic_1d.hpp"
 
+#include <fmt/core.h>
 #include <itensor/mps/autompo.h>
 #include <itensor/mps/sites/boson.h>
 #include <itensor/util/iterate.h>
@@ -13,11 +14,16 @@ Bosonic1D::Bosonic1D(int L, bool periodic, bool conserve_N, int max_N)
 {
 }
 
-auto Bosonic1D::getInitialState() const -> itensor::MPS
+auto Bosonic1D::getInitialState(const std::string &initial_state) const -> itensor::MPS
 {
-    auto state = itensor::InitState(m_sites);
-    state.set(1, std::to_string(m_max_N));
-    return itensor::randomMPS(state);
+    if (initial_state == "default")
+    {
+        auto state = itensor::InitState(m_sites);
+        state.set(1, std::to_string(m_max_N));
+        return itensor::randomMPS(state);
+    }
+
+    throw std::invalid_argument(fmt::format("Unknown initial state \"{}\"", initial_state));
 }
 
 auto Bosonic1D::getParticleNumberOperator() const -> itensor::MPO

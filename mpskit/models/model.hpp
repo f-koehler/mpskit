@@ -24,7 +24,7 @@ class Model
     explicit Model(itensor::SiteSet sites);
     virtual ~Model() = default;
 
-    virtual itensor::MPS getInitialState() const = 0;
+    virtual itensor::MPS getInitialState(const std::string &initial_state) const = 0;
     virtual itensor::MPO getHamiltonian() const = 0;
     virtual std::map<std::string, Observable> getObservables() const;
     virtual std::map<std::string, std::vector<OnePointFunction>> getOnePointFunctions() const;

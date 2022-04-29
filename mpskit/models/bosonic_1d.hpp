@@ -22,7 +22,7 @@ class Bosonic1D : public Model1D
   public:
     explicit Bosonic1D(int L, bool periodic, bool conserve_N, int max_N);
 
-    itensor::MPS getInitialState() const override;
+    itensor::MPS getInitialState(const std::string &initial_state = "default") const override;
     itensor::MPO getParticleNumberOperator() const;
     std::map<std::string, Observable> getObservables() const override;
     std::map<std::string, std::vector<OnePointFunction>> getOnePointFunctions() const override;

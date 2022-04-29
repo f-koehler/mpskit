@@ -1,5 +1,6 @@
 #include "spin_half_1d.hpp"
 
+#include <fmt/core.h>
 #include <itensor/mps/autompo.h>
 #include <itensor/mps/sites/spinhalf.h>
 #include <itensor/util/iterate.h>
@@ -13,9 +14,65 @@ SpinHalf1D::SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_par
 {
 }
 
-auto SpinHalf1D::getInitialState() const -> itensor::MPS
+auto SpinHalf1D::getInitialState(const std::string &initial_state) const -> itensor::MPS
 {
-    return itensor::randomMPS(m_sites);
+    if ((initial_state == "random") || (initial_state == "default"))
+    {
+        return itensor::randomMPS(m_sites);
+    }
+
+    auto state = itensor::InitState(m_sites);
+    if (initial_state == "up")
+    {
+        for (auto i : itensor::range1(m_L))
+        {
+            state.set(i, "Up");
+        }
+        return state;
+    }
+
+    if (initial_state == "down")
+    {
+        for (auto i : itensor::range1(m_L))
+        {
+            state.set(i, "Dn");
+        }
+        return state;
+    }
+
+    if (initial_state == "neel_up")
+    {
+        for (auto i : itensor::range1(m_L))
+        {
+            if (i % 2 == 0)
+            {
+                state.set(i, "Dn");
+            }
+            else
+            {
+                state.set(i, "Up");
+            }
+        }
+        return state;
+    }
+
+    if (initial_state == "neel_down")
+    {
+        for (auto i : itensor::range1(m_L))
+        {
+            if (i % 2 == 0)
+            {
+                state.set(i, "Up");
+            }
+            else
+            {
+                state.set(i, "Dn");
+            }
+        }
+        return state;
+    }
+
+    throw std::invalid_argument(fmt::format("Unknown initial state \"{}\"", initial_state));
 }
 
 auto SpinHalf1D::getTotalSxOperator() const -> itensor::MPO

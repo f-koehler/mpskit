@@ -23,7 +23,7 @@ class SpinHalf1D : public Model1D
   public:
     explicit SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_parity);
 
-    itensor::MPS getInitialState() const override;
+    itensor::MPS getInitialState(const std::string &initial_state = "default") const override;
     itensor::MPO getTotalSxOperator() const;
     itensor::MPO getTotalSyOperator() const;
     itensor::MPO getTotalSzOperator() const;

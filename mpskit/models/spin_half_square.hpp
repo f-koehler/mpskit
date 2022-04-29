@@ -17,7 +17,7 @@ class SpinHalfSquare : public Model2D
   public:
     explicit SpinHalfSquare(int Lx, int Ly, bool conserve_Sz, bool conserve_parity);
 
-    itensor::MPS getInitialState() const override;
+    itensor::MPS getInitialState(const std::string &initial_state = "default") const override;
     itensor::MPO getTotalSxOperator() const;
     itensor::MPO getTotalSyOperator() const;
     itensor::MPO getTotalSzOperator() const;
