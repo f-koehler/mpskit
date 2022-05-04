@@ -57,7 +57,7 @@ In order to achieve this replace the CMake command above with
 cmake -B build -DCMAKE_BUILD_TYPE=Debug
 ```
 
-## 2. Compile the code
+### 2. Compile the code
 
 After step one just run
 
@@ -68,6 +68,6 @@ cmake --build build
 to compile the code.
 The `build/` folder will then contain the `mpskit` executable.
 
-## Running the code
+## Running the program
 
 You can consult `mpskit --help` to see the command line options this programs has to offer.
