@@ -1,6 +1,9 @@
 # mpskit
 
-[![CI](https://github.com/f-koehler/dmrg/actions/workflows/ci.yml/badge.svg)](https://github.com/f-koehler/dmrg/actions/workflows/ci.yml)
+[![Repository on GitHub](https://img.shields.io/badge/Repo-Github-brightgreen?logo=github)](https://github.com/f-koehler/mpskit)
+[![CI](https://github.com/f-koehler/mpskit/actions/workflows/ci.yml/badge.svg)](https://github.com/f-koehler/mpskit/actions/workflows/ci.yml)
+[![GitHub](https://img.shields.io/github/license/f-koehler/mpskit)](https://github.com/f-koehler/mpskit/blob/main/LICENSE.md)
+![GitHub top language](https://img.shields.io/github/languages/top/f-koehler/mpskit)
 
 mpskit is a toolkit to facilitate the investigation of discrete quantum systems (e.g. lattice models of spins and bosons) in one and two dimensions.
 It employs the [ITensor](https://github.com/ITensor/ITensor) library for matrix product and tensor network states as well as the [density matrix renormalization group (DMRG) algorithm](https://en.wikipedia.org/wiki/Density_matrix_renormalization_group) to compute eigenstates.
