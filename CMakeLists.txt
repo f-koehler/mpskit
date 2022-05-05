@@ -125,6 +125,7 @@ add_library(mpskit_common STATIC
     mpskit/models/spin_half_square.cpp
     mpskit/models/transverse_ising_1d.cpp
     mpskit/models/transverse_ising_square.cpp
+    mpskit/models/xy_spin_glass_1d.cpp
     mpskit/observable.cpp
     mpskit/observer.cpp
     mpskit/point_functions.cpp

@@ -5,6 +5,7 @@
 #include "model_1d.hpp"
 #include "transverse_ising_1d.hpp"
 #include "transverse_ising_square.hpp"
+#include "xy_spin_glass_1d.hpp"
 
 #include <fmt/core.h>
 #include <map>
@@ -27,6 +28,10 @@ auto createModel1D(const json &js) -> std::shared_ptr<Model>
     else if (name == "Heisenberg1D")
     {
         model = new Heisenberg1D(js);
+    }
+    else if (name == "XYSpinGlass1D")
+    {
+        model = new XYSpinGlass1D(js);
     }
     else if (name == "TransverseIsingSquare")
     {
