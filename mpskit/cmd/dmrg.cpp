@@ -81,6 +81,10 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
     H5Easy::File file(output_path, H5Easy::File::Overwrite);
     H5Easy::dump(file, "/runtimes/monotonic", duration_monotonic);
     H5Easy::dump(file, "/runtimes/hires", duration_hires);
+
+    H5Easy::dump(file, "/mps_info/max_bond_dim", itensor::maxLinkDim(psi));
+    H5Easy::dump(file, "/mps_info/average_bond_dim", itensor::averageLinkDim(psi));
+
     // H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
 
     // for (const auto &[name, values] : observer.getObservableValues())
