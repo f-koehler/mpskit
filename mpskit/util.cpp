@@ -15,23 +15,23 @@ auto getSweepsFromJSON(const json &j) -> itensor::Sweeps
         const auto &entry = j[static_cast<std::size_t>(i)];
         if (entry.contains("maxdim"))
         {
-            sweeps.setmaxdim(i, entry["maxdim"].get<int>());
+            sweeps.setmaxdim(i + 1, entry["maxdim"].get<int>());
         }
         if (entry.contains("mindim"))
         {
-            sweeps.setmindim(i, entry["mindim"].get<int>());
+            sweeps.setmindim(i + 1, entry["mindim"].get<int>());
         }
         if (entry.contains("cutoff"))
         {
-            sweeps.setcutoff(i, entry["cutoff"].get<Real>());
+            sweeps.setcutoff(i + 1, entry["cutoff"].get<Real>());
         }
         if (entry.contains("niter"))
         {
-            sweeps.setniter(i, entry["niter"].get<int>());
+            sweeps.setniter(i + 1, entry["niter"].get<int>());
         }
         if (entry.contains("noise"))
         {
-            sweeps.setnoise(i, entry["noise"].get<Real>());
+            sweeps.setnoise(i + 1, entry["noise"].get<Real>());
         }
     }
     return sweeps;

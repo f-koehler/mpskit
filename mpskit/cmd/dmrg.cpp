@@ -14,6 +14,7 @@
 #include <highfive/bits/H5Slice_traits_misc.hpp>
 #include <highfive/h5easy_bits/H5Easy_public.hpp>
 #include <itensor/mps/dmrg.h>
+#include <itensor/util/print_macro.h>
 #include <itensor/util/readwrite.h>
 #include <map>
 #include <memory>
@@ -35,6 +36,8 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
 
     const auto sweeps = getSweepsFromJSON(input["dmrg"]["sweeps"]);
     const auto initial_state = jsonGetDefault<std::string>(input["model"], "initial_state", "default");
+
+    Print(sweeps);
 
     const auto hamiltonian = model->getHamiltonian();
     auto psi0 = model->getInitialState(initial_state);
