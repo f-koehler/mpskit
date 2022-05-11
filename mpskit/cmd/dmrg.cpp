@@ -88,23 +88,6 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
     H5Easy::dump(file, "/mps_info/max_bond_dim", itensor::maxLinkDim(psi));
     H5Easy::dump(file, "/mps_info/average_bond_dim", itensor::averageLinkDim(psi));
 
-    // H5Easy::dump(file, "/convergence/energy", observer.getEnergies());
-
-    // for (const auto &[name, values] : observer.getObservableValues())
-    // {
-    //     H5Easy::dump(file, fmt::format("/convergence/observables/{}/value", name), values);
-    // }
-
-    // for (const auto &[name, values] : observer.getObservableSquaredValues())
-    // {
-    //     H5Easy::dump(file, fmt::format("/convergence/observables/{}/squared", name), values);
-    // }
-
-    // for (const auto &[name, values] : observer.getObservableVariances())
-    // {
-    //     H5Easy::dump(file, fmt::format("/convergence/observables/{}/variance", name), values);
-    // }
-
     for (const auto &[name, observable] : observables)
     {
         H5Easy::dump(file, fmt::format("/observables/{}/real", name), observable.value.real());
