@@ -5,6 +5,7 @@
 #include <string>
 
 #include "mpskit/cmd/dmrg.hpp"
+#include "mpskit/cmd/entanglement_entropy.hpp"
 #include "mpskit/cmd/list_observables.hpp"
 #include "mpskit/cmd/list_one_point.hpp"
 #include "mpskit/cmd/list_two_point.hpp"
@@ -21,6 +22,7 @@ auto main(int argc, char **argv) -> int
     std::string input_path;
     std::string output_path;
     std::string psi_path;
+    int bond;
     // Real tfinal = 1.0;
     // Real dt = 0.05;
     // int substeps = 5;
@@ -31,6 +33,13 @@ auto main(int argc, char **argv) -> int
         ->required();
     app_dmrg->add_option("-o,--output", output_path, "Output file containing DMRG output.")->required();
     app_dmrg->add_option("-p,--psi", psi_path, "File to write the final matrix product state to.")->required();
+
+    auto app_entanglement_entropy =
+        app.add_subcommand("entanglement-entropy", "Compute von Neumann entanglement entropy across a certain bond");
+    app_entanglement_entropy->add_option("psi,-p,--psi", psi_path, "Matrix product state to analyze.")->required();
+    app_entanglement_entropy->add_option("-o,--output", output_path, "Output file for entanglement-entropy.")
+        ->required();
+    app_entanglement_entropy->add_option("bond,-b,--bond", bond, "Bond to compute t.")->required();
 
     // auto app_tebd = app.add_subcommand("tebd", "Compute time-evolution using TEBD.");
     // app_tebd->add_option("input,-i,--input", input_path, "input file spceifying the model.")->required();
@@ -54,6 +63,11 @@ auto main(int argc, char **argv) -> int
     if (app_dmrg->parsed())
     {
         return cmdDMRG(input_path, output_path, psi_path);
+    }
+
+    if (app_entanglement_entropy->parsed())
+    {
+        return cmdEntanglementEntropy(psi_path, output_path, bond);
     }
 
     // if (app_tebd->parsed())
