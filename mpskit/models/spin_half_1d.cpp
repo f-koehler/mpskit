@@ -21,23 +21,23 @@ auto SpinHalf1D::getInitialState(const std::string &initial_state) const -> iten
         return itensor::randomMPS(m_sites);
     }
 
-    auto state = itensor::InitState(m_sites);
+    auto init = itensor::InitState(m_sites);
     if (initial_state == "up")
     {
         for (auto i : itensor::range1(m_L))
         {
-            state.set(i, "Up");
+            init.set(i, "Up");
         }
-        return state;
+        return init;
     }
 
     if (initial_state == "down")
     {
         for (auto i : itensor::range1(m_L))
         {
-            state.set(i, "Dn");
+            init.set(i, "Dn");
         }
-        return state;
+        return init;
     }
 
     if (initial_state == "neel_up")
@@ -46,14 +46,14 @@ auto SpinHalf1D::getInitialState(const std::string &initial_state) const -> iten
         {
             if (i % 2 == 0)
             {
-                state.set(i, "Dn");
+                init.set(i, "Dn");
             }
             else
             {
-                state.set(i, "Up");
+                init.set(i, "Up");
             }
         }
-        return state;
+        return init;
     }
 
     if (initial_state == "neel_down")
@@ -62,14 +62,46 @@ auto SpinHalf1D::getInitialState(const std::string &initial_state) const -> iten
         {
             if (i % 2 == 0)
             {
-                state.set(i, "Up");
+                init.set(i, "Up");
             }
             else
             {
-                state.set(i, "Dn");
+                init.set(i, "Dn");
             }
         }
-        return state;
+        return init;
+    }
+
+    if ((initial_state == "plus") || (initial_state == "minus"))
+    {
+        if (initial_state == "plus")
+        {
+            for (auto i : itensor::range1(m_L))
+            {
+                init.set(i, "Up");
+            }
+        }
+        else
+        {
+            for (auto i : itensor::range1(m_L))
+            {
+                init.set(i, "Dn");
+            }
+        }
+        auto psi = itensor::MPS(init);
+
+        for (auto i : itensor::range1(m_L))
+        {
+            auto ind = m_sites(i);
+            auto ind_prime = itensor::prime(m_sites(i));
+            auto hadamard = itensor::ITensor(ind, ind_prime);
+            hadamard.set(ind(1), ind_prime(1), itensor::ISqrt2);
+            hadamard.set(ind(1), ind_prime(2), itensor::ISqrt2);
+            hadamard.set(ind(2), ind_prime(1), itensor::ISqrt2);
+            hadamard.set(ind(2), ind_prime(2), -itensor::ISqrt2);
+            psi.set(i, (hadamard * psi(i)).noPrime());
+        }
+        return psi;
     }
 
     throw std::invalid_argument(fmt::format("Unknown initial state \"{}\"", initial_state));
