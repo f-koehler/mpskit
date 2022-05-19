@@ -21,6 +21,10 @@ SpinHalfLR1D::SpinHalfLR1D(const json &js)
         for (int j = 0; j < i; ++j)
         {
             const auto coupling = -m_J / std::pow(std::abs(static_cast<Real>(j - i)), m_alpha);
+            if (coupling > m_cutoff)
+            {
+                continue;
+            }
             m_two_body_terms.emplace_back(coupling, "Sz", i, "Sz", j);
         }
     }
