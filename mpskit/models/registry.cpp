@@ -38,6 +38,10 @@ auto createModel1D(const json &js) -> std::shared_ptr<Model>
     {
         model = new TransverseIsingSquare(js);
     }
+    else if (name == "IsingLR1D")
+    {
+        model = new IsingLR1D(js);
+    }
     else
     {
         throw std::runtime_error(fmt::format("Unknown model: {}", name));

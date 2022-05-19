@@ -1,7 +1,7 @@
 #include "ising_lr_1d.hpp"
 #include <cmath>
 
-SpinHalfLR1D::SpinHalfLR1D(const json &js)
+IsingLR1D::IsingLR1D(const json &js)
     : TransverseIsing1D(js), m_alpha(js["alpha"].get<Real>()), m_cutoff(jsonGetDefault<Real>(js, "cutoff", -1.0))
 {
     m_one_body_terms.clear();
@@ -30,12 +30,12 @@ SpinHalfLR1D::SpinHalfLR1D(const json &js)
     }
 }
 
-const Real &SpinHalfLR1D::getAlpha() const
+const Real &IsingLR1D::getAlpha() const
 {
     return m_alpha;
 }
 
-const Real &SpinHalfLR1D::getCutoff() const
+const Real &IsingLR1D::getCutoff() const
 {
     return m_cutoff;
 }
