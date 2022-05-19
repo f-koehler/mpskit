@@ -27,6 +27,8 @@ However, I got it to work with the Julia version of ITensor, [ITensor.jl](https:
 - Bose-Hubbard Model (1D)
   - [example input](examples/bose_hubbard_1d.json)
   - [Wikipedia](https://en.wikipedia.org/wiki/Bose%E2%80%93Hubbard_model)
+- Long-Range disordered XY Spin Glass (1D)
+- Long-Range Transverse-Field Ising Model (1D)
 
 A new model can be added by adding it to the `models` source folder (take inspiration from [`transverse_ising_1d.hpp`](https://github.com/f-koehler/dmrg/blob/main/mpskit/models/transverse_ising_1d.hpp), [`transverse_ising_1d.cpp`](https://github.com/f-koehler/dmrg/blob/main/mpskit/models/transverse_ising_1d.cpp), etc.).
 Afterwards it has to be registered in the model registry (see [`registry.cpp`](https://github.com/f-koehler/dmrg/blob/main/mpskit/models/registry.cpp)).
