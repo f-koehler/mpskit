@@ -35,8 +35,8 @@ TransverseIsing1D::TransverseIsing1D(int L, bool periodic, const Real &J, const 
 }
 
 TransverseIsing1D::TransverseIsing1D(const json &js)
-    : TransverseIsing1D(js["L"].get<int>(), js["periodic"].get<bool>(), js["J"].get<Real>(), js["hx"].get<Real>(),
-                        js["hz"].get<Real>())
+    : TransverseIsing1D(js["L"].get<int>(), jsonGetDefault<bool>(js, "periodic", false), js["J"].get<Real>(),
+                        js["hx"].get<Real>(), js["hz"].get<Real>())
 {
 }
 
