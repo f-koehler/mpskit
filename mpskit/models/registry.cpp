@@ -2,6 +2,7 @@
 #include "../json.hpp"
 #include "bose_hubbard_1d.hpp"
 #include "heisenberg_1d.hpp"
+#include "ising_lr_1d.hpp"
 #include "model_1d.hpp"
 #include "transverse_ising_1d.hpp"
 #include "transverse_ising_square.hpp"
