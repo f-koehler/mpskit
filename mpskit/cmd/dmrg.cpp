@@ -41,11 +41,11 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
 
     const auto hamiltonian = model->getHamiltonian();
     auto psi0 = model->getInitialState(initial_state);
-    // auto observer = Observer(psi0, model);
+    auto observer = Observer(psi0);
 
     const auto start_monotonic = std::chrono::steady_clock::now();
     const auto start_hires = std::chrono::high_resolution_clock::now();
-    auto [energy, psi] = itensor::dmrg(hamiltonian, psi0, sweeps);
+    auto [energy, psi] = itensor::dmrg(hamiltonian, psi0, sweeps, observer);
     const auto stop_hires = std::chrono::high_resolution_clock::now();
     const auto stop_monotonic = std::chrono::steady_clock::now();
 
@@ -87,6 +87,10 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
 
     H5Easy::dump(file, "/mps_info/max_bond_dim", itensor::maxLinkDim(psi));
     H5Easy::dump(file, "/mps_info/average_bond_dim", itensor::averageLinkDim(psi));
+
+    H5Easy::dump(file, "/convergence/energies", observer.getEnergies());
+    H5Easy::dump(file, "/convergence/max_bond_dim", observer.getMaxBondDimensions());
+    H5Easy::dump(file, "/convergence/average_bond_dim", observer.getAverageBondDimensions());
 
     for (const auto &[name, observable] : observables)
     {

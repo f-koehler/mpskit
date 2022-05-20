@@ -5,42 +5,28 @@
 
 #include "models/model.hpp"
 
-Observer::Observer(const itensor::MPS &psi, std::shared_ptr<Model> model, const itensor::Args &args)
-    : itensor::DMRGObserver(psi, args), m_observables(model->getObservables())
+Observer::Observer(const itensor::MPS &psi, const itensor::Args &args) : itensor::DMRGObserver(psi, args)
 {
 }
 
 auto Observer::checkDone(const itensor::Args &args) -> bool
 {
-    const auto energy = args.getReal("Energy", 0.0);
     auto retval = DMRGObserver::checkDone(args);
-    m_energies.push_back(energy);
-
-    for (auto &[name, observable] : m_observables)
-    {
-        observable(psi());
-        m_observable_values[name].push_back(observable.value);
-        m_observable_squared_values[name].push_back(observable.squared);
-        m_observable_variances[name].push_back(observable.variance);
-    }
-
+    m_energies.push_back(args.getReal("Energy", 0));
+    m_max_bond_dimensions.push_back(itensor::maxLinkDim(psi()));
+    m_average_bond_dimensions.push_back(itensor::averageLinkDim(psi()));
     return retval;
 }
 
-auto Observer::getEnergies() const -> const RealSeries &
+const RealSeries &Observer::getEnergies() const
 {
     return m_energies;
 }
-
-const std::map<std::string, ComplexSeries> &Observer::getObservableValues() const
+const IntSeries &Observer::getMaxBondDimensions() const
 {
-    return m_observable_values;
+    return m_max_bond_dimensions;
 }
-const std::map<std::string, ComplexSeries> &Observer::getObservableSquaredValues() const
+const RealSeries &Observer::getAverageBondDimensions() const
 {
-    return m_observable_squared_values;
-}
-const std::map<std::string, ComplexSeries> &Observer::getObservableVariances() const
-{
-    return m_observable_variances;
+    return m_average_bond_dimensions;
 }
