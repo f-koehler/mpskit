@@ -20,7 +20,7 @@ IsingLR1D::IsingLR1D(const json &js)
     {
         for (int j = 0; j < i; ++j)
         {
-            const auto coupling = -m_J / std::pow(std::abs(static_cast<Real>(j - i)), m_alpha);
+            const auto coupling = -4.0 * m_J / std::pow(std::abs(static_cast<Real>(j - i)), m_alpha);
             if (coupling > m_cutoff)
             {
                 continue;
