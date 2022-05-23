@@ -9,13 +9,13 @@ class IsingLR1D : public TransverseIsing1D
 {
   protected:
     Real m_alpha;
-    Real m_cutoff;
+    Real m_cutoff_radius;
 
   public:
     IsingLR1D(const json &js);
 
     const Real &getAlpha() const;
-    const Real &getCutoff() const;
+    const Real &getCutoffRadius() const;
 };
 
 #endif /* MPSKIT_MODELS_ISING_LR_1D */
