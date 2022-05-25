@@ -119,6 +119,7 @@ add_library(mpskit_common STATIC
     mpskit/models/bosonic_1d.cpp
     mpskit/models/heisenberg_1d.cpp
     mpskit/models/ising_lr_1d.cpp
+    mpskit/models/ising_lr_square.cpp
     mpskit/models/model.cpp
     mpskit/models/model_1d.cpp
     mpskit/models/model_2d.cpp
