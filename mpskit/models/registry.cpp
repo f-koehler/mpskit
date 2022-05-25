@@ -45,7 +45,7 @@ auto createModel1D(const json &js) -> std::shared_ptr<Model>
     }
     else if (name == "IsingLRSquare")
     {
-        model = new IsingLR1D(js);
+        model = new IsingLRSquare(js);
     }
     else
     {
