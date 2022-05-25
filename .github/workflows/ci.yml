@@ -92,7 +92,13 @@ jobs:
         run: cmake --build build
       - name: Run BoseHubbard1D.
         run: build/mpskit dmrg --input examples/bose_hubbard_1d.json --psi dmrg.itensor --output results.h5
+      - name: Run IsingLR1D.
+        run: build/mpskit dmrg --input examples/ising_lr_1d.json --psi dmrg.itensor --output results.h5
+      - name: Run IsingLRSquare.
+        run: build/mpskit dmrg --input examples/ising_lr_square.json --psi dmrg.itensor --output results.h5
       - name: Run TransverseIsing1D.
         run: build/mpskit dmrg --input examples/transverse_ising_1d.json --psi dmrg.itensor --output results.h5
       - name: Run TransverseIsingSquare.
         run: build/mpskit dmrg --input examples/transverse_ising_square.json --psi dmrg.itensor --output results.h5
+      - name: Run XYSpinGlass1D.
+        run: build/mpskit dmrg --input examples/xy_spin_glass_1d.json --psi dmrg.itensor --output results.h5
