@@ -3,6 +3,7 @@
 #include "bose_hubbard_1d.hpp"
 #include "heisenberg_1d.hpp"
 #include "ising_lr_1d.hpp"
+#include "ising_lr_square.hpp"
 #include "model_1d.hpp"
 #include "transverse_ising_1d.hpp"
 #include "transverse_ising_square.hpp"
@@ -39,6 +40,10 @@ auto createModel1D(const json &js) -> std::shared_ptr<Model>
         model = new TransverseIsingSquare(js);
     }
     else if (name == "IsingLR1D")
+    {
+        model = new IsingLR1D(js);
+    }
+    else if (name == "IsingLRSquare")
     {
         model = new IsingLR1D(js);
     }
