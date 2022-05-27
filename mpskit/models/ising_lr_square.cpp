@@ -19,11 +19,6 @@ IsingLRSquare::IsingLRSquare(const json &js)
 
     for (const auto &bond : m_lattice)
     {
-        if (bond.s1 <= bond.s2)
-        {
-            continue;
-        }
-
         const auto dx = std::abs(bond.x1 - bond.x2);
         const auto dy = std::abs(bond.y1 - bond.y2);
         const auto dist = std::sqrt((dx * dx) + (dy * dy));
