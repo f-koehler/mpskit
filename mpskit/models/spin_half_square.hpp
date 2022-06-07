@@ -13,6 +13,8 @@ class SpinHalfSquare : public Model2D
 
     std::vector<OnePointFunction> generateOnePointFunctions(const std::string &op, const Real &prefactor,
                                                             bool full = true) const;
+    std::vector<TwoPointFunction> generateTwoPointFunctions(const std::string &op1, const std::string &op2,
+                                                            const Real &prefactor, bool full = true) const;
 
   public:
     explicit SpinHalfSquare(int Lx, int Ly, bool conserve_Sz, bool conserve_parity);

@@ -26,6 +26,33 @@ std::vector<OnePointFunction> SpinHalfSquare::generateOnePointFunctions(const st
     return functions;
 }
 
+std::vector<TwoPointFunction> SpinHalfSquare::generateTwoPointFunctions(const std::string &op1, const std::string &op2,
+                                                                        const Real &prefactor, bool full) const
+{
+    std::vector<TwoPointFunction> functions;
+    auto N = m_Lx * m_Ly;
+    if (full)
+    {
+        functions.reserve(static_cast<std::size_t>(N * N));
+        for (int i = 0; i < N; ++i)
+        {
+            for (int j = 0; j < N; ++j)
+            {
+                functions.emplace_back(m_sites, i, j, op1, op2, prefactor);
+            }
+        }
+    }
+    else
+    {
+        functions.reserve(static_cast<std::size_t>(N));
+        for (int i = 0; i < N; ++i)
+        {
+            functions.emplace_back(m_sites, 0, i, op1, op2, prefactor);
+        }
+    }
+    return functions;
+}
+
 SpinHalfSquare::SpinHalfSquare(int Lx, int Ly, bool conserve_Sz, bool conserve_parity)
     : Model2D(itensor::SpinHalf(Lx * Ly, {"ConserveSz=", conserve_Sz, "ConserveParity=", conserve_parity}),
               itensor::squareLattice(Lx, Ly, {"YPeriodic=", false})),
@@ -175,6 +202,9 @@ std::map<std::string, std::vector<OnePointFunction>> SpinHalfSquare::getOnePoint
 std::map<std::string, std::vector<TwoPointFunction>> SpinHalfSquare::getTwoPointFunctions() const
 {
     std::map<std::string, std::vector<TwoPointFunction>> result;
+    result.insert({"sx_sx", generateTwoPointFunctions("Sx", "Sx", 4.0, true)});
+    result.insert({"sy_sy", generateTwoPointFunctions("Sy", "Sy", 4.0, true)});
+    result.insert({"sz_sz", generateTwoPointFunctions("Sz", "Sz", 4.0, true)});
     return result;
 }
 
