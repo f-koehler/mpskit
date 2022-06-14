@@ -53,3 +53,11 @@ auto BoseHubbard1D::getMu() const -> const Real &
 {
     return m_mu;
 }
+
+void BoseHubbard1D::print(std::ostream &stream) const
+{
+    Bosonic1D::print(stream);
+    stream << "\n\tJ:                  " << m_J;
+    stream << "\n\tU:                  " << m_U;
+    stream << "\n\tµ:                  " << m_mu;
+}

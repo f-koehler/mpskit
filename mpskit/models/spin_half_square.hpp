@@ -29,6 +29,10 @@ class SpinHalfSquare : public Model2D
 
     bool doesConserveSz() const;
     bool doesConserveParity() const;
+    int getLx() const;
+    int getLy() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_SPIN_HALF_2D */

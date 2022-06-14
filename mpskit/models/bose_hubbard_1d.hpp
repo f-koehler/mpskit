@@ -20,6 +20,8 @@ class BoseHubbard1D : public Bosonic1D
     const Real &getJ() const;
     const Real &getU() const;
     const Real &getMu() const;
+
+    void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_BOSE_HUBBARD_1D */

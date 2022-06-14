@@ -21,6 +21,8 @@ class Model2D : public Model
     itensor::MPO getHamiltonian() const override;
     virtual const std::vector<OneSiteTerm> &getOneBodyTerms() const;
     virtual const std::vector<TwoSiteTerm> &getTwoBodyTerms() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_MODEL_SQUARE */

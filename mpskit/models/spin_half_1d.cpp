@@ -172,3 +172,10 @@ auto SpinHalf1D::doesConserveParity() const -> bool
 {
     return m_conserve_parity;
 }
+
+void SpinHalf1D::print(std::ostream &stream) const
+{
+    Model1D::print(stream);
+    stream << "\n\tconserve Sz:        " << m_conserve_Sz;
+    stream << "\n\tconserve Parity:    " << m_conserve_parity;
+}

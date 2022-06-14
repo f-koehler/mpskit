@@ -30,6 +30,8 @@ class Bosonic1D : public Model1D
 
     bool doesConserveN() const;
     int getMaxN() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_BOSONIC_1D */

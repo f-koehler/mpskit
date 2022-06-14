@@ -28,3 +28,8 @@ auto Model2D::getTwoBodyTerms() const -> const std::vector<TwoSiteTerm> &
 {
     return m_two_body_terms;
 }
+
+void Model2D::print(std::ostream &stream) const
+{
+    Model::print(stream);
+}

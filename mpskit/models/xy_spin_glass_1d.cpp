@@ -45,3 +45,9 @@ auto XYSpinGlass1D::getAlpha() const -> const Real &
 {
     return m_alpha;
 }
+
+void XYSpinGlass1D::print(std::ostream &stream) const
+{
+    SpinHalf1D::print(stream);
+    stream << "\n\talpha:              " << m_alpha;
+}

@@ -18,6 +18,8 @@ class TransverseIsingSquare : public SpinHalfSquare
     const Real &getJ() const;
     const Real &getHx() const;
     const Real &getHz() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_TRANSVERSE_ISING_SQUARE */

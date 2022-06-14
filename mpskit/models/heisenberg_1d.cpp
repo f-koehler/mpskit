@@ -70,3 +70,14 @@ auto Heisenberg1D::getHz() const -> const Real &
 {
     return m_hz;
 }
+
+void Heisenberg1D::print(std::ostream &stream) const
+{
+    SpinHalf1D::print(stream);
+    stream << "\n\tJx:                 " << m_Jx;
+    stream << "\n\tJy:                 " << m_Jy;
+    stream << "\n\tJz:                 " << m_Jz;
+    stream << "\n\thx:                 " << m_hx;
+    stream << "\n\thy:                 " << m_hy;
+    stream << "\n\thz:                 " << m_hz;
+}

@@ -66,3 +66,10 @@ auto Bosonic1D::getMaxN() const -> int
 {
     return m_max_N;
 }
+
+void Bosonic1D::print(std::ostream &stream) const
+{
+    Model1D::print(stream);
+    stream << "\n\tconserve N:         " << m_conserve_N;
+    stream << "\n\tmax N:              " << m_max_N;
+}

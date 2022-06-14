@@ -51,3 +51,13 @@ const Real &IsingLRSquare::getCutoffRadius() const
 {
     return m_cutoff_radius;
 }
+
+void IsingLRSquare::print(std::ostream &stream) const
+{
+    SpinHalfSquare::print(stream);
+    stream << "\n\tJ:                  " << m_J;
+    stream << "\n\thx:                 " << m_hx;
+    stream << "\n\thz:                 " << m_hz;
+    stream << "\n\talpha:              " << m_alpha;
+    stream << "\n\tcutoff radius:      " << m_cutoff_radius;
+}

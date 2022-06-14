@@ -30,3 +30,15 @@ std::map<std::string, std::vector<TwoPointFunction>> Model::getTwoPointFunctions
 {
     return {};
 }
+
+void Model::print(std::ostream &stream) const
+{
+    stream << "Model";
+    // TODO: print model name
+}
+
+std::ostream &operator<<(std::ostream &stream, const Model &model)
+{
+    model.print(stream);
+    return stream;
+}

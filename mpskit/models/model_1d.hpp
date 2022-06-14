@@ -39,6 +39,8 @@ class Model1D : public Model
     virtual const std::vector<TwoSiteTerm> &getTwoBodyTerms() const;
     bool isPeriodic() const;
     int getL() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_MODEL_1D */

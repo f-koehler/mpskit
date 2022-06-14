@@ -5,7 +5,9 @@
 #include <itensor/mps/mps.h>
 #include <itensor/mps/siteset.h>
 #include <map>
+#include <ostream>
 #include <string>
+#include <string_view>
 #include <vector>
 
 #include "../observable.hpp"
@@ -31,6 +33,10 @@ class Model
     virtual std::map<std::string, std::vector<TwoPointFunction>> getTwoPointFunctions() const;
 
     const itensor::SiteSet &getSites() const;
+
+    virtual void print(std::ostream &stream) const;
 };
+
+std::ostream &operator<<(std::ostream &stream, const Model &model);
 
 #endif /* MPSKIT_MODELS_MODEL */

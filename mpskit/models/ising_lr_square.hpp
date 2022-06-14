@@ -22,6 +22,8 @@ class IsingLRSquare : public SpinHalfSquare
     const Real &getHz() const;
     const Real &getAlpha() const;
     const Real &getCutoffRadius() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_ISING_LR_SQUARE */

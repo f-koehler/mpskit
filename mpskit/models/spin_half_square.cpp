@@ -216,3 +216,21 @@ bool SpinHalfSquare::doesConserveParity() const
 {
     return m_conserve_parity;
 }
+
+int SpinHalfSquare::getLx() const
+{
+    return m_Lx;
+}
+int SpinHalfSquare::getLy() const
+{
+    return m_Ly;
+}
+
+void SpinHalfSquare::print(std::ostream &stream) const
+{
+    Model2D::print(stream);
+    stream << "\n\tconserve Sz:        " << m_conserve_Sz;
+    stream << "\n\tconserve Parity:    " << m_conserve_parity;
+    stream << "\n\tLx:                 " << m_Lx;
+    stream << "\n\tLy:                 " << m_Ly;
+}

@@ -41,3 +41,10 @@ const Real &IsingLR1D::getCutoffRadius() const
 {
     return m_cutoff_radius;
 }
+
+void IsingLR1D::print(std::ostream &stream) const
+{
+    TransverseIsing1D::print(stream);
+    stream << "\n\talpha:              " << m_alpha;
+    stream << "\n\tcutoff radius:      " << m_cutoff_radius;
+}

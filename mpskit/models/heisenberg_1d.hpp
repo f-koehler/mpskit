@@ -26,6 +26,8 @@ class Heisenberg1D : public SpinHalf1D
     const Real &getHx() const;
     const Real &getHy() const;
     const Real &getHz() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_HEISENBERG_1D */

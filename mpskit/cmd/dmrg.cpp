@@ -34,6 +34,8 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
     auto input = loadJSON(input_path);
     auto model = createModel1D(input["model"]);
 
+    std::cout << "\n\n" << *model << "\n\n";
+
     const auto sweeps = getSweepsFromJSON(input["dmrg"]["sweeps"]);
     const auto initial_state = jsonGetDefault<std::string>(input["model"], "initial_state", "default");
 

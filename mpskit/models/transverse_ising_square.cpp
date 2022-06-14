@@ -35,3 +35,11 @@ const Real &TransverseIsingSquare::getHz() const
 {
     return m_hz;
 }
+
+void TransverseIsingSquare::print(std::ostream &stream) const
+{
+    SpinHalfSquare::print(stream);
+    stream << "\n\tJ:                  " << m_J;
+    stream << "\n\thx:                 " << m_hx;
+    stream << "\n\thz:                 " << m_hz;
+}

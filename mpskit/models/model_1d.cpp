@@ -114,3 +114,10 @@ auto Model1D::getL() const -> int
 {
     return m_L;
 }
+
+void Model1D::print(std::ostream &stream) const
+{
+    Model::print(stream);
+    stream << "\n\tL:                  " << m_L;
+    stream << "\n\tperiodic:           " << m_periodic;
+}

@@ -52,3 +52,11 @@ auto TransverseIsing1D::getHz() const -> const Real &
 {
     return m_hz;
 }
+
+void TransverseIsing1D::print(std::ostream &stream) const
+{
+    SpinHalf1D::print(stream);
+    stream << "\n\tJ:                  " << m_J;
+    stream << "\n\thx:                 " << m_hx;
+    stream << "\n\thz:                 " << m_hz;
+}

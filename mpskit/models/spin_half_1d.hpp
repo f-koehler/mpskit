@@ -33,6 +33,8 @@ class SpinHalf1D : public Model1D
 
     bool doesConserveSz() const;
     bool doesConserveParity() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_SPIN_HALF_1D */

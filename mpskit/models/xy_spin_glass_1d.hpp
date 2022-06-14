@@ -16,6 +16,8 @@ class XYSpinGlass1D : public SpinHalf1D
     XYSpinGlass1D(const json &js);
 
     const Real &getAlpha() const;
+
+    virtual void print(std::ostream &stream) const override;
 };
 
 #endif /* MPSKIT_MODELS_XY_SPIN_GLASS_1D */
