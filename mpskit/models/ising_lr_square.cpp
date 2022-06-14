@@ -19,17 +19,24 @@ IsingLRSquare::IsingLRSquare(const json &js)
         m_one_body_terms.emplace_back(-2.0 * m_hz, "Sz", i);
     }
 
-    for (const auto &bond : m_lattice)
+    for (int i = 0; i < N; ++i)
     {
-        const auto dx = std::abs(bond.x1 - bond.x2);
-        const auto dy = std::abs(bond.y1 - bond.y2);
-        const auto dist = std::sqrt((dx * dx) + (dy * dy));
-        if ((m_cutoff_radius > 0.0) && (dist > m_cutoff_radius))
+        const int x1 = i / m_Ly;
+        const int y1 = i % m_Ly;
+        for (int j = 0; j < i; ++j)
         {
-            continue;
+            const int x2 = j / m_Ly;
+            const int y2 = j % m_Ly;
+            const auto dx = static_cast<double>(std::abs(x1 - x2));
+            const auto dy = static_cast<double>(std::abs(y1 - y2));
+            const auto dist = std::sqrt((dx * dx) + (dy * dy));
+            if ((m_cutoff_radius > 0.0) && (dist > m_cutoff_radius))
+            {
+                continue;
+            }
+            const auto coupling = -4.0 * m_J / std::pow(dist, m_alpha);
+            m_two_body_terms.emplace_back(coupling, "Sz", i, "Sz", j);
         }
-        const auto coupling = -4.0 * m_J / std::pow(dist, m_alpha);
-        m_two_body_terms.emplace_back(coupling, "Sz", bond.s1 - 1, "Sz", bond.s2 - 1);
     }
 }
 
