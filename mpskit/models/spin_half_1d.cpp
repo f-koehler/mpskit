@@ -12,6 +12,7 @@ SpinHalf1D::SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_par
     : Model1D(itensor::SpinHalf(L, {"ConserveSz=", conserve_Sz, "ConserveParity=", conserve_parity}), L, periodic),
       m_conserve_Sz(conserve_Sz), m_conserve_parity(conserve_parity)
 {
+    m_name = "SpinHalf1D";
 }
 
 auto SpinHalf1D::getInitialState(const std::string &initial_state) const -> itensor::MPS

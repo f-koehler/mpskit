@@ -21,6 +21,7 @@ class Model
 {
   protected:
     itensor::SiteSet m_sites;
+    std::string m_name;
 
   public:
     explicit Model(itensor::SiteSet sites);

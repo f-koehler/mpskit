@@ -7,6 +7,8 @@ XYSpinGlass1D::XYSpinGlass1D(const json &js)
     : SpinHalf1D(js["L"].get<int>(), js["periodic"].get<bool>(), jsonGetDefault<bool>(js, "conserve_sz", false), false),
       m_alpha(js["alpha"].get<Real>())
 {
+    m_name = "XYSpinGlass1D";
+
     xt::xarray<Real> J_matrix = xt::zeros<Real>({m_L, m_L});
     const auto J_matrix_file = jsonGetDefault<std::string>(js, "J_matrix_file", "");
     if (!J_matrix_file.empty())

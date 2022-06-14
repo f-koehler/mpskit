@@ -11,6 +11,7 @@
 
 Model1D::Model1D(const itensor::SiteSet &sites, int L, bool periodic) : Model(sites), m_L(L), m_periodic(periodic)
 {
+    m_name = "Model1D";
 }
 
 void Model1D::orderTerms()

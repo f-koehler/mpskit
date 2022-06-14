@@ -7,7 +7,7 @@
 struct OnePointFunction;
 struct TwoPointFunction;
 
-Model::Model(itensor::SiteSet sites) : m_sites(std::move(sites))
+Model::Model(itensor::SiteSet sites) : m_sites(std::move(sites)), m_name("Model")
 {
 }
 
@@ -33,7 +33,7 @@ std::map<std::string, std::vector<TwoPointFunction>> Model::getTwoPointFunctions
 
 void Model::print(std::ostream &stream) const
 {
-    stream << "Model";
+    stream << "Model:\t" << m_name;
     // TODO: print model name
 }
 

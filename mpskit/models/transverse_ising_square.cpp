@@ -3,6 +3,8 @@
 TransverseIsingSquare::TransverseIsingSquare(int Lx, int Ly, const Real &J, const Real &hx, const Real &hz)
     : SpinHalfSquare(Lx, Ly, false, false), m_J(J), m_hx(hx), m_hz(hz)
 {
+    m_name = "TransverseIsingSquare";
+
     m_one_body_terms.reserve(static_cast<std::size_t>(2 * Lx * Ly));
     m_two_body_terms.reserve(static_cast<std::size_t>(m_lattice.size()));
 

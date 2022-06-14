@@ -5,6 +5,8 @@ IsingLR1D::IsingLR1D(const json &js)
     : TransverseIsing1D(js), m_alpha(js["alpha"].get<Real>()),
       m_cutoff_radius(jsonGetDefault<Real>(js, "cutoff_radius", -1.0))
 {
+    m_name = "IsingLR1D";
+
     m_one_body_terms.clear();
     m_two_body_terms.clear();
 

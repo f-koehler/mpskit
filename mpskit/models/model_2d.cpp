@@ -3,6 +3,7 @@
 
 Model2D::Model2D(const itensor::SiteSet &sites, const itensor::LatticeGraph &lattice) : Model(sites), m_lattice(lattice)
 {
+    m_name = "Model2D";
 }
 
 auto Model2D::getHamiltonian() const -> itensor::MPO

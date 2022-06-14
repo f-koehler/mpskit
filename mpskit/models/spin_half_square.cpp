@@ -58,6 +58,7 @@ SpinHalfSquare::SpinHalfSquare(int Lx, int Ly, bool conserve_Sz, bool conserve_p
               itensor::squareLattice(Lx, Ly, {"YPeriodic=", false})),
       m_conserve_Sz(conserve_Sz), m_conserve_parity(conserve_parity), m_Lx(Lx), m_Ly(Ly)
 {
+    m_name = "SpinHalfSquare";
 }
 
 itensor::MPS SpinHalfSquare::getInitialState(const std::string &initial_state) const

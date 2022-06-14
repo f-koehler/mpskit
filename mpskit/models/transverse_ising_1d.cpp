@@ -14,6 +14,8 @@
 TransverseIsing1D::TransverseIsing1D(int L, bool periodic, const Real &J, const Real &hx, const Real &hz)
     : SpinHalf1D(L, periodic, false, false), m_J(J), m_hx(hx), m_hz(hz)
 {
+    m_name = "TransverseIsing1D";
+
     m_one_body_terms.reserve(static_cast<std::size_t>(2 * L));
     m_two_body_terms.reserve(static_cast<std::size_t>(L));
 

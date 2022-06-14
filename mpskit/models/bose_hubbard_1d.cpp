@@ -15,6 +15,8 @@ BoseHubbard1D::BoseHubbard1D(int L, bool periodic, bool conserve_N, int max_N, c
                              const Real &mu)
     : Bosonic1D(L, periodic, conserve_N, max_N), m_J(J), m_U(U), m_mu(mu)
 {
+    m_name = "BoseHubbard1D";
+
     m_one_body_terms.reserve(static_cast<std::size_t>(L));
     m_two_body_terms.reserve(static_cast<std::size_t>(3 * L));
 

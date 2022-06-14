@@ -6,6 +6,8 @@ IsingLRSquare::IsingLRSquare(const json &js)
       m_hx(js["hx"].get<Real>()), m_hz(js["hz"].get<Real>()), m_alpha(js["alpha"].get<Real>()),
       m_cutoff_radius(jsonGetDefault<Real>(js, "cutoff_radius", -1.0))
 {
+    m_name = "IsingLRSquare";
+
     const auto N = m_Lx * m_Ly;
 
     m_one_body_terms.reserve(static_cast<std::size_t>(2 * N));

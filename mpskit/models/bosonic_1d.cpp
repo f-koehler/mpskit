@@ -12,6 +12,7 @@ Bosonic1D::Bosonic1D(int L, bool periodic, bool conserve_N, int max_N)
     : Model1D(itensor::Boson(L, {"MaxOcc=", max_N, "ConserveNb=", conserve_N}), L, periodic), m_conserve_N(conserve_N),
       m_max_N(max_N)
 {
+    m_name = "Bosonic1D";
 }
 
 auto Bosonic1D::getInitialState(const std::string &initial_state) const -> itensor::MPS

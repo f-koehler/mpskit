@@ -15,6 +15,8 @@ Heisenberg1D::Heisenberg1D(int L, bool periodic, const Real &Jx, const Real &Jy,
                            const Real &hy, const Real &hz)
     : SpinHalf1D(L, periodic, false, false), m_Jx(Jx), m_Jy(Jy), m_Jz(Jz), m_hx(hx), m_hy(hy), m_hz(hz)
 {
+    m_name = "Heisenberg1D";
+
     m_one_body_terms.reserve(static_cast<std::size_t>(3 * L));
     m_two_body_terms.reserve(static_cast<std::size_t>(3 * L));
 
