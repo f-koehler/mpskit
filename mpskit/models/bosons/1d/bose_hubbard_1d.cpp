@@ -7,9 +7,9 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-#include "../json.hpp"
-#include "../terms.hpp"
-#include "../types.hpp"
+#include "../../../json.hpp"
+#include "../../../terms.hpp"
+#include "../../../types.hpp"
 
 BoseHubbard1D::BoseHubbard1D(int L, bool periodic, bool conserve_N, int max_N, const Real &J, const Real &U,
                              const Real &mu)

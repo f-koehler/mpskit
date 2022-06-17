@@ -1,8 +1,8 @@
-#ifndef MPSKIT_MODELS_ISING_LR_1D
-#define MPSKIT_MODELS_ISING_LR_1D
+#ifndef MPSKIT_MODELS_SPIN_HALF_1D_ISING_LR_1D
+#define MPSKIT_MODELS_SPIN_HALF_1D_ISING_LR_1D
 
-#include "../json.hpp"
-#include "../types.hpp"
+#include "../../../json.hpp"
+#include "../../../types.hpp"
 #include "transverse_ising_1d.hpp"
 
 class IsingLR1D : public TransverseIsing1D
@@ -20,4 +20,4 @@ class IsingLR1D : public TransverseIsing1D
     virtual void print(std::ostream &stream) const override;
 };
 
-#endif /* MPSKIT_MODELS_ISING_LR_1D */
+#endif /* MPSKIT_MODELS_SPIN_HALF_1D_ISING_LR_1D */

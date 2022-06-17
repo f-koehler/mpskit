@@ -1,8 +1,8 @@
-#ifndef MPSKIT_MODELS_BOSE_HUBBARD_1D
-#define MPSKIT_MODELS_BOSE_HUBBARD_1D
+#ifndef MPSKIT_MODELS_BOSONS_1D_BOSE_HUBBARD_1D
+#define MPSKIT_MODELS_BOSONS_1D_BOSE_HUBBARD_1D
 
-#include "../json.hpp"
-#include "../types.hpp"
+#include "../../../json.hpp"
+#include "../../../types.hpp"
 #include "bosonic_1d.hpp"
 
 class BoseHubbard1D : public Bosonic1D
@@ -24,4 +24,4 @@ class BoseHubbard1D : public Bosonic1D
     void print(std::ostream &stream) const override;
 };
 
-#endif /* MPSKIT_MODELS_BOSE_HUBBARD_1D */
+#endif /* MPSKIT_MODELS_BOSONS_1D_BOSE_HUBBARD_1D */

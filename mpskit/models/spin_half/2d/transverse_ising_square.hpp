@@ -1,7 +1,7 @@
-#ifndef MPSKIT_MODELS_TRANSVERSE_ISING_SQUARE
-#define MPSKIT_MODELS_TRANSVERSE_ISING_SQUARE
+#ifndef MPSKIT_MODELS_SPIN_HALF_2D_TRANSVERSE_ISING_SQUARE
+#define MPSKIT_MODELS_SPIN_HALF_2D_TRANSVERSE_ISING_SQUARE
 
-#include "../json.hpp"
+#include "../../../json.hpp"
 #include "spin_half_square.hpp"
 
 class TransverseIsingSquare : public SpinHalfSquare
@@ -22,4 +22,4 @@ class TransverseIsingSquare : public SpinHalfSquare
     virtual void print(std::ostream &stream) const override;
 };
 
-#endif /* MPSKIT_MODELS_TRANSVERSE_ISING_SQUARE */
+#endif /* MPSKIT_MODELS_SPIN_HALF_2D_TRANSVERSE_ISING_SQUARE */

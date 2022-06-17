@@ -1,8 +1,8 @@
-#ifndef MPSKIT_MODELS_ISING_LR_SQUARE
-#define MPSKIT_MODELS_ISING_LR_SQUARE
+#ifndef MPSKIT_MODELS_SPIN_HALF_2D_ISING_LR_SQUARE
+#define MPSKIT_MODELS_SPIN_HALF_2D_ISING_LR_SQUARE
 
-#include "../json.hpp"
-#include "../types.hpp"
+#include "../../../json.hpp"
+#include "../../../types.hpp"
 #include "spin_half_square.hpp"
 
 class IsingLRSquare : public SpinHalfSquare
@@ -26,4 +26,4 @@ class IsingLRSquare : public SpinHalfSquare
     virtual void print(std::ostream &stream) const override;
 };
 
-#endif /* MPSKIT_MODELS_ISING_LR_SQUARE */
+#endif /* MPSKIT_MODELS_SPIN_HALF_2D_ISING_LR_SQUARE */

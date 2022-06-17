@@ -1,13 +1,13 @@
 #include "registry.hpp"
 #include "../json.hpp"
-#include "bose_hubbard_1d.hpp"
-#include "heisenberg_1d.hpp"
-#include "ising_lr_1d.hpp"
-#include "ising_lr_square.hpp"
-#include "model_1d.hpp"
-#include "transverse_ising_1d.hpp"
-#include "transverse_ising_square.hpp"
-#include "xy_spin_glass_1d.hpp"
+
+#include "bosons/1d/bose_hubbard_1d.hpp"
+#include "spin_half/1d/heisenberg_1d.hpp"
+#include "spin_half/1d/ising_lr_1d.hpp"
+#include "spin_half/1d/transverse_ising_1d.hpp"
+#include "spin_half/1d/xy_spin_glass_1d.hpp"
+#include "spin_half/2d/ising_lr_square.hpp"
+#include "spin_half/2d/transverse_ising_square.hpp"
 
 #include <fmt/core.h>
 #include <map>

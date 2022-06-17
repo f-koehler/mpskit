@@ -1,8 +1,8 @@
-#ifndef MPSKIT_MODELS_TRANSVERSE_ISING_1D
-#define MPSKIT_MODELS_TRANSVERSE_ISING_1D
+#ifndef MPSKIT_MODELS_SPIN_HALF_1D_TRANSVERSE_ISING_1D
+#define MPSKIT_MODELS_SPIN_HALF_1D_TRANSVERSE_ISING_1D
 
-#include "../json.hpp"
-#include "../types.hpp"
+#include "../../../json.hpp"
+#include "../../../types.hpp"
 #include "spin_half_1d.hpp"
 
 class TransverseIsing1D : public SpinHalf1D
@@ -23,4 +23,4 @@ class TransverseIsing1D : public SpinHalf1D
     virtual void print(std::ostream &stream) const override;
 };
 
-#endif /* MPSKIT_MODELS_TRANSVERSE_ISING_1D */
+#endif /* MPSKIT_MODELS_SPIN_HALF_1D_TRANSVERSE_ISING_1D */

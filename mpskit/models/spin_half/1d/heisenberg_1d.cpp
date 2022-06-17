@@ -7,9 +7,9 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-#include "../json.hpp"
-#include "../terms.hpp"
-#include "../types.hpp"
+#include "../../../json.hpp"
+#include "../../../terms.hpp"
+#include "../../../types.hpp"
 
 Heisenberg1D::Heisenberg1D(int L, bool periodic, const Real &Jx, const Real &Jy, const Real &Jz, const Real &hx,
                            const Real &hy, const Real &hz)

@@ -5,8 +5,8 @@
 #include <itensor/mps/sites/spinhalf.h>
 #include <itensor/util/iterate.h>
 
-#include "../observable.hpp"
-#include "../point_functions.hpp"
+#include "../../../observable.hpp"
+#include "../../../point_functions.hpp"
 
 SpinHalf1D::SpinHalf1D(int L, bool periodic, bool conserve_Sz, bool conserve_parity)
     : Model1D(itensor::SpinHalf(L, {"ConserveSz=", conserve_Sz, "ConserveParity=", conserve_parity}), L, periodic),

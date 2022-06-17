@@ -7,9 +7,9 @@
 #include <nlohmann/json.hpp>
 #include <vector>
 
-#include "../json.hpp"
-#include "../terms.hpp"
-#include "../types.hpp"
+#include "../../../json.hpp"
+#include "../../../terms.hpp"
+#include "../../../types.hpp"
 
 TransverseIsing1D::TransverseIsing1D(int L, bool periodic, const Real &J, const Real &hx, const Real &hz)
     : SpinHalf1D(L, periodic, false, false), m_J(J), m_hx(hx), m_hz(hz)

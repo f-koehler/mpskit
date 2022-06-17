@@ -1,10 +1,10 @@
-#ifndef MPSKIT_MODELS_XY_SPIN_GLASS_1D
-#define MPSKIT_MODELS_XY_SPIN_GLASS_1D
+#ifndef MPSKIT_MODELS_SPIN_HALF_1D_XY_SPIN_GLASS_1D
+#define MPSKIT_MODELS_SPIN_HALF_1D_XY_SPIN_GLASS_1D
 
 #include <cstdint>
 
-#include "../json.hpp"
-#include "../types.hpp"
+#include "../../../json.hpp"
+#include "../../../types.hpp"
 #include "spin_half_1d.hpp"
 
 class XYSpinGlass1D : public SpinHalf1D
@@ -20,4 +20,4 @@ class XYSpinGlass1D : public SpinHalf1D
     virtual void print(std::ostream &stream) const override;
 };
 
-#endif /* MPSKIT_MODELS_XY_SPIN_GLASS_1D */
+#endif /* MPSKIT_MODELS_SPIN_HALF_1D_XY_SPIN_GLASS_1D */

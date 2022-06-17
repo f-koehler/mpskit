@@ -9,6 +9,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(CheckIPOSupported)
 check_ipo_supported(RESULT result OUTPUT output)
+
 if(NOT result)
     message(WARNING "IPO is not supported: ${output}")
 endif()
@@ -25,7 +26,8 @@ macro(mpskit_compile_options target)
     target_compile_definitions(${target} PRIVATE H5_USE_XTENSOR)
     target_compile_definitions(${target} PRIVATE FMT_HEADER_ONLY)
     target_compile_definitions(${target} PRIVATE XTENSOR_USE_XSIMD)
-    if (${BLA_VENDOR} MATCHES "Intel" OR "mkl")
+
+    if(${BLA_VENDOR} MATCHES "Intel" OR "mkl")
         target_compile_definitions(${target} PRIVATE -DPLATFORM_mkl)
     elseif(${BLA_VENDOR} MATCHES ACML)
         target_compile_definitions(${target} PRIVATE -DPLATFORM_mkl)
@@ -34,9 +36,11 @@ macro(mpskit_compile_options target)
     else()
         target_compile_definitions(${target} PRIVATE -DPLATFORM_lapack)
     endif()
+
     target_compile_options(${target} PRIVATE
         $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-O>
     )
+
     if(IPO_SUPPORTED)
         set_property(TARGET ${target} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
     endif()
@@ -84,6 +88,7 @@ add_library(itensor STATIC
     dependencies/itensor/itensor/itdata/combiner.cc
     dependencies/itensor/itensor/itdata/dense.cc
     dependencies/itensor/itensor/itdata/diag.cc
+
     # dependencies/itensor/itensor/itdata/itlazy.cc
     dependencies/itensor/itensor/itdata/qcombiner.cc
     dependencies/itensor/itensor/itdata/qdense.cc
@@ -115,20 +120,20 @@ add_library(mpskit_common STATIC
     mpskit/cmd/list_one_point.cpp
     mpskit/cmd/list_two_point.cpp
     mpskit/json.cpp
-    mpskit/models/bose_hubbard_1d.cpp
-    mpskit/models/bosonic_1d.cpp
-    mpskit/models/heisenberg_1d.cpp
-    mpskit/models/ising_lr_1d.cpp
-    mpskit/models/ising_lr_square.cpp
+    mpskit/models/bosons/1d/bose_hubbard_1d.cpp
+    mpskit/models/bosons/1d/bosonic_1d.cpp
     mpskit/models/model.cpp
     mpskit/models/model_1d.cpp
     mpskit/models/model_2d.cpp
     mpskit/models/registry.cpp
-    mpskit/models/spin_half_1d.cpp
-    mpskit/models/spin_half_square.cpp
-    mpskit/models/transverse_ising_1d.cpp
-    mpskit/models/transverse_ising_square.cpp
-    mpskit/models/xy_spin_glass_1d.cpp
+    mpskit/models/spin_half/1d/heisenberg_1d.cpp
+    mpskit/models/spin_half/1d/ising_lr_1d.cpp
+    mpskit/models/spin_half/1d/spin_half_1d.cpp
+    mpskit/models/spin_half/1d/transverse_ising_1d.cpp
+    mpskit/models/spin_half/1d/xy_spin_glass_1d.cpp
+    mpskit/models/spin_half/2d/ising_lr_square.cpp
+    mpskit/models/spin_half/2d/spin_half_square.cpp
+    mpskit/models/spin_half/2d/transverse_ising_square.cpp
     mpskit/observable.cpp
     mpskit/observer.cpp
     mpskit/point_functions.cpp
@@ -140,7 +145,6 @@ mpskit_enable_warnings(mpskit_common)
 mpskit_include_directories(mpskit_common)
 mpskit_link_libraries(mpskit_common)
 target_link_libraries(mpskit_common PRIVATE itensor)
-
 
 add_executable(
     mpskit

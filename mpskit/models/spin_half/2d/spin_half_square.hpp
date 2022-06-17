@@ -1,7 +1,9 @@
+#ifndef MPSKIT_MODELS_SPIN_HALF_2D_SPIN_HALF_SQUARE
+#define MPSKIT_MODELS_SPIN_HALF_2D_SPIN_HALF_SQUARE
 #ifndef MPSKIT_MODELS_SPIN_HALF_SQUARE
 #define MPSKIT_MODELS_SPIN_HALF_SQUARE
 
-#include "model_2d.hpp"
+#include "../../model_2d.hpp"
 
 class SpinHalfSquare : public Model2D
 {
@@ -36,3 +38,5 @@ class SpinHalfSquare : public Model2D
 };
 
 #endif /* MPSKIT_MODELS_SPIN_HALF_2D */
+
+#endif /* MPSKIT_MODELS_SPIN_HALF_2D_SPIN_HALF_SQUARE */
