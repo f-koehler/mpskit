@@ -130,6 +130,7 @@ add_library(mpskit_common STATIC
     mpskit/models/spin_half/1d/ising_lr_1d.cpp
     mpskit/models/spin_half/1d/spin_half_1d.cpp
     mpskit/models/spin_half/1d/transverse_ising_1d.cpp
+    mpskit/models/spin_half/1d/vitagliano_2010.cpp
     mpskit/models/spin_half/1d/xy_spin_glass_1d.cpp
     mpskit/models/spin_half/2d/ising_lr_square.cpp
     mpskit/models/spin_half/2d/spin_half_square.cpp
