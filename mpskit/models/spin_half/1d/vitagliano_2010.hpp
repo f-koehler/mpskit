@@ -8,33 +8,33 @@
 namespace Vitagliano2010
 {
 
-enum CouplingDistribution : int
+enum CouplingFunction : int
 {
     Uniform,
-    ExponentialDecay,
-    GaussianDecay,
+    Exponential,
+    Gaussian,
     Invalid
 };
 
-NLOHMANN_JSON_SERIALIZE_ENUM(CouplingDistribution, {
-                                                       {Invalid, nullptr},
-                                                       {Uniform, "Uniform"},
-                                                       {ExponentialDecay, "ExponentialDecay"},
-                                                       {GaussianDecay, "GaussianDecay"},
-                                                   })
+NLOHMANN_JSON_SERIALIZE_ENUM(CouplingFunction, {
+                                                   {Invalid, nullptr},
+                                                   {Uniform, "Uniform"},
+                                                   {Exponential, "Exponential"},
+                                                   {Gaussian, "Gaussian"},
+                                               })
 
 class XXModel : public SpinHalf1D
 {
   private:
     Real m_J0;
-    CouplingDistribution m_coupling_distribution;
+    CouplingFunction m_coupling_function;
 
   public:
-    explicit XXModel(int L, const Real &J0, const CouplingDistribution &coupling_distribution);
+    explicit XXModel(int L, const Real &J0, const CouplingFunction &coupling_function);
     explicit XXModel(const json &js);
 
     const Real &getJ0() const;
-    const CouplingDistribution &getCouplingDist() const;
+    const CouplingFunction &getCouplingFunction() const;
 };
 
 } // namespace Vitagliano2010
