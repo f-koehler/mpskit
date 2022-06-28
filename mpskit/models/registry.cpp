@@ -5,6 +5,7 @@
 #include "spin_half/1d/heisenberg_1d.hpp"
 #include "spin_half/1d/ising_lr_1d.hpp"
 #include "spin_half/1d/transverse_ising_1d.hpp"
+#include "spin_half/1d/vitagliano_2010.hpp"
 #include "spin_half/1d/xy_spin_glass_1d.hpp"
 #include "spin_half/2d/ising_lr_square.hpp"
 #include "spin_half/2d/transverse_ising_square.hpp"
@@ -46,6 +47,10 @@ auto createModel1D(const json &js) -> std::shared_ptr<Model>
     else if (name == "IsingLRSquare")
     {
         model = new IsingLRSquare(js);
+    }
+    else if (name == "Vitagliano2010")
+    {
+        model = new Vitagliano2010::XXModel(js);
     }
     else
     {
