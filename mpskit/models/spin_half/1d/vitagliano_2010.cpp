@@ -46,8 +46,8 @@ XXModel::XXModel(const json &js)
     for (int i = 0; i < m_L - 1; ++i)
     {
         int n = std::abs(center - i);
-        m_two_body_terms.emplace_back(-2 * m_J0 * dist(n), "Sx", i, "Sx", i + 1);
-        m_two_body_terms.emplace_back(-2 * m_J0 * dist(n), "Sy", i, "Sy", i + 1);
+        m_two_body_terms.emplace_back(2 * m_J0 * dist(n), "Sx", i, "Sx", i + 1);
+        m_two_body_terms.emplace_back(2 * m_J0 * dist(n), "Sy", i, "Sy", i + 1);
     }
 }
 
