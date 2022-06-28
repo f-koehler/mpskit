@@ -18,9 +18,9 @@ enum CouplingFunction : int
 
 NLOHMANN_JSON_SERIALIZE_ENUM(CouplingFunction, {
                                                    {Invalid, nullptr},
-                                                   {Uniform, "Uniform"},
-                                                   {Exponential, "Exponential"},
-                                                   {Gaussian, "Gaussian"},
+                                                   {Uniform, "uniform"},
+                                                   {Exponential, "exponential"},
+                                                   {Gaussian, "gaussian"},
                                                })
 
 class XXModel : public SpinHalf1D
