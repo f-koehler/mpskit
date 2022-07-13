@@ -115,6 +115,7 @@ mpskit_link_libraries(itensor)
 
 add_library(mpskit_common STATIC
     mpskit/cmd/dmrg.cpp
+    mpskit/cmd/analyze_basis.cpp
     mpskit/cmd/entanglement_entropy.cpp
     mpskit/cmd/list_observables.cpp
     mpskit/cmd/list_one_point.cpp
