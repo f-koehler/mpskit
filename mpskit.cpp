@@ -4,6 +4,7 @@
 #include <CLI/Option.hpp>
 #include <string>
 
+#include "mpskit/cmd/analyze_basis.hpp"
 #include "mpskit/cmd/dmrg.hpp"
 #include "mpskit/cmd/entanglement_entropy.hpp"
 #include "mpskit/cmd/list_observables.hpp"
@@ -58,6 +59,11 @@ auto main(int argc, char **argv) -> int
     auto app_list_two_point = app.add_subcommand("list-two-point", "List available two-point functions for model.");
     app_list_two_point->add_option("input,-i,--input", input_path, "Input file specifying model.")->required();
 
+    auto app_analyze_basis = app.add_subcommand("analyze-basis", "Project a MPS state onto all basis states.");
+    app_analyze_basis->add_option("-i,--input", input_path, "Input file specifying model.")->required();
+    app_analyze_basis->add_option("-p,--psi", psi_path, "Matrix product state to analyze.")->required();
+    app_analyze_basis->add_option("-o,--output", output_path, "Output file for the projections.")->required();
+
     CLI11_PARSE(app, argc, argv);
 
     if (app_dmrg->parsed())
@@ -88,6 +94,11 @@ auto main(int argc, char **argv) -> int
     if (app_list_two_point->parsed())
     {
         return cmdListTwoPoint(input_path);
+    }
+
+    if (app_analyze_basis->parsed())
+    {
+        return cmdAnalyzeBasis(input_path, psi_path, output_path);
     }
 
     return 0;
