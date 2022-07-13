@@ -65,7 +65,7 @@ int cmdAnalyzeBasis(const std::string &input_path, const std::string &psi_path, 
             const auto overlap_abs = std::abs(overlap);
 
             dset_states.select({index, 0}, {1, num_sites}).write(configuration);
-            dset_overlaps.select({index}).write(overlap_abs * overlap_abs);
+            dset_overlaps.select(std::vector<std::size_t>{index}).write(overlap_abs * overlap_abs);
         }
     }
     catch (HighFive::Exception &e)
