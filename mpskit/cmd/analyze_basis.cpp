@@ -42,8 +42,7 @@ int cmdAnalyzeBasis(const std::string &input_path, const std::string &psi_path, 
 
     try
     {
-        HighFive::File file(output_path,
-                            HighFive::File::Overwrite | HighFive::File::Create | HighFive::File::ReadWrite);
+        HighFive::File file(output_path, HighFive::File::Overwrite | HighFive::File::Create);
         HighFive::DataSet dset_states = file.createDataSet<int>(
             "states", HighFive::DataSpace({static_cast<std::size_t>(num_states), static_cast<std::size_t>(num_sites)}));
         HighFive::DataSet dset_overlaps =
