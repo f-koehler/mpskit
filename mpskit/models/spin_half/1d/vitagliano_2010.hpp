@@ -28,13 +28,20 @@ class XXModel : public SpinHalf1D
   private:
     Real m_J0;
     CouplingFunction m_coupling_function;
+    Real m_hx;
+    Real m_hy;
+    Real m_hz;
 
   public:
-    explicit XXModel(int L, const Real &J0, const CouplingFunction &coupling_function);
+    explicit XXModel(int L, const Real &J0, const CouplingFunction &coupling_function, const Real &hx = 0.0,
+                     const Real &hy = 0.0, const Real &hz = 0.0);
     explicit XXModel(const json &js);
 
     const Real &getJ0() const;
     const CouplingFunction &getCouplingFunction() const;
+    const Real &getHx() const;
+    const Real &getHy() const;
+    const Real &getHz() const;
 };
 
 } // namespace Vitagliano2010
