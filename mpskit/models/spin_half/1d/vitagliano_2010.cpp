@@ -57,7 +57,7 @@ XXModel::XXModel(const json &js)
     for (int i = 0; i < m_L; ++i)
     {
         m_one_body_terms.emplace_back(-2.0 * m_hx, "Sx", i);
-        m_one_body_terms.emplace_back(-2.0 * m_hx, "Sy", i);
+        m_one_body_terms.emplace_back(-2.0 * m_hy, "Sy", i);
         m_one_body_terms.emplace_back(-2.0 * m_hz, "Sz", i);
     }
 }
