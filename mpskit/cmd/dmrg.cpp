@@ -32,7 +32,7 @@
 int cmdDMRG(const std::string &input_path, const std::string &output_path, const std::string &psi_path)
 {
     auto input = loadJSON(input_path);
-    auto model = createModel1D(input["model"]);
+    auto model = createModel(input["model"]);
 
     std::cout << '\n' << *model << "\n\n";
 

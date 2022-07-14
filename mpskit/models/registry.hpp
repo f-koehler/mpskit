@@ -7,6 +7,6 @@
 
 class Model;
 
-auto createModel1D(const json &js) -> std::shared_ptr<Model>;
+auto createModel(const json &js) -> std::shared_ptr<Model>;
 
 #endif /* MPSKIT_MODELS_REGISTRY */

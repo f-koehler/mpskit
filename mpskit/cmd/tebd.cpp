@@ -9,7 +9,7 @@ int cmdTEBD(const std::string &input_path, const std::string &psi_path, int orde
             int substeps)
 {
     auto input = loadJSON(input_path);
-    auto model = createModel1D(input["model"]);
+    auto model = createModel(input["model"]);
 
     using TEBDPtr = std::shared_ptr<TEBD>;
 

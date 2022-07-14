@@ -13,7 +13,7 @@
 int cmdListObservables(const std::string &input)
 {
     auto config = loadJSON(input);
-    auto model = createModel1D(config["model"]);
+    auto model = createModel(config["model"]);
     for (const auto &[name, _] : model->getObservables())
     {
         std::cout << name << '\n';

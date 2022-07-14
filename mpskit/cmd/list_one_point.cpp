@@ -12,7 +12,7 @@
 int cmdListOnePoint(const std::string &input)
 {
     auto config = loadJSON(input);
-    auto model = createModel1D(config["model"]);
+    auto model = createModel(config["model"]);
     for (const auto &[name, _] : model->getOnePointFunctions())
     {
         std::cout << name << '\n';

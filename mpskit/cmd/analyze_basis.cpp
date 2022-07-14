@@ -17,7 +17,7 @@
 int cmdAnalyzeBasis(const std::string &input_path, const std::string &psi_path, const std::string &output_path)
 {
     auto input = loadJSON(input_path);
-    auto model = createModel1D(input["model"]);
+    auto model = createModel(input["model"]);
     auto sites = model->getSites();
 
     // read MPS

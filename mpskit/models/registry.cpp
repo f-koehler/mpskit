@@ -17,7 +17,7 @@
 #include <stdexcept>
 #include <string>
 
-auto createModel1D(const json &js) -> std::shared_ptr<Model>
+auto createModel(const json &js) -> std::shared_ptr<Model>
 {
     const auto name = js["name"].get<std::string>();
     Model *model = nullptr;
