@@ -128,6 +128,7 @@ add_library(mpskit_common STATIC
     mpskit/models/model_2d.cpp
     mpskit/models/registry.cpp
     mpskit/models/spin_half/1d/heisenberg_1d.cpp
+    mpskit/models/spin_half/1d/calabrese_2020.cpp
     mpskit/models/spin_half/1d/ising_lr_1d.cpp
     mpskit/models/spin_half/1d/spin_half_1d.cpp
     mpskit/models/spin_half/1d/transverse_ising_1d.cpp

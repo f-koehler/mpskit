@@ -2,6 +2,7 @@
 #include "../json.hpp"
 
 #include "bosons/1d/bose_hubbard_1d.hpp"
+#include "spin_half/1d/calabrese_2020.hpp"
 #include "spin_half/1d/heisenberg_1d.hpp"
 #include "spin_half/1d/ising_lr_1d.hpp"
 #include "spin_half/1d/transverse_ising_1d.hpp"
@@ -51,6 +52,10 @@ auto createModel1D(const json &js) -> std::shared_ptr<Model>
     else if (name == "Vitagliano2010")
     {
         model = new Vitagliano2010::XXModel(js);
+    }
+    else if (name == "Calabrese2020")
+    {
+        model = new Calabrese2020(js);
     }
     else
     {
