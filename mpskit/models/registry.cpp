@@ -21,6 +21,7 @@ auto createModel(const json &js) -> std::shared_ptr<Model>
 {
     const auto name = js["name"].get<std::string>();
     Model *model = nullptr;
+    // FIXME: implement a nicer way to register models.
     if (name == "BoseHubbard1D")
     {
         model = new BoseHubbard1D(js);
