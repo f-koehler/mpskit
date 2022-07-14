@@ -8,7 +8,7 @@ Calabrese2020::Calabrese2020(const json &js)
     m_name = "Calabrese2020";
 
     const auto J_vector_file = js["J_vector_file"].get<std::string>();
-    xt::xarray<Real> J_vector = xt::zeros<Real>({m_L});
+    xt::xarray<Real> J_vector = xt::zeros<Real>({m_L - 1});
     H5Easy::File file(J_vector_file, H5Easy::File::ReadOnly);
     J_vector = H5Easy::load<xt::xarray<Real>>(file, "/values");
 
