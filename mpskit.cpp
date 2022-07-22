@@ -5,6 +5,7 @@
 #include <string>
 
 #include "mpskit/cmd/analyze_basis.hpp"
+#include "mpskit/cmd/create_state.hpp"
 #include "mpskit/cmd/dmrg.hpp"
 #include "mpskit/cmd/entanglement_entropy.hpp"
 #include "mpskit/cmd/list_observables.hpp"
@@ -23,6 +24,7 @@ auto main(int argc, char **argv) -> int
     std::string input_path;
     std::string output_path;
     std::string psi_path;
+    std::string name;
     int bond;
     // Real tfinal = 1.0;
     // Real dt = 0.05;
@@ -64,6 +66,11 @@ auto main(int argc, char **argv) -> int
     app_analyze_basis->add_option("-p,--psi", psi_path, "Matrix product state to analyze.")->required();
     app_analyze_basis->add_option("-o,--output", output_path, "Output file for the projections.")->required();
 
+    auto app_create_state = app.add_subcommand("create-state", "Store a specific MPS in a file.");
+    app_create_state->add_option("name,-n,--name", name, "Name of the MPS to create.")->required();
+    app_create_state->add_option("-i,--input", input_path, "Input file specifying model.")->required();
+    app_create_state->add_option("-o,--output", output_path, "Output file for the MPS.")->required();
+
     CLI11_PARSE(app, argc, argv);
 
     if (app_dmrg->parsed())
@@ -99,6 +106,11 @@ auto main(int argc, char **argv) -> int
     if (app_analyze_basis->parsed())
     {
         return cmdAnalyzeBasis(input_path, psi_path, output_path);
+    }
+
+    if (app_create_state->parsed())
+    {
+        return cmdCreateState(name, input_path, output_path);
     }
 
     return 0;
