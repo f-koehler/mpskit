@@ -121,6 +121,7 @@ add_library(mpskit_common STATIC
     mpskit/cmd/list_observables.cpp
     mpskit/cmd/list_one_point.cpp
     mpskit/cmd/list_two_point.cpp
+    mpskit/cmd/overlap.cpp
     mpskit/json.cpp
     mpskit/models/bosons/1d/bose_hubbard_1d.cpp
     mpskit/models/bosons/1d/bosonic_1d.cpp

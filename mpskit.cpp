@@ -11,6 +11,7 @@
 #include "mpskit/cmd/list_observables.hpp"
 #include "mpskit/cmd/list_one_point.hpp"
 #include "mpskit/cmd/list_two_point.hpp"
+#include "mpskit/cmd/overlap.hpp"
 #include "mpskit/cmd/tebd.hpp"
 #include "mpskit/types.hpp"
 
@@ -24,6 +25,7 @@ auto main(int argc, char **argv) -> int
     std::string input_path;
     std::string output_path;
     std::string psi_path;
+    std::string psi2_path;
     std::string name;
     int bond;
     // Real tfinal = 1.0;
@@ -71,6 +73,11 @@ auto main(int argc, char **argv) -> int
     app_create_state->add_option("-i,--input", input_path, "Input file specifying model.")->required();
     app_create_state->add_option("-o,--output", output_path, "Output file for the MPS.")->required();
 
+    auto app_overlap = app.add_subcommand("overlap", "Compute the overlap of between two MPS states.");
+    app_overlap->add_option("psi1,--psi1", psi_path, "Ket state.")->required();
+    app_overlap->add_option("psi2,--psi2", psi2_path, "Bra state.")->required();
+    app_overlap->add_option("-o,--output", output_path, "Output file for the overlap.")->required();
+
     CLI11_PARSE(app, argc, argv);
 
     if (app_dmrg->parsed())
@@ -111,6 +118,11 @@ auto main(int argc, char **argv) -> int
     if (app_create_state->parsed())
     {
         return cmdCreateState(name, input_path, output_path);
+    }
+
+    if (app_overlap->parsed())
+    {
+        return cmdOverlap(psi_path, psi2_path, output_path);
     }
 
     return 0;
