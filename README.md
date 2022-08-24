@@ -16,19 +16,71 @@ However, I got it to work with the Julia version of ITensor, [ITensor.jl](https:
 
 ## Available Models
 
-- Transverse-Field Ising Model (1D)
-  - [example input](examples/transverse_ising_1d.json)
-  - [Wikipedia](https://en.wikipedia.org/wiki/Transverse-field_Ising_model)
-- Transverse-Field Ising Model (2D square lattice)
-  - [example input](examples/transverse_ising_2d.json)
-  - [Wikipedia](https://en.wikipedia.org/wiki/Transverse-field_Ising_model)
-- Heisenberg Model (1D)
-  - [Wikipedia](https://en.wikipedia.org/wiki/Quantum_Heisenberg_model)
-- Bose-Hubbard Model (1D)
-  - [example input](examples/bose_hubbard_1d.json)
-  - [Wikipedia](https://en.wikipedia.org/wiki/Bose%E2%80%93Hubbard_model)
-- Long-Range disordered XY Spin Glass (1D)
-- Long-Range Transverse-Field Ising Model (1D)
+### 1D Spin Systems
+
+#### Transverse-Field Ising Model
+
+- [Wikipedia](https://en.wikipedia.org/wiki/Transverse-field_Ising_model)
+- [example input](examples/transverse_ising_1d.json)
+
+$$
+H=\sum\limits_{i=1}^{L-1}\left(
+  J\sigma_{i}^{z}\sigma_{i+1}^{z}
+  \right)
+  +\sum\limits_{i=1}^{L}\left(
+    h_x\sigma_{i}^{x}
+    +h_z\sigma_{i}^{z}
+  \right)
+$$
+
+#### Long-Range Transverse-Field Ising Model
+
+$$
+H=\sum\limits_{i=1}^{L-1}\sum\limits_{j=1}^{i}\left(
+  \frac{J}{{|i-j|}^{\alpha}}\sigma_{i}^{z}\sigma_{i+1}^{z}
+  \right)
+  +\sum\limits_{i=1}^{L}\left(
+    h_x\sigma_{i}^{x}
+    +h_z\sigma_{i}^{z}
+  \right)
+$$
+
+with an optional cutoff radius for the interaction.
+
+#### Heisenberg Model
+
+- [Wikipedia](https://en.wikipedia.org/wiki/Quantum_Heisenberg_model)
+
+$$
+H=\sum\limits_{i=1}^{L-1}\left(
+  J_x\sigma_{i}^{x}\sigma_{i+1}^{x}
+  +J_y\sigma_{i}^{y}\sigma_{i+1}^{y}
+  +J_z\sigma_{i}^{z}\sigma_{i+1}^{z}
+  \right)
+  +\sum\limits_{i=1}^{L}\left(
+    h_x\sigma_{i}^{x}
+    +h_y\sigma_{i}^{y}
+    +h_z\sigma_{i}^{z}
+  \right)
+$$
+
+#### Long-Range Disordered XY Spin Glass
+
+### 1D Bosonic Systems
+
+#### Bose-Hubbard Model (1D)
+
+- [example input](examples/bose_hubbard_1d.json)
+- [Wikipedia](https://en.wikipedia.org/wiki/Bose%E2%80%93Hubbard_model)
+
+$$
+H=-J\sum\limits_{i=1}^{L-1}\left(
+  b_{i}^{\dagger}b_{i+1}
+  +b_{i+1}^{\dagger}b_{i}
+\right)
++\frac{U}{2}\sum\limits_{i=1}^{L}
+n_i(n_i-1)
+$$
 
 A new model can be added by adding it to the `models` source folder (take inspiration from [`transverse_ising_1d.hpp`](https://github.com/f-koehler/dmrg/blob/main/mpskit/models/transverse_ising_1d.hpp), [`transverse_ising_1d.cpp`](https://github.com/f-koehler/dmrg/blob/main/mpskit/models/transverse_ising_1d.cpp), etc.).
 Afterwards it has to be registered in the model registry (see [`registry.cpp`](https://github.com/f-koehler/dmrg/blob/main/mpskit/models/registry.cpp)).
