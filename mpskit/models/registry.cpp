@@ -7,6 +7,7 @@
 #include "spin_half/1d/ising_lr_1d.hpp"
 #include "spin_half/1d/transverse_ising_1d.hpp"
 #include "spin_half/1d/vitagliano_2010.hpp"
+#include "spin_half/1d/xy_inhom.hpp"
 #include "spin_half/1d/xy_spin_glass_1d.hpp"
 #include "spin_half/2d/ising_lr_square.hpp"
 #include "spin_half/2d/transverse_ising_square.hpp"
@@ -37,6 +38,10 @@ auto createModel(const json &js) -> std::shared_ptr<Model>
     else if (name == "XYSpinGlass1D")
     {
         model = new XYSpinGlass1D(js);
+    }
+    else if (name == "XYInhom1D")
+    {
+        model = new XYInhom(js);
     }
     else if (name == "TransverseIsingSquare")
     {
