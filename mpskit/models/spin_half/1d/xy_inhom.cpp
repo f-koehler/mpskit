@@ -27,7 +27,7 @@ XYInhom::XYInhom(int L, const Real &J0, const CouplingDistribution &coupling_dis
         dist = [](int r) { return std::exp(-static_cast<Real>(r - 1)); };
         break;
     case Gaussian:
-        dist = [](int r) { return std::exp(-static_cast<Real>((r - 1) * (r - 1))); };
+        dist = [](int r) { return std::exp(-static_cast<Real>(2 * (r - 1) * (r - 1))); };
         break;
     case Logarithmic:
         dist = [](int r) { return 1.0 / std::log2(static_cast<Real>(r + 1)); };
