@@ -41,7 +41,7 @@ auto createModel(const json &js) -> std::shared_ptr<Model>
     }
     else if (name == "XYInhom1D")
     {
-        model = new XYInhom(js);
+        model = new XYInhom::XYInhom(js);
     }
     else if (name == "TransverseIsingSquare")
     {
