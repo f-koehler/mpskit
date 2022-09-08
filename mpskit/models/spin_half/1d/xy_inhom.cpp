@@ -3,10 +3,10 @@
 
 namespace XYInhom
 {
-XYInhom::XYInhom(int L, const Real &J0, const CouplingDistribution &coupling_distribution, const Real &hx,
-                 const Real &hy, const Real &hz)
-    : SpinHalf1D(L, false, false, false), m_J0(J0), m_coupling_distribution(coupling_distribution), m_hx(hx), m_hy(hy),
-      m_hz(hz)
+XYInhom::XYInhom(int L, const Real &J0, const CouplingDistribution &coupling_distribution, const Real &alpha,
+                 const Real &hx, const Real &hy, const Real &hz)
+    : SpinHalf1D(L, false, false, false), m_J0(J0), m_coupling_distribution(coupling_distribution), m_alpha(alpha),
+      m_hx(hx), m_hy(hy), m_hz(hz)
 {
     m_name = "XYInhom";
     if (m_L % 2)
@@ -41,7 +41,8 @@ XYInhom::XYInhom(int L, const Real &J0, const CouplingDistribution &coupling_dis
     {
         for (int j = 0; j < i; ++j)
         {
-            const auto J = m_J0 * dist(std::abs(i - j));
+            const auto r = std::abs(i - j);
+            const auto J = m_J0 * dist(r) / std::pow(static_cast<Real>(r), m_alpha);
             m_two_body_terms.emplace_back(4.0 * J, "S+", i, "S-", j);
             m_two_body_terms.emplace_back(4.0 * J, "S-", i, "S+", j);
         }
@@ -58,8 +59,8 @@ XYInhom::XYInhom(int L, const Real &J0, const CouplingDistribution &coupling_dis
 XYInhom::XYInhom(const json &js)
     : XYInhom(js.at("L").get<int>(), jsonGetDefault<Real>(js, "J0", 1.0),
               jsonGetDefault<CouplingDistribution>(js, "coupling_distribution", CouplingDistribution::Uniform),
-              jsonGetDefault<Real>(js, "hx", 0.0), jsonGetDefault<Real>(js, "hy", 0.0),
-              jsonGetDefault<Real>(js, "hz", 0.0))
+              jsonGetDefault<Real>(js, "alpha", 0.0), jsonGetDefault<Real>(js, "hx", 0.0),
+              jsonGetDefault<Real>(js, "hy", 0.0), jsonGetDefault<Real>(js, "hz", 0.0))
 {
 }
 
@@ -70,6 +71,10 @@ const Real &XYInhom::getJ0() const
 const CouplingDistribution &XYInhom::getCouplingDistribution() const
 {
     return m_coupling_distribution;
+}
+const Real &XYInhom::getAlpha() const
+{
+    return m_alpha;
 }
 const Real &XYInhom::getHx() const
 {

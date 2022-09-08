@@ -29,17 +29,19 @@ class XYInhom : public SpinHalf1D
   private:
     Real m_J0;
     CouplingDistribution m_coupling_distribution;
+    Real m_alpha;
     Real m_hx;
     Real m_hy;
     Real m_hz;
 
   public:
-    explicit XYInhom(int L, const Real &J0, const CouplingDistribution &coupling_distribution, const Real &hx = 0.0,
-                     const Real &hy = 0.0, const Real &hz = 0.0);
+    explicit XYInhom(int L, const Real &J0, const CouplingDistribution &coupling_distribution, const Real &alpha,
+                     const Real &hx = 0.0, const Real &hy = 0.0, const Real &hz = 0.0);
     explicit XYInhom(const json &js);
 
     const Real &getJ0() const;
     const CouplingDistribution &getCouplingDistribution() const;
+    const Real &getAlpha() const;
     const Real &getHx() const;
     const Real &getHy() const;
     const Real &getHz() const;
