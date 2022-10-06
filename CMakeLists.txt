@@ -64,7 +64,7 @@ macro(mpskit_include_directories target)
         dependencies/xtl/include
         dependencies/xsimd/include
         dependencies/itensor
-        dependencies/spdlog
+        dependencies/spdlog/include
         ${CMAKE_CURRENT_BINARY_DIR}
     )
 endmacro()
