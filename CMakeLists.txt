@@ -5,6 +5,7 @@ project(mpskit LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(CheckIPOSupported)
@@ -26,6 +27,7 @@ macro(mpskit_compile_options target)
     target_compile_definitions(${target} PRIVATE H5_USE_XTENSOR)
     target_compile_definitions(${target} PRIVATE FMT_HEADER_ONLY)
     target_compile_definitions(${target} PRIVATE XTENSOR_USE_XSIMD)
+    target_compile_definitions(${target} PRIVATE SPDLOG_FMT_EXTERNAL)
 
     if(${BLA_VENDOR} MATCHES "Intel" OR "mkl")
         target_compile_definitions(${target} PRIVATE -DPLATFORM_mkl)
@@ -62,6 +64,7 @@ macro(mpskit_include_directories target)
         dependencies/xtl/include
         dependencies/xsimd/include
         dependencies/itensor
+        dependencies/spdlog
         ${CMAKE_CURRENT_BINARY_DIR}
     )
 endmacro()

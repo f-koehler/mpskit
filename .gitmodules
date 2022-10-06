@@ -22,3 +22,6 @@
 [submodule "dependencies/xsimd"]
 	path = dependencies/xsimd
 	url = https://github.com/xtensor-stack/xsimd.git
+[submodule "dependencies/spdlog"]
+	path = dependencies/spdlog
+	url = https://github.com/gabime/spdlog.git

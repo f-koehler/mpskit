@@ -19,6 +19,7 @@
 #include <map>
 #include <memory>
 #include <nlohmann/json.hpp>
+#include <spdlog/spdlog.h>
 #include <tuple>
 #include <utility>
 
@@ -51,29 +52,41 @@ int cmdDMRG(const std::string &input_path, const std::string &output_path, const
     const auto stop_hires = std::chrono::high_resolution_clock::now();
     const auto stop_monotonic = std::chrono::steady_clock::now();
 
+    spdlog::info("Start measuring oberservables …");
     auto observables = model->getObservables();
-    for (auto &[_, observable] : observables)
+    for (auto &[name, observable] : observables)
     {
+        spdlog::info("Measuring {} …", name);
         observable(psi);
+        spdlog::info("Done measuring {}.", name);
     }
+    spdlog::info("Done measuring oberservables.");
 
+    spdlog::info("Start measuring local operators …");
     auto one_point_functions = model->getOnePointFunctions();
-    for (auto &[_, one_point_function] : one_point_functions)
+    for (auto &[name, one_point_function] : one_point_functions)
     {
         for (auto &instance : one_point_function)
         {
+            spdlog::info("Measuring {} at index {} …", name, instance.getIndex());
             instance(psi);
+            spdlog::info("Done measuring {} at index {}.", name, instance.getIndex());
         }
     }
+    spdlog::info("Done measuring local operators.");
 
+    spdlog::info("Start measuring two-point operators …");
     auto two_point_functions = model->getTwoPointFunctions();
-    for (auto &[_, two_point_function] : two_point_functions)
+    for (auto &[name, two_point_function] : two_point_functions)
     {
         for (auto &instance : two_point_function)
         {
+            spdlog::info("Measuring {} at indices {} and {} …", name, instance.getIndex1(), instance.getIndex2());
             instance(psi);
+            spdlog::info("Done measuring {} at indices {} and {} …", name, instance.getIndex1(), instance.getIndex2());
         }
     }
+    spdlog::info("Done measuring two-point operators …");
 
     auto duration_monotonic =
         static_cast<Real>(
