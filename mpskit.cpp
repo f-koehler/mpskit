@@ -11,6 +11,7 @@
 #include "mpskit/cmd/list_observables.hpp"
 #include "mpskit/cmd/list_one_point.hpp"
 #include "mpskit/cmd/list_two_point.hpp"
+#include "mpskit/cmd/max_bond_dimension.hpp"
 #include "mpskit/cmd/overlap.hpp"
 #include "mpskit/cmd/tebd.hpp"
 #include "mpskit/types.hpp"
@@ -78,6 +79,10 @@ auto main(int argc, char **argv) -> int
     app_overlap->add_option("psi2,--psi2", psi2_path, "Bra state.")->required();
     app_overlap->add_option("-o,--output", output_path, "Output file for the overlap.")->required();
 
+    auto app_max_bond_dimension =
+        app.add_subcommand("max-bond-dimension", "Compute the maximum bond dimension of a MPS.");
+    app_max_bond_dimension->add_option("psi,-p,--psi", psi_path, "Matrix product state to analyze.")->required();
+
     CLI11_PARSE(app, argc, argv);
 
     if (app_dmrg->parsed())
@@ -123,6 +128,11 @@ auto main(int argc, char **argv) -> int
     if (app_overlap->parsed())
     {
         return cmdOverlap(psi_path, psi2_path, output_path);
+    }
+
+    if (app_max_bond_dimension->parsed())
+    {
+        return cmdMaxBondDimension(psi_path);
     }
 
     return 0;
