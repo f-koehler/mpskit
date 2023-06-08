@@ -166,3 +166,14 @@ mpskit_include_directories(mpskit)
 mpskit_link_libraries(mpskit)
 target_link_libraries(mpskit PRIVATE itensor)
 target_link_libraries(mpskit PRIVATE mpskit_common)
+
+
+add_executable(
+    tdvp_example
+    dependencies/TDVP/sample/run.cc
+)
+mpskit_compile_options(tdvp_example)
+mpskit_include_directories(tdvp_example)
+target_link_libraries(tdvp_example PRIVATE itensor)
+target_include_directories(tdvp_example PRIVATE dependencies/TDVP)
+

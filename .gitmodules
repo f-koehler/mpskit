@@ -25,3 +25,6 @@
 [submodule "dependencies/spdlog"]
 	path = dependencies/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "dependencies/TDVP"]
+	path = dependencies/TDVP
+	url = https://github.com/ITensor/TDVP.git
